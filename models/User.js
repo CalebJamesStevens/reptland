@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     profilePicture: {
-        type: Image
+        type: String
     },
     pets: {
         type: Array,
@@ -22,26 +22,25 @@ const UserSchema = new mongoose.Schema({
         of: String
     },
     postIDs: {
-        type: Array,
-        of: String 
+        type: [String]
     },
     communityIDs: {
-        type: String
+        type: [String]
     },
     createdCommunityIDs: {
-        type: String
+        type: [String]
     },
     savedPostIDs: {
-        type: String
+        type: [String]
     },
     likePostIDs: {
-        type: String
+        type: [String]
     },
     friendIDs: {
-        type: String
+        type: [String]
     },
     followedUserIDs: {
-        type: String
+        type: [String]
     },
     data: {
         type: Date,
