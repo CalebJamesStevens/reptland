@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router();
 const User = require("../models/User");
+const bcrypt = require('bcryptjs')
 
 router.get('/sign-in', (req, res) => res.render("users/signIn"))
 
@@ -32,7 +33,54 @@ router.post('/sign-up', (req, res) => {
             confirm_password
         });
     } else {
-        res.send('pass')
+        User.findOne({email: email})
+            .then(user => {
+                
+                if (user) {
+                    errors.push({msg:'Email already registered'})
+                    res.render('users/signUp', {
+                        errors,
+                        username,
+                        email,
+                        password,
+                        confirm_password
+                    });
+                } else {
+                    User.findOne({username: username})
+                        .then(user_ => {
+                            if (user_) {
+                                errors.push({msg:'Username already in use'})
+                                res.render('users/signUp', {
+                                    errors,
+                                    username,
+                                    email,
+                                    password,
+                                    confirm_password
+                                });
+                            } else {
+                                const newUser = new User( {
+                                    username,
+                                    email,
+                                    password
+                                });
+                                
+                                //Hash Password
+                                bcrypt.genSalt(10, (err, salt) =>
+                                    bcrypt.hash(newUser.password, salt, (err, hash) =>{
+                                        if (err) throw err;
+                                        //set password to hashed
+                                        newUser.password = hash;
+                                        //save user
+                                        newUser.save()
+                                            .then(user => {
+                                                res.redirect('/users/sign-in')
+                                            })
+                                            .catch(err => console.log(err))
+                                }))
+                            }
+                        })
+                }
+            })
     }
 
 });
