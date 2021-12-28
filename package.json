@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/CalebJamesStevens/reptland/issues"
   },
-  "homepage": "https://github.com/CalebJamesStevens/reptland#readme"
+  "homepage": "https://github.com/CalebJamesStevens/reptland#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
