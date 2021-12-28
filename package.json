@@ -1,0 +1,19 @@
+{
+  "name": "reptland",
+  "version": "1.0.0",
+  "description": "Everything Reptiles",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CalebJamesStevens/reptland.git"
+  },
+  "author": "Caleb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CalebJamesStevens/reptland/issues"
+  },
+  "homepage": "https://github.com/CalebJamesStevens/reptland#readme"
+}
