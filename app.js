@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended: false}));
 
 //Routes
 app.use('/', require('./routes/index'));
-app.use('/user', require('./routes/users'));
+app.use('/users', require('./routes/users'));
 
 const PORT = process.env.PORT || 3000;
 
