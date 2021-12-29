@@ -8,7 +8,7 @@ router.post('/new-post', (req, res) => {
     const details = req.body;
     const newPost = new Post({
         title: details.title,
-        authorID: currentUser.id
+        authorID: res.locals.currentUser.id
     });
     if (details.body) {
         newPost.body = details.body;

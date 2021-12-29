@@ -36,6 +36,7 @@ app.use(passport.session());
 // Give access to currentUser without having to pass in 
 app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
+    console.log(res.locals.currentUser);
     next();
 });
 
