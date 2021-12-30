@@ -3,7 +3,8 @@ const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session')
 const mongoose = require('mongoose');
 const passport = require('passport')
-
+const Post = require('./models/Post');
+const {ObjectId} = require('mongodb')
 const app = express();
 
 require('./config/passport')(passport);
@@ -36,7 +37,7 @@ app.use(passport.session());
 // Give access to currentUser without having to pass in 
 app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
-    console.log(res.locals.currentUser);
+
     next();
 });
 

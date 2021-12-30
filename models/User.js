@@ -17,30 +17,28 @@ const UserSchema = new mongoose.Schema({
         type: String
     },
     pets: {
-        type: Array,
-        of: Array,
-        of: String
+        type: [[String]]
     },
-    postIDs: {
-        type: [String]
+    posts: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
     },
-    communityIDs: {
-        type: [String]
+    communities: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Community'}]
     },
-    createdCommunityIDs: {
-        type: [String]
+    createdCommunities: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Community'}]
     },
-    savedPostIDs: {
-        type: [String]
+    savedPosts: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
     },
-    likePostIDs: {
-        type: [String]
+    likePosts: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
     },
-    friendIDs: {
-        type: [String]
+    friends: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
     },
-    followedUserIDs: {
-        type: [String]
+    followedUsers: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
     },
     data: {
         type: Date,

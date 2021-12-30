@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const CommentSchema = new mongoose.Schema({
-    commentAuthorID: {
-        type: String 
+    commentAuthor: {
+        type: {type: mongoose.Schema.Types.ObjectId, ref: 'User'} 
     },
     commentBody: {
         type: String,
@@ -12,8 +12,8 @@ const CommentSchema = new mongoose.Schema({
         type: Number,
         default: 0            
     },
-    replyIDs: {
-        type: [String]
+    replys: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
     }
 });
 

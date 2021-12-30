@@ -1,14 +1,40 @@
 const express = require("express")
 const router = express.Router();
 const Post = require("../models/Post");
+const mongoose = require('mongoose')
+const {ObjectId} = require('mongodb')
+
 
 router.get('/new-post', (req, res) => res.render('../views/posts/new-post'))
+
+router.get(`/:postID`, (req, res) => {
+    /*Post.findOne({_id: req.params.postID}, (err, docs) => {
+
+        res.render(
+            '../views/posts/view-post', 
+            {
+                post: docs
+            }
+        );
+    })*/
+    Post.findOne({_id: req.params.postID})
+        .populate('authorID')
+        .exec((err, post) => {
+            res.render(
+                '../views/posts/view-post', 
+                {
+                    post: post
+                }
+            );
+        })
+}) 
 
 router.post('/new-post', (req, res) => {
     const details = req.body;
     const newPost = new Post({
         title: details.title,
-        authorID: res.locals.currentUser.id
+        authorID: res.locals.currentUser._id,
+        author: res.locals.currentUser
     });
     if (details.body) {
         newPost.body = details.body;
@@ -25,7 +51,7 @@ router.post('/new-post', (req, res) => {
 
     newPost.save()
         .then(post => {
-            res.redirect("/")
+            res.redirect(`/posts/${post.id}`)
         })
 
 })

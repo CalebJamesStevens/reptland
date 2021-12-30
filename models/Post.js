@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const User = require('./User').schema
 
 const PostSchema = new mongoose.Schema({
     title: {
@@ -7,7 +7,7 @@ const PostSchema = new mongoose.Schema({
         required: true
     },
     authorID: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, ref: 'User',
         required: true
     },
     body: {
@@ -20,11 +20,11 @@ const PostSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    commentIDs: {
-        type: [String]
+    comments: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
     },
-    communityID: {
-        type: String
+    community: {
+        type: {type: mongoose.Schema.Types.ObjectId, ref: 'Community'}
     },
     communityTopic: {
         type: String

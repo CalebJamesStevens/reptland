@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 console.log(Post);
 
 const CommunitySchema = new mongoose.Schema({
-    creatorID: {
-        type: String
+    creator: {
+        type: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     },
     icon: {
         type: String
@@ -18,20 +18,20 @@ const CommunitySchema = new mongoose.Schema({
         type: [String]
     },
 
-    postIDs: {
-        type: [String]
+    posts: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
     },
 
-    adminIDs: {
-        type: [String]
+    admins: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
     },
 
     topics: {
         type: [String]
     },
 
-    followerIDs:{
-        type: [String]
+    followers:{
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
     } 
         
 
