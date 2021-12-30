@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router();
 const Post = require("../models/Post");
+const User = require("../models/User");
 const mongoose = require('mongoose')
 const {ObjectId} = require('mongodb')
 
@@ -33,9 +34,9 @@ router.post('/new-post', (req, res) => {
     const details = req.body;
     const newPost = new Post({
         title: details.title,
-        authorID: res.locals.currentUser._id,
-        author: res.locals.currentUser
+        authorID: res.locals.currentUser._id
     });
+    
     if (details.body) {
         newPost.body = details.body;
     }
@@ -51,7 +52,11 @@ router.post('/new-post', (req, res) => {
 
     newPost.save()
         .then(post => {
-            res.redirect(`/posts/${post.id}`)
+            console.log(res.locals.currentUser._id)
+            console.log(post._id)
+            User.updateOne({_id: res.locals.currentUser._id}, {$push: {posts: post._id}})
+                .then(res.redirect(`/posts/${post.id}`))
+            
         })
 
 })
