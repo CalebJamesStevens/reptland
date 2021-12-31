@@ -96,7 +96,7 @@ router.post('/sign-in', (req, res, next) => {
     })(req, res, next)
 });
 
-router.get('/logout', (req, res) => {
+router.get('/sign-out', (req, res) => {
     req.logout();
     res.redirect('/users/sign-in')
 })

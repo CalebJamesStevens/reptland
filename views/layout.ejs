@@ -8,6 +8,10 @@
 </head>
 <body>
     <h1>Reptland</h1>
+    <%if (currentUser){%>
+    <h2>asdfads</h2>
+    <a href="/users/sign-out">Sign Out</a>
+    <%}%>
     <div class="container">
         <%- body %>
     </div>
