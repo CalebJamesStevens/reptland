@@ -9,15 +9,6 @@ const {ObjectId} = require('mongodb')
 router.get('/new-post', (req, res) => res.render('../views/posts/new-post'))
 
 router.get(`/:postID`, (req, res) => {
-    /*Post.findOne({_id: req.params.postID}, (err, docs) => {
-
-        res.render(
-            '../views/posts/view-post', 
-            {
-                post: docs
-            }
-        );
-    })*/
     Post.findOne({_id: req.params.postID})
         .populate('authorID')
         .exec((err, post) => {
@@ -60,5 +51,26 @@ router.post('/new-post', (req, res) => {
         })
 
 })
+
+router.get(`/enrich-post/:postID`, async (req, res) => {
+    console.log(req.params.postID)
+    if (!res.locals.currentUser) {
+        res.redirect(`/posts/${req.params.postID}`)
+        return;
+    };
+    if (res.locals.currentUser.likedPosts.includes(req.params.postID)) {
+        await Post.updateOne({_id: req.params.postID}, {$inc: {enrichment: -1}})
+        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {likedPosts: req.params.postID}})
+        res.redirect(`/posts/${req.params.postID}`)
+    } else {
+        await Post.updateOne({_id: req.params.postID}, {$inc: {enrichment: 1}})
+        await User.updateOne({_id: res.locals.currentUser._id}, {$push: {likedPosts: req.params.postID}})
+        res.redirect(`/posts/${req.params.postID}`)
+        console.log("Enriched")
+    }
+    
+})
+
+
 
 module.exports = router;

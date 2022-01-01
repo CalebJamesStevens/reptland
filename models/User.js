@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
     savedPosts: {
         type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
     },
-    likePosts: {
+    likedPosts: {
         type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
     },
     friends: {
