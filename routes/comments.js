@@ -14,7 +14,7 @@ router.post('/new', (req, res) => {
         return;
     }
 
-    newComment = new Comment({
+    const newComment = new Comment({
         commentBody: details.commentBody,
         commentAuthor: res.locals.currentUser._id,
         post: details.postID

@@ -3,10 +3,11 @@ const Post = require("../models/Post");
 
 const CommentSchema = new mongoose.Schema({
     commentAuthor: {
-        type: {type: mongoose.Schema.Types.ObjectId, ref: 'User'} 
+        type: mongoose.Schema.Types.ObjectId, ref: 'User',
+        required: true 
     },
     post: {
-        type: {type: mongoose.Schema.Types.ObjectId, ref: 'Post'} 
+        type: mongoose.Schema.Types.ObjectId, ref: 'Post' 
     },
     commentBody: {
         type: String,

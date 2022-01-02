@@ -23,3 +23,12 @@
     <input name="postID" type="hidden" value="<%=post._id%>">
     <button type="submit">Comment</button>
 </form>
+
+<%post.comments.forEach(comment => {%>
+    <div>
+        <%- include('../partials/comment-partial.ejs') %>
+        <%=comment.commentBody%>
+        <%=comment.commentAuthor.username%>
+    </div>
+
+<%})%>

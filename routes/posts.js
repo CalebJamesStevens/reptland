@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
+const Comment = require("../models/Comment");
 const mongoose = require('mongoose')
 const {ObjectId} = require('mongodb');
 const { redirect } = require("express/lib/response");
@@ -93,6 +94,15 @@ router.get(`/enrich-post/:postID`, async (req, res) => {
 router.get(`/:postID`, (req, res) => {
     Post.findOne({_id: req.params.postID})
         .populate('authorID')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: "commentAuthor",
+                populate: {
+                    path: "replies"
+                }
+            }
+        })
         .exec((err, post) => {
             res.render(
                 '../views/posts/view-post', 
