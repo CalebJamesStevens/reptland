@@ -3,10 +3,9 @@ const router = express.Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
 const mongoose = require('mongoose')
-const {ObjectId} = require('mongodb')
+const {ObjectId} = require('mongodb');
+const { redirect } = require("express/lib/response");
 
-
-router.get('/new-post', (req, res) => res.render('../views/posts/new-post'))
 
 router.get(`/:postID`, (req, res) => {
     Post.findOne({_id: req.params.postID})
@@ -20,6 +19,37 @@ router.get(`/:postID`, (req, res) => {
             );
         })
 }) 
+
+router.post('/:postID/delete', async (req, res) => {
+    console.log("GOT THIS FAR")
+    try {
+        console.log("Starting post deletion")
+        await Post.findById({_id: req.params.postID}, (err, post) => {
+            console.log("Starting post deletion")
+            try {
+                if (!post.authorID._id.equals(res.locals.currentUser._id)) {
+                    res.redirect(`/posts/${req.params.postID}`)
+                    return;
+                } 
+            } catch {
+                res.redirect(`/posts/${req.params.postID}`)
+                return;
+            }
+        }).clone()
+        console.log("Post deleted")
+        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {posts: req.params.postID}})
+        await Post.deleteOne({_id: req.params.postID})
+        res.redirect(`/`)
+        
+    } catch (err){
+        console.log(err)
+    
+        res.redirect(`/`)
+    }
+})
+
+router.get('/new-post', (req, res) => res.render('../views/posts/new-post'))
+
 
 router.post('/new-post', (req, res) => {
     const details = req.body;

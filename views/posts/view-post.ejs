@@ -1,11 +1,19 @@
-
-
 <h2><%=post.authorID.username%></h2>
 <h2><%=post.title%></h2>
 <h2><%=post.body%></h2>
 
+
 <div>
     <a href=<%='/posts/enrich-post/'+post.id%>>Enrich</a>
-    <%=post.enrichment%>
+    <%=post.enrichment%></br>
 </div>
+<%if (currentUser) {%>
+    <%if (post.authorID._id.equals(currentUser._id)) {%>
+    <div>
+        <form action="/posts/<%=post.id%>/delete" method="POST">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+    <%}%>
+<% } %>
 

@@ -1,10 +1,11 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const session = require('express-session')
+const session = require('express-session');
+const passport = require('passport');
 const mongoose = require('mongoose');
-const passport = require('passport')
+
 const Post = require('./models/Post');
-const {ObjectId} = require('mongodb')
+const {ObjectId} = require('mongodb');
 const app = express();
 
 require('./config/passport')(passport);
@@ -19,9 +20,12 @@ mongoose.connect(db, {useNewUrlParser: true})
     .catch(err => console.log(err));
 
 
+    
+    
 //EJS
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
+    
 
 //Bodyparser
 app.use(express.urlencoded({extended: false}));
@@ -34,6 +38,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 
 // Give access to currentUser without having to pass in 
 app.use(function(req, res, next) {
