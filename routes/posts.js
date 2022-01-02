@@ -7,18 +7,7 @@ const {ObjectId} = require('mongodb');
 const { redirect } = require("express/lib/response");
 
 
-router.get(`/:postID`, (req, res) => {
-    Post.findOne({_id: req.params.postID})
-        .populate('authorID')
-        .exec((err, post) => {
-            res.render(
-                '../views/posts/view-post', 
-                {
-                    post: post
-                }
-            );
-        })
-}) 
+
 
 router.post('/:postID/delete', async (req, res) => {
     console.log("GOT THIS FAR")
@@ -101,6 +90,17 @@ router.get(`/enrich-post/:postID`, async (req, res) => {
     
 })
 
+router.get(`/:postID`, (req, res) => {
+    Post.findOne({_id: req.params.postID})
+        .populate('authorID')
+        .exec((err, post) => {
+            res.render(
+                '../views/posts/view-post', 
+                {
+                    post: post
+                }
+            );
+        })
+}) 
 
-
-module.exports = router;
+module.exports = router; 

@@ -17,3 +17,9 @@
     <%}%>
 <% } %>
 
+
+<form action="/comments/new" method="POST">
+    <input name="commentBody" id="commentBody" type="text-field" placeholder="Add your thoughts"/>
+    <input name="postID" type="hidden" value="<%=post._id%>">
+    <button type="submit">Comment</button>
+</form>
