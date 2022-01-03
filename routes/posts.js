@@ -6,6 +6,7 @@ const Comment = require("../models/Comment");
 const mongoose = require('mongoose')
 const {ObjectId} = require('mongodb');
 const { redirect } = require("express/lib/response");
+const Community = require("../models/Community");
 
 
 
@@ -38,7 +39,28 @@ router.post('/:postID/delete', async (req, res) => {
     }
 })
 
-router.get('/new-post', (req, res) => res.render('../views/posts/new-post'))
+router.get('/new-post', async (req, res) => {
+    if (!res.locals.currentUser) {
+        res.redirect('/users/sign-up')
+        return;
+    }
+
+    let userCommunities = new Array();
+
+    await User.findById(res.locals.currentUser._id)
+            .populate({
+                path:'communities',
+                populate: {
+                    path:'topics'
+                }
+            })
+            .exec((err, user) => {
+                userCommunities = user.communities
+                res.render('../views/posts/new-post', {communities: userCommunities})
+            })
+            
+
+})
 
 
 router.post('/new-post', (req, res) => {
@@ -48,11 +70,16 @@ router.post('/new-post', (req, res) => {
         authorID: res.locals.currentUser._id
     });
     
+    console.log(details)
+
     if (details.body) {
         newPost.body = details.body;
     }
-    if (details.communityID) {
-        newPost.communityID = details.communityID;
+    if (details.community != "") {
+        newPost.community = details.community;
+        if (!details.communityTopic) {
+            newPost.communityTopic = 'general';
+        }
     }
     if (details.communityTopic) {
         newPost.communityTopic = details.communityTopic;
@@ -63,10 +90,13 @@ router.post('/new-post', (req, res) => {
 
     newPost.save()
         .then(post => {
-            console.log(res.locals.currentUser._id)
-            console.log(post._id)
+            
             User.updateOne({_id: res.locals.currentUser._id}, {$push: {posts: post._id}})
-                .then(res.redirect(`/posts/${post.id}`))
+                .then(user => {
+                    Community.updateOne({_id: post.community}, {$push: {posts: post._id}})
+                        .then(res.redirect(`/posts/${post.id}`))
+                    
+                })
             
         })
 
@@ -94,6 +124,7 @@ router.get(`/enrich-post/:postID`, async (req, res) => {
 router.get(`/:postID`, (req, res) => {
     Post.findOne({_id: req.params.postID})
         .populate('authorID')
+        .populate('community')
         .populate({
             path: 'comments',
             populate: {

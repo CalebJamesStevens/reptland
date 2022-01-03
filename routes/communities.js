@@ -37,14 +37,34 @@ router.post('/new-community', (req, res) => {
         })
 })
 
-router.get('/:communtiy_name', (req, res) => {
-    Community.findOne({name: req.params.communtiy_name})
+router.get('/:community_name/new-community-post', (req, res) => {
+    if (!res.locals.currentUser) {
+        res.redirect('/users/sign-up')
+        return;
+    }
+    Community.findOne({name: req.params.community_name})
+    .exec((err, community) => {
+        res.render(
+            '../views/communities/new-community-post',
+            {
+                community: community
+            }
+        );
+    })
+})
+
+router.get('/:community_name', async (req, res) => {
+    console.log("FINDING COMMUNITY")
+    await Community.findOne({name: req.params.community_name})
     .populate('posts')
     .populate('creator')
     .populate('admins')
-    .exec(community => {
+    .exec((err, community) => {
+        console.log(community)
+        console.log(req.params.community_name)
         res.render(
             '../views/communities/view-community',
+            
             {
                 community: community
             }

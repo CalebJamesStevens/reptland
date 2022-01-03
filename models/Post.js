@@ -25,7 +25,7 @@ const PostSchema = new mongoose.Schema({
         type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
     },
     community: {
-        type: {type: mongoose.Schema.Types.ObjectId, ref: 'Community'}
+        type: mongoose.Schema.Types.ObjectId, ref: 'Community'
     },
     communityTopic: {
         type: String

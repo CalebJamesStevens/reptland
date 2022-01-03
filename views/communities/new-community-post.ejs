@@ -1,0 +1,26 @@
+<h1>New Post</h1>
+
+<form action="/posts/new-post" method="POST">
+    <div>
+        <label for="communityTopic">Topic:</label></br>
+        <select name="communityTopic" id="post-form-community-select">
+            <option name="communityTopic" value="general">General</option>
+            <%community.topics.forEach(topic => {%>
+                <option name="communityTopic" value="<%=topic%>"><%=topic%></option>
+            <%})%>
+
+        </select>
+        
+    </div>
+    
+    <div>
+        <label for="title"></label>
+        <input name="title" type="text" id="title"/>
+    </div>
+    <div>
+        <label for="body"></label>
+        <input name="body" type="text" id="body"/>
+    </div>
+    <input name="community" type="hidden" value="<%=community._id%>">
+    <input type="submit" value="Create"/>
+</form>

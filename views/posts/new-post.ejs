@@ -2,6 +2,18 @@
 
 <form action="/posts/new-post" method="POST">
     <div>
+        <label for="community">Post to:</label></br>
+        <select name="community" id="post-form-community-select">
+            <option name="community" value="">My Profile</option>
+            <%communities.forEach(community => {%>
+                <option name="community" value="<%=community._id%>"><%=community.name%></option>
+            <%})%>
+
+        </select>
+        
+    </div>
+    
+    <div>
         <label for="title"></label>
         <input name="title" type="text" id="title"/>
     </div>

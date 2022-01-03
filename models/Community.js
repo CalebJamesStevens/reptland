@@ -8,7 +8,7 @@ const CommunitySchema = new mongoose.Schema({
         unique: true
     },
     creator: {
-        type: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
     },
     icon: {
         type: String
