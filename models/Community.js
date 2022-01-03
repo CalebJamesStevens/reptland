@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 console.log(Post);
 
 const CommunitySchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
     creator: {
         type: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     },
