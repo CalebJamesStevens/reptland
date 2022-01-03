@@ -10,11 +10,17 @@ const Community = require("../models/Community");
 
 
 router.get('/new-community', (req, res) => {
-    res.render('../views/posts/new-community')
+    if (!res.locals.currentUser) {
+        res.redirect('/users/sign-up')
+        return;
+    }
+    res.render('../views/communities/new-community')
 })
 
 router.post('/new-community', (req, res) => {
-    const details = req.body;
+    let details = req.body;
+    details.topics = details.topics.split(',').map(topic => topic.trim())
+    details.tags = details.tags.split(',').map(tag => tag.trim())
     const newCommunity = new Community({
         name: details.name,
         creator: res.locals.currentUser._id,
@@ -26,20 +32,19 @@ router.post('/new-community', (req, res) => {
 
     newCommunity.save()
         .then(community => {
-            User.updateOne({_id: res.locals.currentUser._id}, {$push: {createdCommunities: community._id}})
-                .then(res.redirect(`/communities/${community._id}`))
-            
+            User.updateOne({_id: res.locals.currentUser._id}, {$push: {createdCommunities: community._id, communities: community._id}})
+                .then(res.redirect(`/communities/${community.name}`))
         })
 })
 
-router.get('/:id', (req, res) => {
-    Community.findById(req.params.id)
+router.get('/:communtiy_name', (req, res) => {
+    Community.findOne({name: req.params.communtiy_name})
     .populate('posts')
     .populate('creator')
     .populate('admins')
     .exec(community => {
         res.render(
-            '../views/posts/view-community',
+            '../views/communities/view-community',
             {
                 community: community
             }

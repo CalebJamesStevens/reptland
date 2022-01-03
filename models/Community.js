@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-console.log(Post);
 
 const CommunitySchema = new mongoose.Schema({
     name: {
