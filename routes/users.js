@@ -3,9 +3,61 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
+const { redirect } = require("express/lib/response");
 
-router.get('/profile', (req, res) => res.render("users/profile"))
+router.get(`/:username/profile`, async (req, res) => {
+    console.log('REQUEST')
+    await User.findOne({username: req.params.username})
+        .populate('posts')
+        .populate('friendRequests')
+        .populate('friends')
+        .exec((err, user) => {
+            res.render("users/profile", {
+                user: user
+            })
+        })
+    console.log('went')
+})
 
+router.post(`/:username/request-friend`, async (req, res) => {
+    console.log('REQUEST')
+    const details = req.body;
+    await User.updateOne({_id: res.locals.currentUser._id}, {$push: {sentFriendRequests: details.userID}})
+    await User.findOneAndUpdate({_id: details.userID}, {$push: {friendRequests: res.locals.currentUser._id}})
+        .then(user => {
+            res.redirect(`/users/${user.username}/profile`)
+        })
+})
+
+router.post(`/:username/accept-friend-request`, async (req, res) => {
+    console.log('REQUEST')
+    const details = req.body;
+    await User.updateOne({_id: details.friendID}, {$pull: {sentFriendRequests: res.locals.currentUser._id}, $push: {friends: res.locals.currentUser._id}})
+    await User.findOneAndUpdate({_id: res.locals.currentUser._id}, {$pull: {friendRequests: details.friendID}, $push: {friends: details.friendID}})
+        .then(user => {
+            res.redirect(`/users/${user.username}/profile`)
+        })
+})
+
+router.post(`/:username/follow-user`, async (req, res) => {
+    console.log('REQUEST')
+    const details = req.body;
+    await User.updateOne({_id: details.userID}, {$push: {followers: res.locals.currentUser._id}})
+    await User.findOneAndUpdate({_id: res.locals.currentUser._id}, {$push: {followedUsers: details.userID}})
+        .then(user => {
+            res.redirect(`/users/${user.username}/profile`)
+        })
+})
+
+router.post(`/:username/unfollow-user`, async (req, res) => {
+    console.log('REQUEST')
+    const details = req.body;
+    await User.updateOne({_id: details.userID}, {$pull: {followers: res.locals.currentUser._id}})
+    await User.findOneAndUpdate({_id: res.locals.currentUser._id}, {$pull: {followedUsers: details.userID}})
+        .then(user => {
+            res.redirect(`/users/${user.username}/profile`)
+        })
+})
 
 router.get('/sign-up', (req, res) => res.render('users/signUp'))
 
