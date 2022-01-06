@@ -11,6 +11,8 @@ router.get(`/:username/profile`, async (req, res) => {
         .populate('posts')
         .populate('friendRequests')
         .populate('friends')
+        .populate('followers')
+        .populate('followedUsers')
         .exec((err, user) => {
             res.render("users/profile", {
                 user: user
@@ -42,8 +44,8 @@ router.post(`/:username/accept-friend-request`, async (req, res) => {
 router.post(`/:username/follow-user`, async (req, res) => {
     console.log('REQUEST')
     const details = req.body;
-    await User.updateOne({_id: details.userID}, {$push: {followers: res.locals.currentUser._id}})
-    await User.findOneAndUpdate({_id: res.locals.currentUser._id}, {$push: {followedUsers: details.userID}})
+    await User.updateOne({_id: res.locals.currentUser._id}, {$push: {followedUsers: details.userID}})
+    await User.findOneAndUpdate({_id: details.userID}, {$push: {followers: res.locals.currentUser._id}})
         .then(user => {
             res.redirect(`/users/${user.username}/profile`)
         })
@@ -52,8 +54,8 @@ router.post(`/:username/follow-user`, async (req, res) => {
 router.post(`/:username/unfollow-user`, async (req, res) => {
     console.log('REQUEST')
     const details = req.body;
-    await User.updateOne({_id: details.userID}, {$pull: {followers: res.locals.currentUser._id}})
-    await User.findOneAndUpdate({_id: res.locals.currentUser._id}, {$pull: {followedUsers: details.userID}})
+    await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {followedUsers: details.userID}})
+    await User.findOneAndUpdate({_id: details.userID}, {$pull: {followers: res.locals.currentUser._id}})
         .then(user => {
             res.redirect(`/users/${user.username}/profile`)
         })

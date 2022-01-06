@@ -2,6 +2,7 @@
 
 <%if (currentUser) {%>
     <%////////////////////    If user    ////////////////////////%>
+    
     <% if (currentUser._id.equals(user._id)) {%>
         <%user.friendRequests.forEach(u => {%>
             <div>
@@ -12,6 +13,20 @@
                 </form>
             </div>
         <%})%>
+    <%} else {%>
+        <%////////////////////    If not user    ////////////////////////%>
+        <% if (user.followers.some(follower => follower._id.equals(currentUser._id))) {%>
+            <form action="/users/<%=user.username%>/unfollow-user" method="POST">
+                <input type="hidden" name="userID" value='<%=user._id%>'>
+                <input type="submit" value="Unfollow User">
+            </form>
+        <%} else {%>
+            <form action="/users/<%=user.username%>/follow-user" method="POST">
+                <input type="hidden" name="userID" value='<%=user._id%>'>
+                <input type="submit" value="Follow User">
+            </form>
+        <%}%>
+
     <%}%>
      
     
