@@ -41,6 +41,16 @@ router.post(`/:username/accept-friend-request`, async (req, res) => {
         })
 })
 
+router.post(`/:username/unfriend`, async (req, res) => {
+    console.log('REQUEST')
+    const details = req.body;
+    await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {friends: details.userID}})
+    await User.findOneAndUpdate({_id: details.userID}, {$pull: {friends: res.locals.currentUser._id}})
+        .then(user => {
+            res.redirect(`/users/${user.username}/profile`)
+        })
+})
+
 router.post(`/:username/follow-user`, async (req, res) => {
     console.log('REQUEST')
     const details = req.body;

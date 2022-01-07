@@ -31,11 +31,17 @@
      
     
     <%////////////////////    If not user, not users friends, not requested to be friends    ////////////////////////%>
-    <% if (!currentUser._id.equals(user._id) && !user.friends.some(u => u._id.equals(currentUser._id)) &&!user.friendRequests.some(u => u._id.equals(currentUser._id))) {%>
-
-        <form action="/users/<%=user.username%>/request-friend" method="POST">
-            <input type="hidden" name="userID" value='<%=user._id%>'>
-            <input type="submit" value="Add Friend+">
-        </form>
+    <% if (!currentUser._id.equals(user._id) &&!user.friendRequests.some(u => u._id.equals(currentUser._id))) {%>
+        <% if (!user.friends.some(u => u._id.equals(currentUser._id))) {%>
+            <form action="/users/<%=user.username%>/request-friend" method="POST">
+                <input type="hidden" name="userID" value='<%=user._id%>'>
+                <input type="submit" value="Add Friend+">
+            </form>
+        <%} else {%>
+            <form action="/users/<%=user.username%>/unfriend" method="POST">
+                <input type="hidden" name="userID" value='<%=user._id%>'>
+                <input type="submit" value="Unfriend">
+            </form>
+        <%}%>
     <%}%>
 <%}%>
