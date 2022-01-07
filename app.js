@@ -3,6 +3,7 @@ const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('passport');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 
 const Post = require('./models/Post');
 const {ObjectId} = require('mongodb');
@@ -39,6 +40,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Method overried
+app.use(methodOverride('_method'))
 
 
 // Give access to currentUser without having to pass in 
@@ -55,6 +58,11 @@ app.use('/users', require('./routes/users'));
 app.use('/posts', require('./routes/posts'));
 app.use('/comments', require('./routes/comments'));
 app.use('/communities', require('./routes/communities'));
+
+//catch 404 and handle erros
+app.use(function(req, res, next) {
+    res.status(404).send('Page does not exist')
+})
 
 const PORT = process.env.PORT || 3000;
 

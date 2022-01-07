@@ -121,17 +121,15 @@ router.get(`/enrich-post/:postID`, async (req, res) => {
     
 })
 
-router.get(`/:postID`, (req, res) => {
-    Post.findOne({_id: req.params.postID})
+router.get(`/:postID`, async (req, res) => {
+    console.log('going to post')
+    await Post.findOne({_id: req.params.postID})
         .populate('authorID')
         .populate('community')
         .populate({
             path: 'comments',
             populate: {
-                path: "commentAuthor",
-                populate: {
-                    path: "replies"
-                }
+                path: "commentAuthor"
             }
         })
         .exec((err, post) => {

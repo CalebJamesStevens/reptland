@@ -1,4 +1,4 @@
-<%if (post.community != "") {%>
+<%if (post.community) {%>
     <h3>Community: <%=post.community.name%> - <%=post.communityTopic%></h3>
 
 <%}%>
@@ -32,6 +32,14 @@
         <%- include('../partials/comment-partial.ejs') %>
         <%=comment.commentBody%>
         <%=comment.commentAuthor.username%>
+        <%if (currentUser) {%>
+            <%if (comment.commentAuthor._id.equals(currentUser._id) || post.authorID.equals(currentUser._id)) {%>
+                <form action="/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                    <input type='hidden' name='postID' value='<%=post._id%>'>
+                    <input type="submit" value="Delete Comment">
+                </form>
+            <%}%>
+        <%}%>
     </div>
 
 <%})%>

@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 const {ObjectId} = require('mongodb');
 const { redirect } = require("express/lib/response");
 
-router.post('/new', (req, res) => {
+router.post('/new', async (req, res) => {
     const details = req.body;
     if (!res.locals.currentUser) {
         res.redirect('/users/sign-in');
@@ -20,7 +20,7 @@ router.post('/new', (req, res) => {
         post: details.postID
     })
 
-    newComment.save()
+    await newComment.save()
         .then(comment => {
             Post.updateOne({_id: details.postID}, {$push: {comments: newComment._id}})
                 .then(
@@ -28,5 +28,16 @@ router.post('/new', (req, res) => {
                 )
         })
 })
+
+router.delete('/:id', async (req, res) => {
+    await Post.findByIdAndUpdate({_id: req.body.postID}, {$pull: {comments: req.params.id}})
+    await Comment.findByIdAndDelete(req.params.id)
+        .then(comment => {
+
+            res.redirect(`/posts/${req.body.postID}`)
+        })
+})
+
+
 
 module.exports = router;
