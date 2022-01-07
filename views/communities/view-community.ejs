@@ -1,1 +1,19 @@
 <a href="/communities/<%=community.name%>/new-community-post">New Post</a>
+
+
+
+<%if (currentUser) {%>
+    <%if(!currentUser.createdCommunities.some(c => c.equals(community._id) )) {%>
+        <%if(!currentUser.communities.some(c => c.equals(community._id) )) {%>
+            <form action='/communities/<%=community.name%>/join-community' method="POST">
+                <input type="hidden" name="communityID" value="<%=community._id%>">
+                <input type="submit" value="Join Community">
+            </form>
+        <%} else {%>
+            <form action='/communities/<%=community.name%>/leave-community' method="POST">
+                <input type="hidden" name="communityID" value="<%=community._id%>">
+                <input type="submit" value="Leave Community">
+            </form>
+        <%}%>
+    <%}%>
+<%}%>

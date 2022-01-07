@@ -53,6 +53,22 @@ router.get('/:community_name/new-community-post', (req, res) => {
     })
 })
 
+router.post('/:community_name/join-community', async (req, res) => {
+    await Community.updateOne({name: req.params.community_name}, {$push: {followers: res.locals.currentUser._id}})
+    await User.updateOne({_id: res.locals.currentUser._id}, {$push: {communities: req.body.communityID}})
+    .then(user => {
+        res.redirect(`/communities/${req.params.community_name}`)
+    })
+})
+
+router.post('/:community_name/leave-community', async (req, res) => {
+    await Community.updateOne({name: req.params.community_name}, {$pull: {followers: res.locals.currentUser._id}})
+    await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {communities: req.body.communityID}})
+    .then(user => {
+        res.redirect(`/communities/${req.params.community_name}`)
+    })
+})
+
 router.get('/:community_name', async (req, res) => {
     console.log("FINDING COMMUNITY")
     await Community.findOne({name: req.params.community_name})
@@ -71,6 +87,7 @@ router.get('/:community_name', async (req, res) => {
         );
     })
 })
+
 
 
 module.exports = router;
