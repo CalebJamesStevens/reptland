@@ -121,6 +121,23 @@ router.get(`/enrich-post/:postID`, async (req, res) => {
     
 })
 
+router.post(`/:postID/save-post`, async (req, res) => {
+    console.log(req.params.postID)
+    if (!res.locals.currentUser) {
+        res.redirect(`/posts/${req.params.postID}`)
+        return;
+    };
+    if (res.locals.currentUser.savedPosts.includes(req.params.postID)) {
+        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {savedPosts: req.params.postID}})
+        res.redirect(`/posts/${req.params.postID}`)
+    } else {
+        await User.updateOne({_id: res.locals.currentUser._id}, {$push: {savedPosts: req.params.postID}})
+        res.redirect(`/posts/${req.params.postID}`)
+        console.log("Saved")
+    }
+    
+})
+
 router.get(`/:postID`, async (req, res) => {
     console.log('going to post')
     await Post.findOne({_id: req.params.postID})
