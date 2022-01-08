@@ -64,6 +64,6 @@ app.use(function(req, res, next) {
     res.status(404).send('Page does not exist')
 })
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, console.log(`Server start on port: ${PORT}`));
