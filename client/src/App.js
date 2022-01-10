@@ -10,6 +10,8 @@ import { UserContext } from './contexts/UserContext';
 //Imported Compontents
 import Home from './components/home-page/home';
 import SignIn from './components/users/sign-in';
+import ViewPost from './components/posts/view-post';
+import NewPost from './components/posts/new-post';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -44,9 +46,16 @@ function App() {
         <div className="App">
           
           <Routes>
-            <Route path="/users/sign-in" element={<SignIn />}/>
-            <Route path="/users/sign-in" element={<SignIn />}/>
             <Route path="/" element={<Home />}/>
+            {/*User Routes*/}
+            <Route path="/users/sign-in" element={<SignIn />}/>
+            
+            {/*Post Routes*/}
+            <Route path="/posts/new-post" element={<NewPost />}/>
+            <Route path="/posts/view-post/:postID" element={<ViewPost />}/>
+          
+            {/*Community Routes*/}
+
           </Routes>
         </div>
       </Router>

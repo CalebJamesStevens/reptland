@@ -3,10 +3,10 @@ import { UserContext } from '../../contexts/UserContext';
 
 function Post({postID}) {
     const {currentUser, setCurrentUser} = useContext(UserContext);
-    const [post, setPost] = useState(new Array());
+    const [post, setPost] = useState(null);
 
     const fetchPost = async () => {
-        fetch(`/posts/${postID}`)
+        fetch(`/posts/view-post/${postID}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -16,8 +16,7 @@ function Post({postID}) {
     }
 
     useEffect(() => {
-        if (!currentUser) return;
-        console.log('fetching posts')
+        console.log('fetching post')
         fetchPost();
 
     },[currentUser]);

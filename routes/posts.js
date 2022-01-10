@@ -102,7 +102,7 @@ router.post('/new-post', (req, res) => {
 
 })
 
-router.get(`/enrich-post/:postID`, async (req, res) => {
+router.get(`/:postID/enrich-post`, async (req, res) => {
     console.log(req.params.postID)
     if (!res.locals.currentUser) {
         res.redirect(`/posts/${req.params.postID}`)
@@ -138,7 +138,7 @@ router.post(`/:postID/save-post`, async (req, res) => {
     
 })
 
-router.get(`/:postID`, async (req, res) => {
+router.get(`/view-post/:postID`, async (req, res) => {
     console.log('going to post')
     await Post.findOne({_id: req.params.postID})
         .populate('authorID')
