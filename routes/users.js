@@ -5,6 +5,17 @@ const bcrypt = require('bcryptjs')
 const passport = require('passport');
 const { redirect } = require("express/lib/response");
 
+router.get('/currentUser', async (req, res) => {
+    if (!res.locals.currentUser) {
+        res.json({'bible': 'bob'});
+        return;
+    }
+    await User.findById(res.locals.currentUser._id)
+        .then(cU => {
+            res.json(cU)
+        })
+})
+
 router.get(`/:username/profile`, async (req, res) => {
     console.log('REQUEST')
     await User.findOne({username: req.params.username})
@@ -156,7 +167,7 @@ router.get('/sign-in', (req, res) => res.render("users/signIn"))
 router.post('/sign-in', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/',
-        failureRedirect: '/users/sign-in'
+        failureRedirect: '/'
     })(req, res, next)
 });
 
