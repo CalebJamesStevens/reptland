@@ -12,6 +12,8 @@ import Home from './components/home-page/home';
 import SignIn from './components/users/sign-in';
 import ViewPost from './components/posts/view-post';
 import NewPost from './components/posts/new-post';
+import Community from './components/communities/Community';
+import CreateCommunity from './components/communities/CreateCommunity';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -47,6 +49,9 @@ function App() {
         <a href='/posts/new-post'>
           <li>New Post</li>
         </a>
+        <a href='/communities/new-community'>
+          <li>New Community</li>
+        </a>
         
       </nav>
       <Router>
@@ -62,6 +67,8 @@ function App() {
             <Route path="/posts/view-post/:postID" element={<ViewPost />}/>
           
             {/*Community Routes*/}
+            <Route path="/communities/new-community" element={<CreateCommunity />}/>
+            <Route path="/communities/view/:communityName" element={<Community />}/>
 
           </Routes>
         </div>
