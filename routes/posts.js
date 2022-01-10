@@ -150,12 +150,7 @@ router.get(`/:postID`, async (req, res) => {
             }
         })
         .exec((err, post) => {
-            res.render(
-                '../views/posts/view-post', 
-                {
-                    post: post
-                }
-            );
+            res.json(post);
         })
 }) 
 

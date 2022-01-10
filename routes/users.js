@@ -7,7 +7,7 @@ const { redirect } = require("express/lib/response");
 
 router.get('/currentUser', async (req, res) => {
     if (!res.locals.currentUser) {
-        res.json({'bible': 'bob'});
+        res.json(null);
         return;
     }
     await User.findById(res.locals.currentUser._id)
