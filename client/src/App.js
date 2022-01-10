@@ -1,7 +1,13 @@
 import {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
+//Imported CSS
 import './App.css';
+
+//Imported Contexts
+import { UserContext } from './contexts/UserContext';
+
+//Imported Compontents
 import Home from './components/home-page/home';
 import SignIn from './components/users/sign-in';
 
@@ -23,15 +29,19 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="App">
-        <h2 className="cU">{currentUser && currentUser.username}</h2>
-        <Routes>
-          <Route path="/users/sign-in" element={<SignIn />}/>
-          <Route path="/" element={<Home />}/>
-        </Routes>
-      </div>
-    </Router>
+    <UserContext.Provider value={currentUser}>
+      
+      <Router>
+        <div className="App">
+          
+          <Routes>
+            <Route path="/users/sign-in" element={<SignIn />}/>
+            <Route path="/" element={<Home />}/>
+          </Routes>
+        </div>
+      </Router>
+
+    </UserContext.Provider>
   );
 }
 
