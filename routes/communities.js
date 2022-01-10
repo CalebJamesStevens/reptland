@@ -20,6 +20,7 @@ router.get('/new-community', (req, res) => {
 router.post('/new-community', (req, res) => {
     let details = req.body;
     details.topics = details.topics.split(',').map(topic => topic.trim())
+    details.topics.unshift('General');
     details.tags = details.tags.split(',').map(tag => tag.trim())
     const newCommunity = new Community({
         name: details.name,
@@ -29,7 +30,7 @@ router.post('/new-community', (req, res) => {
         topics: details.topics
     });
 
-
+    
     newCommunity.save()
         .then(community => {
             User.updateOne({_id: res.locals.currentUser._id}, {$push: {createdCommunities: community._id, communities: community._id}})
@@ -69,22 +70,19 @@ router.post('/:community_name/leave-community', async (req, res) => {
     })
 })
 
-router.get('/:community_name', async (req, res) => {
+router.get('/view/:community', async (req, res) => {
     console.log("FINDING COMMUNITY")
-    await Community.findOne({name: req.params.community_name})
-    .populate('posts')
-    .populate('creator')
-    .populate('admins')
-    .exec((err, community) => {
-        console.log(community)
-        console.log(req.params.community_name)
-        res.render(
-            '../views/communities/view-community',
-            
-            {
-                community: community
+    await Community.findOne({name: req.params.community})
+        .exec((err, community) => {
+            if (community) {
+                res.json(community);
             }
-        );
+        })
+    await Community.findOne({_id: req.params.community})
+    .exec((err, community) => {
+        if (community) {
+            res.json(community);
+        }
     })
 })
 

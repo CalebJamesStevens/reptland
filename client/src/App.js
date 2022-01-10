@@ -20,6 +20,8 @@ function App() {
     () => ({currentUser, setCurrentUser}), [currentUser, setCurrentUser]
     );
 
+
+
   const getCurrentUser = () => {
     console.log('fetching user data')
     fetch('/users/currentUser')
@@ -34,6 +36,7 @@ function App() {
       getCurrentUser();
   }, []);
 
+
   return (
     <UserContext.Provider value={userProviderValue}>
     
@@ -41,6 +44,10 @@ function App() {
         <a href='/users/sign-in'>
           <li>Sign In</li>
         </a>
+        <a href='/posts/new-post'>
+          <li>New Post</li>
+        </a>
+        
       </nav>
       <Router>
         <div className="App">

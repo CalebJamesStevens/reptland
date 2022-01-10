@@ -75,11 +75,8 @@ router.post('/new-post', (req, res) => {
     if (details.body) {
         newPost.body = details.body;
     }
-    if (details.community != "") {
+    if (details.community != " ") {
         newPost.community = details.community;
-        if (!details.communityTopic) {
-            newPost.communityTopic = 'general';
-        }
     }
     if (details.communityTopic) {
         newPost.communityTopic = details.communityTopic;
@@ -94,7 +91,7 @@ router.post('/new-post', (req, res) => {
             User.updateOne({_id: res.locals.currentUser._id}, {$push: {posts: post._id}})
                 .then(user => {
                     Community.updateOne({_id: post.community}, {$push: {posts: post._id}})
-                        .then(res.redirect(`/posts/${post.id}`))
+                        .then(res.redirect(`/posts/view-post/${post.id}`))
                     
                 })
             
