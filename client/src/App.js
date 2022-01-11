@@ -16,6 +16,7 @@ import Community from './components/communities/Community';
 import CreateCommunity from './components/communities/CreateCommunity';
 import UserProfile from './components/users/user-profile';
 import HeartIcon from './components/icons/heart-icon';
+import NavBar from './components/header/navbar';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -43,22 +44,12 @@ function App() {
 
   return (
     <UserContext.Provider value={userProviderValue}>
-    
-      <nav>
-        <a href='/users/sign-in'>
-          <li>Sign In</li>
-        </a>
-        <a href='/posts/new-post'>
-          <li>New Post</li>
-        </a>
-        <a href='/communities/new-community'>
-          <li>New Community</li>
-        </a>
-        <HeartIcon/>
-      </nav>
+      
       <Router>
         <div className="App">
           
+          <NavBar/>
+
           <Routes>
             <Route path="/" element={<Home />}/>
             {/*User Routes*/}
