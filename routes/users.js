@@ -19,15 +19,8 @@ router.get('/currentUser', async (req, res) => {
 router.get(`/:username/profile`, async (req, res) => {
     console.log('REQUEST')
     await User.findOne({username: req.params.username})
-        .populate('posts')
-        .populate('friendRequests')
-        .populate('friends')
-        .populate('followers')
-        .populate('followedUsers')
-        .exec((err, user) => {
-            res.render("users/profile", {
-                user: user
-            })
+        .then(user => {
+            res.json(user)
         })
     console.log('went')
 })

@@ -14,6 +14,8 @@ import ViewPost from './components/posts/view-post';
 import NewPost from './components/posts/new-post';
 import Community from './components/communities/Community';
 import CreateCommunity from './components/communities/CreateCommunity';
+import UserProfile from './components/users/user-profile';
+import HeartIcon from './components/icons/heart-icon';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -52,7 +54,7 @@ function App() {
         <a href='/communities/new-community'>
           <li>New Community</li>
         </a>
-        
+        <HeartIcon/>
       </nav>
       <Router>
         <div className="App">
@@ -61,6 +63,7 @@ function App() {
             <Route path="/" element={<Home />}/>
             {/*User Routes*/}
             <Route path="/users/sign-in" element={<SignIn />}/>
+            <Route path="/users/:username/profile" element={<UserProfile />}/>
             
             {/*Post Routes*/}
             <Route path="/posts/new-post" element={<NewPost />}/>
