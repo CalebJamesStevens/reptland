@@ -1,9 +1,11 @@
 import {useContext, useEffect, useState} from 'react';
+import { useParams } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 
-function Community({communityName}) {
+function Community() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [community, setCommunity] = useState(null);
+    const {communityName} = useParams();
 
     const fetchCommunity = async () => {
         fetch(`/communities/view/${communityName}`)

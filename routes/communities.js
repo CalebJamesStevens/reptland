@@ -21,6 +21,7 @@ router.post('/new-community', (req, res) => {
     let details = req.body;
     details.topics = details.topics.split(',').map(topic => topic.trim())
     details.topics.unshift('General');
+    details.name = details.name.toLowerCase();
     details.tags = details.tags.split(',').map(tag => tag.trim())
     const newCommunity = new Community({
         name: details.name,
@@ -34,7 +35,7 @@ router.post('/new-community', (req, res) => {
     newCommunity.save()
         .then(community => {
             User.updateOne({_id: res.locals.currentUser._id}, {$push: {createdCommunities: community._id, communities: community._id}})
-                .then(res.redirect(`/communities/${community.name}`))
+                .then(res.redirect(`/communities/view/${community.name}`))
         })
 })
 
@@ -72,18 +73,40 @@ router.post('/:community_name/leave-community', async (req, res) => {
 
 router.get('/view/:community', async (req, res) => {
     console.log("FINDING COMMUNITY")
-    await Community.findOne({name: req.params.community})
-        .exec((err, community) => {
-            if (community) {
-                res.json(community);
-            }
-        })
-    await Community.findOne({_id: req.params.community})
-    .exec((err, community) => {
-        if (community) {
-            res.json(community);
-        }
-    })
+    let community = req.params.community.toLowerCase();
+    console.log(req.params.community)
+    console.log(community)
+
+    //try to find by name
+    try {
+
+        console.log('trying name')
+        await Community.findOne({name: community})
+            .then(c => {
+                console.log('Name' + c)
+                if (c) {
+                    res.json(c);
+                    return;
+                }
+            })
+    } catch {
+        
+    }
+
+    // Try to find by id
+    try {
+        console.log('trying id')
+        await Community.findOne({_id: community})
+            .then(c => {
+                console.log('ID' + c)
+                if (c) {
+                    res.json(c);
+                }
+            })
+    } catch {
+
+    }
+    
 })
 
 
