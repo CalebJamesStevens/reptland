@@ -15,8 +15,9 @@ import NewPost from './components/posts/new-post';
 import Community from './components/communities/Community';
 import CreateCommunity from './components/communities/CreateCommunity';
 import UserProfile from './components/users/user-profile';
-import HeartIcon from './components/icons/heart-icon';
 import NavBar from './components/header/navbar';
+import FollowedUsers from './components/home-page/followed-users';
+import SignUp from './components/users/sign-up';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -51,9 +52,13 @@ function App() {
           <NavBar/>
 
           <Routes>
-            <Route path="/" element={<Home />}/>
+            {/*Home routs*/}
+            <Route path="/home" element={<Home />}/>
+            <Route path="/home/followed-users" element={<FollowedUsers />}/>
+            
             {/*User Routes*/}
             <Route path="/users/sign-in" element={<SignIn />}/>
+            <Route path="/users/sign-up" element={<SignUp />}/>
             <Route path="/users/:username/profile" element={<UserProfile />}/>
             
             {/*Post Routes*/}

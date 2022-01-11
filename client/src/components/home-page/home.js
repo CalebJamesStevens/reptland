@@ -6,12 +6,23 @@ import HomePosts from '../posts/home-posts';
 function Home() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
 
+    let test = () => {
+        console.log('fetching home')
+        fetch('/home/')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
+    }
+
+    useEffect(() => {
+        test()
+        console.log('asdfasdfa')
+    }, []);
+
     return (
         <div className="home-container">
-            <div>{currentUser && currentUser.username}</div>
-            <h2>Home</h2>
             <HomePosts/>
-            
         </div>
     );
 }

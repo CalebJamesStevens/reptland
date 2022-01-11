@@ -16,25 +16,56 @@ function NavBar() {
         navigate(path);
     }
 
-    return (
-        <nav className='navbar'>
-            <div id="header-website-name nav-item-container">Reptland</div>
-            <div className="nav-categories nav-item-container">
-                <div onClick={() => redirect('/')} className="clickable center-nav-icon ">
-                    <HomeIcon/>
+    const loggedOutNavHtml = (
+        <>
+            <div className='header-website-name nav-item-container'>Reptland</div>
+                <div className="nav-categories nav-item-container">
+                    <div onClick={() => redirect('/home')} className="clickable center-nav-icon ">
+                <HomeIcon/>
                 </div>
-                <div onClick={() => redirect('/')} className="clickable center-nav-icon">
+                <div onClick={() => redirect('/home/followed-users')} className="clickable center-nav-icon">
                     <FollowedUsersIcon/>
                 </div>
                 <div onClick={() => redirect('/posts/new-post')} className="clickable center-nav-icon">
                     <AddIcon/>
                 </div>
-                
+            </div>
+
+            <div className="nav-user-logged-out nav-item-container">
+                <div onClick={() => redirect('/users/sign-in')} className="clickable sign-in-button">
+                    Sign In
+                </div>
+                <div onClick={() => redirect('/users/sign-up')} className="clickable sign-up-button">
+                    Sign Out                    
+                </div>
+            </div>
+        </>
+    )
+
+    const loggedInNavHtml = (
+        <>
+            <div className='header-website-name nav-item-container'>Reptland</div>
+                <div className="nav-categories nav-item-container">
+                    <div onClick={() => redirect('/home')} className="clickable center-nav-icon ">
+                <HomeIcon/>
+                </div>
+                <div onClick={() => redirect('/home/followed-users')} className="clickable center-nav-icon">
+                    <FollowedUsersIcon/>
+                </div>
+                <div onClick={() => redirect('/posts/new-post')} className="clickable center-nav-icon">
+                    <AddIcon/>
+                </div>
             </div>
 
             <div className="nav-profile nav-item-container">
                 <ProfileIcon/>
             </div>
+        </>
+    )
+    
+    return (
+        <nav className='navbar'>
+            {currentUser ? loggedInNavHtml : loggedOutNavHtml}
         </nav>
     );
 }

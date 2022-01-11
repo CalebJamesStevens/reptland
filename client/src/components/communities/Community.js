@@ -11,6 +11,7 @@ function Community() {
         fetch(`/communities/view/${communityName}`)
             .then(res => res.json())
             .then(data => {
+                console.log('fetched')
                 setCommunity(data)
             })
         
@@ -22,10 +23,20 @@ function Community() {
 
     },[currentUser]);
 
+    const communityHTML = (
+        <>
+            <form action={`/communities/${community?.name}/join-community`} method="POST">
+                <input type="hidden" name="communityID" value={community?._id}/>
+                <input type="submit" value="Join Community"/>
+            </form>
+        </>
+    )
+
     return (
         <div>
             <h2>Community:</h2>
-            {community && community.name}
+            {community ? communityHTML : <></>}
+            
         </div>
     );
 }

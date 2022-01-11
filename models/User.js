@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema({
     followers: {
         type: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
     },
-    data: {
+    dateCreated: {
         type: Date,
         default: Date.now
     }

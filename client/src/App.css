@@ -62,9 +62,34 @@ a:hover {
     display: flex;
 }
 
-#header-website-name {
+
+
+.header-website-name {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 2rem;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.nav-user-logged-out {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+    gap: 1rem;
+}
+
+.sign-in-button, .sign-up-button {
+    font-weight: 800;
+    position: relative;
+    padding: .5rem;
+    padding-inline: .75rem;
+    border-radius: 10px;
+    border: solid .1rem;
+}
+
+.sign-in-button:hover, .sign-up-button:hover {
+    background-color: rgba(0, 0, 0, 10%);
 }
 

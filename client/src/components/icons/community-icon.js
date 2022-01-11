@@ -1,9 +1,5 @@
-import {useContext, useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContext';
 
 function CommunityIcon() {
-    const {currentUser, setCurrentUser} = useContext(UserContext);
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-building-community" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#ffffff" fill="none" strokeLinecap="round" strokeLinejoin="round">
