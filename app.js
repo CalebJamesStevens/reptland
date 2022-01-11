@@ -54,6 +54,7 @@ app.use(function(req, res, next) {
 
 //Routes
 app.use('/', require('./routes/index'));
+app.use('/home', require('./routes/home'));
 app.use('/users', require('./routes/users'));
 app.use('/posts', require('./routes/posts'));
 app.use('/comments', require('./routes/comments'));
