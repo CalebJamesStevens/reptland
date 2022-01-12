@@ -91,6 +91,7 @@ a:hover {
     display: flex;
     align-items: center;
     gap: .3rem;
+    padding-right: 2rem;
 }
 
 .sign-in-button, .sign-up-button {
@@ -112,11 +113,19 @@ a:hover {
     justify-content: center;
 }
 
-/*  POSTS  */
+/* VIEW POST PAGE*/
+.view-post-container {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+/*  POST COMPONENT  */
 
 .post-container {
     background-color: #99b667b6;
-    margin: 2rem;
+    margin: .5rem;
     width: 40rem;
     border-radius: 3px;
     border: solid .2rem #99b667;
@@ -159,4 +168,16 @@ a:hover {
     left: 0;
     bottom: 0;
     /*background:linear-gradient(transparent 20rem, #99b667b6);*/
+}
+
+/* SIDEBAR COMPONENTS */
+
+.sidebar-container {
+    background-color: #99b667b6;
+    margin: .5rem;
+    width: 16rem;
+    border-radius: 3px;
+    border: solid .2rem #99b667;
+    padding: 1rem;
+    padding-bottom: .2rem;
 }

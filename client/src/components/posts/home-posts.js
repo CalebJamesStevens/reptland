@@ -1,6 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import Post from './post'
+import PostPreview from './post-preview';
 function HomePosts() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [posts, setPosts] = useState(new Array());
@@ -11,7 +12,7 @@ function HomePosts() {
                 .then(res => res.json())
                 .then(data => {
                     data.posts.forEach (post => {
-                        setPosts(current => [...current, <Post key={post} postID={post}/>])
+                        setPosts(current => [...current, <PostPreview key={post} postID={post}/>])
                     })
                 })
         });
