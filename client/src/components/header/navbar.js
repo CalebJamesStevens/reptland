@@ -59,6 +59,9 @@ function NavBar() {
 
             <div className="nav-profile nav-item-container">
                 <ProfileIcon/>
+                <div>
+                    {currentUser.username}
+                </div>
             </div>
         </>
     )

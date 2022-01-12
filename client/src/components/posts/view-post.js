@@ -14,7 +14,7 @@ function ViewPost() {
     },[]);
 
     return (
-        <div>
+        <div className='view-post-container'>
             <Post postID={post}/>
         </div>
     );

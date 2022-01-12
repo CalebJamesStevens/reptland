@@ -26,7 +26,6 @@ function HomePosts() {
 
     return (
         <div>
-            <h2>Posts</h2>
             {posts && posts}
         </div>
     );
