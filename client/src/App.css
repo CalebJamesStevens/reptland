@@ -8,6 +8,17 @@ a {
     text-decoration: none;
 }
 
+/* BUTTON STYLES */
+.button-style-1 {
+    text-align: center;
+    font-weight: 800;
+    position: relative;
+    padding: .5rem;
+    padding-inline: .75rem;
+    border-radius: 10px;
+    border: solid .1rem;
+}
+
 /* HOVER STYLES */
 
 .hover-style-1:hover {

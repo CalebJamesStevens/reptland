@@ -8,7 +8,7 @@ function CommunitiesSidebar () {
     const navigate = useNavigate();
 
     const getRandomCommunities = () => {
-        fetch('communities/getrandom')
+        fetch('/communities/getrandom')
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -20,7 +20,7 @@ function CommunitiesSidebar () {
         setCommunitiesHtml(communities.map((community) => {
             return (
                 <>
-                    <div className='clickable' onClick={() => navigate(`communities/view/${community.name}`)}>
+                    <div className='clickable' onClick={() => navigate(`/communities/view/${community.name}`)}>
                         {community.name}
                     </div>
                 </>

@@ -167,6 +167,21 @@ router.post('/sign-in', (req, res, next) => {
 router.get('/sign-out', (req, res) => {
     req.logout();
     res.redirect('/users/sign-in')
+
+})
+
+router.get('/getrandom', async (req, res) => {
+    await User.aggregate(
+        [{$sample: {size: 1}}]
+    )
+    .then (user => {
+        console.log(user[0])
+        const data = {
+            username: user[0].username,
+            id: user[0]._id
+        }
+        res.json(user)
+    })
 })
 
 module.exports = router;
