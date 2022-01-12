@@ -109,6 +109,14 @@ router.get('/view/:community', async (req, res) => {
     
 })
 
+router.get('/getrandom', async (req, res) => {
+    await Community.aggregate(
+        [{$sample: {size: 1}}]
+    )
+    .then (community => {
+        res.json(community)
+    })
+})
 
 
 module.exports = router;
