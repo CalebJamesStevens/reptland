@@ -39,11 +39,15 @@ function App() {
   }
   
   useEffect(() => {
-      if (currentUser != null) return;
       getCurrentUser();
-  }, [currentUser]);
+      console.log(currentUser)
+      
+  }, []);
 
-
+  useEffect(() => {
+    console.log(currentUser)
+    
+}, [currentUser]);
   return (
     <UserContext.Provider value={userProviderValue}>
       

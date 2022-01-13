@@ -18,6 +18,9 @@ const UserSchema = new mongoose.Schema({
     profilePicture: {
         type: String
     },
+    bio: {
+        type: String
+    },
     pets: {
         type: [[String]]
     },

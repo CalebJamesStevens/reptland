@@ -20,6 +20,19 @@ a {
     font-weight: 800;
 }
 
+/* CONTAINER STYLES */
+
+.container-1 {
+    background-color: #99b667b6;
+    margin: .5rem;
+    width: 15rem;
+    border-radius: 3px;
+    border: solid .2rem #99b667;
+    padding: 1rem;
+    padding-bottom: .2rem;
+
+}
+
 /* BUTTON STYLES */
 .button-style-1 {
     text-align: center;
@@ -320,4 +333,33 @@ a:hover {
     border-radius: 3px;
     border: solid .2rem #99b667;
     padding: .1rem;
+}
+
+/* USER PROFILE PAGE */
+
+.user-profile-container {
+    display: flex;
+    justify-content: center;
+}
+
+.user-profile-post-container {
+    margin: .5rem;
+    padding-bottom: .2rem;
+}
+
+.user-profile-sidebar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+svg {
+    width: inherit;
+    height: inherit;
+}
+
+.sidebar-profile-picture {
+    width: 8rem;
+    height: 8rem;
 }
