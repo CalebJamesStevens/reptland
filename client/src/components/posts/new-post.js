@@ -1,9 +1,11 @@
 import {useContext, useEffect, useState} from 'react';
 import { UserContext } from '../../contexts/UserContext';
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate, Route, useNavigate } from 'react-router-dom';
 import Post from './post';
 
 function NewPost() {
+    const navigate = useNavigate();
+
     const {currentUser, setCurrentUser} = useContext(UserContext);
     
     const [userCommunityNameOptions, setUserCommunityNameOptions] = useState(new Array());
@@ -11,6 +13,8 @@ function NewPost() {
     const [htmlCommunityTopics, setHtmlCommunityTopics] = useState();
     const [communityTopicSelector, setCommunityTopicSelector] = useState();
     
+
+
     const communitySelectChange = (event) => {
         console.log(event.target.value)
         if (event.target.value == " ") {
@@ -46,7 +50,7 @@ function NewPost() {
 
     const getCommunityNames = () => {
         console.log('geting communities')
-        currentUser.communities.forEach(community => {
+        currentUser?.communities.forEach(community => {
             fetch(`/communities/view/${community}`)
             .then(res => res.json())
             .then(data => {
@@ -57,7 +61,9 @@ function NewPost() {
     }
 
     useEffect(() => {
-        if (!currentUser) return;
+        if (!currentUser) {
+            navigate('/users/sign-in')
+        };
         getCommunityNames();
     },[currentUser])
 
@@ -68,33 +74,27 @@ function NewPost() {
 
 
     return (
-        <div>
-            {/*!currentUser && <Navigate to="/users/sign-in"/>*/}   
-            <h1>New Post</h1>
-
-            <form action="/posts/new-post" method="POST">
-                <div>
+        <div className='new-post-container'>
+            <div className='new-post-header'>Create a post:</div>
+            <form className='form-style-2' action="/posts/new-post" method="POST">
+                <div className='new-post-slectors'>
                     <label htmlFor="community">Post to:</label>
-                    <select onChange={communitySelectChange} name="community" id="post-form-community-select">
+                    <select className='select-1' onChange={communitySelectChange} name="community" id="post-form-community-select">
                         <option name="community" value=" ">My Profile</option>
                         {userCommunityNameOptions && userCommunityNameOptions}
                     </select>
 
                     <label htmlFor="communityTopic">Topic:</label>
-                    <select name="communityTopic" id="post-form-community-topic-select">
+                    <select className='select-1' name="communityTopic" id="post-form-community-topic-select">
                         {htmlCommunityTopics && htmlCommunityTopics}
                     </select>
                 </div>
                 
-                <div>
-                    <label htmlFor="title"></label>
-                    <input name="title" type="text" id="title"/>
-                </div>
-                <div>
-                    <label htmlFor="body"></label>
-                    <input name="body" type="text" id="body"/>
-                </div>
-                <input type="submit" value="Create"/>
+                <input className='new-post-title input-field-style-1' maxLength='300' placeholder="Title" name="title" type="text" id="title"/>
+                <textarea className='new-post-body input-field-style-1' placeholder="Body" name="body" type="text" id="body"/>
+                <input className='new-post-title input-field-style-1' maxLength='300' placeholder="Tags: Please seperate by commas" name="tags" type="text" id="tags"/>
+                
+                <input className='new-post-submit button-style-2' type="submit" value="Post"/>
             </form>
         </div>
     );

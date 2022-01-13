@@ -8,6 +8,22 @@ a {
     text-decoration: none;
 }
 
+svg {
+    width: inherit;
+    height: inherit;
+}
+
+/*SELECT STYLES*/
+
+.select-1 {
+    font-family: sans-serif;
+    background-color: white;
+    padding: .5rem;
+    padding-block: .5rem;
+    border: solid grey 2px;
+    border-radius: 5px;
+}
+
 /* TRANSFORM CLASSES */
 
 .upside-down {
@@ -92,8 +108,23 @@ a {
     border-radius: 3px;
     border: solid .2rem #99b667;
     margin-block: .2rem;
+}
 
-
+.form-style-2 {
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #738956;
+    border-radius: 3px;
+    border: solid .2rem #99b667;
+    margin-block: .2rem;
 }
 
 /* INPUT STYLES */
@@ -148,7 +179,7 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 4rem;
+    width: 3rem;
 
 }
 
@@ -230,7 +261,7 @@ a:hover {
     transition: 250ms;
 }
 
-.nav-profile-dropdown-icon > svg {
+.nav-profile-dropdown-icon {
     height: 2rem;
 }
 
@@ -243,7 +274,7 @@ a:hover {
     flex-direction: column;
 }
 
-.sign-in-profile-icon svg, .sign-up-profile-icon svg  {
+.sign-in-profile-icon, .sign-up-profile-icon  {
     width: 13rem;
     height: 13rem;
 }
@@ -289,7 +320,7 @@ a:hover {
     margin-top: .5rem;
     gap: 1rem;
 }
-.post-interaction-icon-container div svg {
+.post-interaction-icon-container div {
     width: 2rem;
 }
 
@@ -319,6 +350,7 @@ a:hover {
     bottom: 0;
     /*background:linear-gradient(transparent 20rem, #99b667b6);*/
 }
+
 
 /* SIDEBAR COMPONENTS */
 
@@ -354,12 +386,58 @@ a:hover {
     justify-content: space-evenly;
 }
 
-svg {
-    width: inherit;
-    height: inherit;
-}
-
 .sidebar-profile-picture {
     width: 8rem;
     height: 8rem;
+}
+
+/* NEW POST PAGE */
+
+.new-post-container {
+    margin: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.new-post-header {
+    display: flex;
+    justify-content: start;
+    width: 42rem;
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-block-end: 1rem;
+}
+
+.new-post-body {
+    text-align: start;
+    height: 20rem;
+    resize: vertical;
+}
+
+.new-post-title {
+    text-align: start;
+}
+
+.new-post-submit {
+    width: 20%;
+    height: 3rem;
+}
+
+.new-post-slectors {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+}
+
+.new-post-slectors label {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-block-end: .25rem;
+}
+
+.new-post-slectors select {
+    margin-block-end: 1rem;
 }

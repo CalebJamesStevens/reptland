@@ -47,10 +47,12 @@ function NavBar() {
 
     const loggedInNavHtml = (
         <>
-            <div className='header-website-name nav-item-container'>Reptland</div>
-                <div className="nav-categories nav-item-container">
-                    <div onClick={() => redirect('/home')} className="clickable center-nav-icon ">
-                <HomeIcon/>
+            <div className='header-website-name nav-item-container'>
+                Reptland
+            </div>
+            <div className="nav-categories nav-item-container">
+                <div onClick={() => redirect('/home')} className="clickable center-nav-icon ">
+                    <HomeIcon/>
                 </div>
                 <div onClick={() => redirect('/home/followed-users')} className="clickable center-nav-icon">
                     <FollowedUsersIcon/>

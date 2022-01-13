@@ -65,6 +65,8 @@ router.get('/new-post', async (req, res) => {
 
 router.post('/new-post', (req, res) => {
     const details = req.body;
+    details.tags = details.tags.split(',').map(tag => tag.trim())
+    
     const newPost = new Post({
         title: details.title,
         authorID: res.locals.currentUser._id
