@@ -39,7 +39,7 @@ function NavBar() {
                     Sign In
                 </div>
                 <div onClick={() => redirect('/users/sign-up')} className="clickable sign-up-button">
-                    Sign Out                    
+                    Sign Up                    
                 </div>
             </div>
         </>

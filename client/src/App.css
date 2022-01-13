@@ -8,6 +8,12 @@ a {
     text-decoration: none;
 }
 
+/* HEADER STYLE*/
+
+.header-1 {
+    font-weight: 800;
+}
+
 /* BUTTON STYLES */
 .button-style-1 {
     text-align: center;
@@ -16,6 +22,16 @@ a {
     padding: .5rem;
     padding-inline: .75rem;
     border-radius: 10px;
+    border: solid .1rem;
+}
+
+.button-style-2 {
+    text-align: center;
+    font-weight: 800;
+    position: relative;
+    padding: .5rem;
+    padding-inline: .75rem;
+    border-radius: 2px;
     border: solid .1rem;
 }
 
@@ -38,6 +54,37 @@ a {
     justify-content: center;
     align-items: center;
     height: 2rem;
+}
+
+/* FORM STYLES */ 
+.form-style-1 {
+    width: 30rem;
+    height: 35rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #738956;
+    border-radius: 3px;
+    border: solid .2rem #99b667;
+    margin-block: .2rem;
+
+
+}
+
+/* INPUT STYLES */
+
+.input-field-style-1 {
+    text-align: center;
+    margin-bottom: .5rem;
+    height: 2rem;
+    width: 90%;
+    font-size: 1.4rem;
 }
 
 /* HOVER STYLES */
@@ -164,7 +211,28 @@ a:hover {
     height: 2rem;
 }
 
+/* SIGN IN PAGE */
+.sign-in-container, .sign-up-container {
+    display: flex;
+    margin: 10vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
+.sign-in-profile-icon svg, .sign-up-profile-icon svg  {
+    width: 13rem;
+    height: 13rem;
+}
+
+.sign-in-profile-icon, .sign-up-profile-icon {
+    margin-bottom: 5rem;
+}
+
+.sign-in-button-1, .sign-up-button-1 {
+    height: 3rem;
+    width: 50%;
+}
 
 /* HOME PAGE */
 .home-container {
