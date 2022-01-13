@@ -159,15 +159,15 @@ router.get('/sign-in', (req, res) => {console.log('sign in page')})
 
 router.post('/sign-in', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/'
+        successRedirect: '/home',
+        failureRedirect: '/home'
     })(req, res, next)
 });
 
-router.get('/sign-out', (req, res) => {
-    req.logout();
-    res.redirect('/users/sign-in')
-
+router.get('/logout', async (req, res, next) => {
+    console.log('logging out')
+    req.logout()
+    res.json({message: 'Succesfully logged out'})
 })
 
 router.get('/getrandom', async (req, res) => {
@@ -175,7 +175,6 @@ router.get('/getrandom', async (req, res) => {
         [{$sample: {size: 1}}]
     )
     .then (user => {
-        console.log(user[0])
         const data = {
             username: user[0].username,
             id: user[0]._id

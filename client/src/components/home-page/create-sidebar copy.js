@@ -1,5 +1,5 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import CommunityIcon from "../icons/community-icon";
+import DropdownIcon from "../icons/dropdown-icon";
 
 function CreateSidebar () {
     const navigate = useNavigate();

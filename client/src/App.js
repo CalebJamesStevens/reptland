@@ -33,6 +33,7 @@ function App() {
     fetch('/users/currentUser')
     .then(res => res.json())
     .then(data => {
+      console.log(data)
       setCurrentUser(data);
     })
   }
@@ -40,7 +41,7 @@ function App() {
   useEffect(() => {
       if (currentUser != null) return;
       getCurrentUser();
-  }, []);
+  }, [currentUser]);
 
 
   return (
@@ -60,6 +61,7 @@ function App() {
             <Route path="/users/sign-in" element={<SignIn />}/>
             <Route path="/users/sign-up" element={<SignUp />}/>
             <Route path="/users/:username/profile" element={<UserProfile />}/>
+            <Route path="/users/logout"/>
             
             {/*Post Routes*/}
             <Route path="/posts/new-post" element={<NewPost />}/>

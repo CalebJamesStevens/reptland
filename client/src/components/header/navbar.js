@@ -2,14 +2,17 @@ import {useContext, useEffect, useState} from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import AddIcon from '../icons/add-icon';
-import CommunityIcon from '../icons/community-icon';
+import DropdownIcon from '../icons/dropdown-icon';
 import FollowedUsersIcon from '../icons/follower-users-icon';
 import HomeIcon from '../icons/home-icon';
 import ProfileIcon from '../icons/profile-icon';
+import NavProfileDropdown from './nav-profile-dropdown';
 
 function NavBar() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [currentHomeDisplay, setCurrentHomeDisplay] = useState()
+    const [navProfileDropdownToggle, setNavProfileDropdownToggle] = useState(false);
+    
     const navigate = useNavigate();
 
     const redirect = (path) => {
@@ -58,13 +61,23 @@ function NavBar() {
             </div>
 
             <div className="nav-profile nav-item-container">
-                <ProfileIcon/>
-                <div>
-                    {currentUser?.username}
+                <div className='nav-profile-preview'>
+                    <ProfileIcon/>
+                    <div className='clickable'>
+                        {currentUser?.username}
+                    </div>
+                    <div onClick={() => {setNavProfileDropdownToggle(current => !current)}} className='nav-profile-dropdown-icon clickable'>
+                        <DropdownIcon/>
+                    </div>
+                    {navProfileDropdownToggle && <NavProfileDropdown/>}
                 </div>
             </div>
         </>
     )
+
+    useEffect(() => {
+
+    }, [currentUser])
     
     return (
         <nav className='navbar'>

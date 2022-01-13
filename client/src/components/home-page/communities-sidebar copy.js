@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CommunityIcon from "../icons/community-icon";
+import DropdownIcon from "../icons/dropdown-icon";
 
 function CommunitiesSidebar () {
     const [communities, setCommunities] = useState(new Array());
@@ -11,7 +11,6 @@ function CommunitiesSidebar () {
         fetch('/communities/getrandom')
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setCommunities(current => [...current, data[0]])
             })
     }

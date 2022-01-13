@@ -19,9 +19,15 @@ function HomePosts() {
     }
 
     useEffect(() => {
-        if (!currentUser) return;
-        console.log('fetching posts')
-        fetchPosts();
+        setPosts(new Array())
+        if (!currentUser) {
+            console.log('no user')
+
+            return
+        } else {
+            console.log('fetching posts')
+            fetchPosts();
+        }
 
     },[currentUser]);
 
