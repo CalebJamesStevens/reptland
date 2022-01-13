@@ -8,6 +8,12 @@ a {
     text-decoration: none;
 }
 
+/* TRANSFORM CLASSES */
+
+.upside-down {
+    transform: scaleY(-1);
+}
+
 /* HEADER STYLE*/
 
 .header-1 {
@@ -205,6 +211,10 @@ a:hover {
 .nav-profile-dropdown {
     position: absolute;
     top: 3rem;
+}
+
+.nav-profile-dropdown-icon {
+    transition: 250ms;
 }
 
 .nav-profile-dropdown-icon > svg {

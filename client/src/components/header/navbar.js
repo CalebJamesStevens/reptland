@@ -66,7 +66,7 @@ function NavBar() {
                     <div className='clickable'>
                         {currentUser?.username}
                     </div>
-                    <div onClick={() => {setNavProfileDropdownToggle(current => !current)}} className='nav-profile-dropdown-icon clickable'>
+                    <div onClick={() => {setNavProfileDropdownToggle(current => !current)}} className={`${navProfileDropdownToggle ? 'upside-down' : ''} nav-profile-dropdown-icon clickable`}>
                         <DropdownIcon/>
                     </div>
                     {navProfileDropdownToggle && <NavProfileDropdown/>}
