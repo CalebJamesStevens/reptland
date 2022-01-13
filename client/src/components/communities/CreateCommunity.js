@@ -1,12 +1,18 @@
 import {useContext, useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 
 function CreateCommunity() {
+    const navigate = useNavigate();
+    
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [community, setCommunity] = useState(null);
 
     useEffect(() => {
-
+        if (!currentUser) {
+            navigate('/users/sign-in')
+            return;
+        };
     },[currentUser]);
 
     return (

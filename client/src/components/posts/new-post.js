@@ -63,6 +63,7 @@ function NewPost() {
     useEffect(() => {
         if (!currentUser) {
             navigate('/users/sign-in')
+            return;
         };
         getCommunityNames();
     },[currentUser])

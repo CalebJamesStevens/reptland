@@ -6,8 +6,8 @@ function HomePosts() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [posts, setPosts] = useState(new Array());
 
-    const fetchPosts = async () => {
-        await currentUser.communities.forEach(community => {
+    const fetchCommunityPosts = async () => {
+        await currentUser?.communities.forEach(community => {
             fetch(`/communities/view/${community}`)
                 .then(res => res.json())
                 .then(data => {
@@ -18,15 +18,26 @@ function HomePosts() {
         });
     }
 
+    const fetchPopularPosts = async () => {
+        fetch(`/posts/popular-posts`)
+            .then(res => res.json())
+            .then(data => {
+                data.forEach (post => {
+                    console.log(post)
+                    setPosts(current => [...current, <PostPreview key={post._id} postID={post._id}/>])
+                })
+            })
+    }
+
     useEffect(() => {
         setPosts(new Array())
         if (!currentUser) {
             console.log('no user')
-
-            return
+            fetchPopularPosts();
+            return;
         } else {
             console.log('fetching posts')
-            fetchPosts();
+            fetchCommunityPosts();
         }
 
     },[currentUser]);

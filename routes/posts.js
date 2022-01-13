@@ -137,6 +137,16 @@ router.post(`/:postID/save-post`, async (req, res) => {
     
 })
 
+router.get(`/popular-posts`, async (req, res) => {
+    await Post.aggregate(
+        [{$sample: {size: 5}}]
+    )
+    .then (post => {
+        res.json(post)
+    })
+
+})
+
 router.get(`/view-post/:postID`, async (req, res) => {
     console.log('going to post')
     await Post.findOne({_id: req.params.postID})
