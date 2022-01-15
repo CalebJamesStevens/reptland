@@ -107,16 +107,16 @@ router.get(`/:postID/enrich-post`, async (req, res) => {
         res.redirect(`/posts/${req.params.postID}`)
         return;
     };
-    if (res.locals.currentUser.likedPosts.includes(req.params.postID)) {
+    if (res.locals.currentUser.enrichedPosts.includes(req.params.postID)) {
         await Post.updateOne({_id: req.params.postID}, {$inc: {enrichment: -1}})
-        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {likedPosts: req.params.postID}})
-        res.redirect(`/posts/${req.params.postID}`)
+        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {enrichedPosts: req.params.postID}})
     } else {
         await Post.updateOne({_id: req.params.postID}, {$inc: {enrichment: 1}})
-        await User.updateOne({_id: res.locals.currentUser._id}, {$push: {likedPosts: req.params.postID}})
-        res.redirect(`/posts/${req.params.postID}`)
+        await User.updateOne({_id: res.locals.currentUser._id}, {$push: {enrichedPosts: req.params.postID}})
         console.log("Enriched")
     }
+
+    res.json({message: 'Success'})
     
 })
 

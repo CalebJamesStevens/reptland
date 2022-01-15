@@ -19,7 +19,7 @@ function UsersSidebar () {
         setUsersHtml(users.map((user) => {
             return (
                 <>
-                    <div className='clickable' onClick={() => navigate(`/users/${user.username}/profile`)}>
+                    <div key={user.username} className='clickable' onClick={() => navigate(`/users/${user.username}/profile`)}>
                         {user.username}
                     </div>
                 </>

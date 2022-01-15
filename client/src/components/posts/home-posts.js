@@ -4,7 +4,7 @@ import Post from './post'
 import PostPreview from './post-preview';
 function HomePosts() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
-    const [posts, setPosts] = useState(new Array());
+    const [posts, setPosts] = useState();
 
     const fetchCommunityPosts = async () => {
         await currentUser?.communities.forEach(community => {
@@ -19,28 +19,35 @@ function HomePosts() {
     }
 
     const fetchPopularPosts = async () => {
-        fetch(`/posts/popular-posts`)
+        await fetch(`/posts/popular-posts`)
             .then(res => res.json())
             .then(data => {
                 data.forEach (post => {
-                    console.log(post)
                     setPosts(current => [...current, <PostPreview key={post._id} postID={post._id}/>])
                 })
             })
     }
 
+
+
     useEffect(() => {
+        if(posts) return;
         setPosts(new Array())
-        if (!currentUser) {
-            console.log('no user')
-            fetchPopularPosts();
-            return;
+        if (currentUser) {
+            fetch(`/users/getEnrichedPosts`)
+                .then(res => res.json())
+                .then(posts => {
+                    setCurrentUser({...currentUser, enrichedPosts: posts})
+                    console.log(currentUser)
+                    
+                })
+                .then(fetchCommunityPosts())
         } else {
-            console.log('fetching posts')
-            fetchCommunityPosts();
+            console.log('hey')
+            fetchPopularPosts();
         }
 
-    },[currentUser]);
+    },[]);
 
     return (
         <div>

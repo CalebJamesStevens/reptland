@@ -55,6 +55,15 @@ router.post(`/:username/unfriend`, async (req, res) => {
         })
 })
 
+router.get(`/getEnrichedPosts`, async (req, res) => {
+    if (!res.locals.currentUser) return;
+    await User.findById(res.locals.currentUser._id)
+    .then(user => {
+        console.log('ENRICHED POSTS', user.enrichedPosts)
+        res.json(user.enrichedPosts)
+    })
+})
+
 router.post(`/:username/follow-user`, async (req, res) => {
     console.log('REQUEST')
     const details = req.body;

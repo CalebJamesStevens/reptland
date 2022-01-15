@@ -19,7 +19,7 @@ function CommunitiesSidebar () {
         setCommunitiesHtml(communities.map((community) => {
             return (
                 <>
-                    <div className='clickable' onClick={() => navigate(`/communities/view/${community.name}`)}>
+                    <div key={community._id} className='clickable' onClick={() => navigate(`/communities/view/${community.name}`)}>
                         {community.name}
                     </div>
                 </>
