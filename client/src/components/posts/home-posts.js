@@ -28,7 +28,11 @@ function HomePosts() {
             })
     }
 
-
+    const test = async (print, wait) => {
+        setTimeout(() => {
+            console.log(print)
+        }, wait)
+    }
 
     useEffect(() => {
         if(posts) return;
@@ -36,10 +40,9 @@ function HomePosts() {
         if (currentUser) {
             fetch(`/users/getEnrichedPosts`)
                 .then(res => res.json())
-                .then(posts => {
-                    setCurrentUser({...currentUser, enrichedPosts: posts})
+                .then(async posts => {
+                    await setCurrentUser({...currentUser, enrichedPosts: posts})
                     console.log(currentUser)
-                    
                 })
                 .then(fetchCommunityPosts())
         } else {

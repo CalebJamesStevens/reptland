@@ -75,7 +75,6 @@ function PostPreview({postID}) {
             console.log('creating post')
             await setPostHtml(
                 <>
-                    <button onClick={() => test()}>Click</button>
                     <div className='post-user-info'>
                         <ProfileIcon/>
                         <div>
@@ -90,7 +89,7 @@ function PostPreview({postID}) {
                         </div>
                     </div>
                     <div className='post-title'>{post?.title}</div>
-                    <div className='post-body'>{post?.body}</div>
+                    <div className='post-preview-body'>{post?.body}</div>
                     <div className='post-interaction-icon-container'>
                         {heartIconHtml}
                         <div className='clickable hover-style-1 comment-interactable'><CommentIcon/></div>

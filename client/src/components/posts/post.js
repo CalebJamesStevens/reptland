@@ -84,7 +84,6 @@ function Post({postID}) {
             console.log('creating post')
             await setPostHtml(
                 <>
-                    <button onClick={() => test()}>Click</button>
                     <div className='post-user-info'>
                         <ProfileIcon/>
                         <div>
