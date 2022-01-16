@@ -15,30 +15,27 @@ function NavBar() {
     
     const navigate = useNavigate();
 
-    const redirect = (path) => {
-        navigate(path);
-    }
 
     const loggedOutNavHtml = (
         <>
             <div className='header-website-name nav-item-container'>Reptland</div>
                 <div className="nav-categories nav-item-container">
-                    <div onClick={() => redirect('/home')} className="clickable center-nav-icon ">
+                    <div onClick={() => navigate('/')} className="clickable center-nav-icon ">
                 <HomeIcon/>
                 </div>
-                <div onClick={() => redirect('/home/followed-users')} className="clickable center-nav-icon">
+                <div onClick={() => navigate('/followed-users')} className="clickable center-nav-icon">
                     <FollowedUsersIcon/>
                 </div>
-                <div onClick={() => redirect('/posts/new-post')} className="clickable center-nav-icon">
+                <div onClick={() => navigate('/posts/new-post')} className="clickable center-nav-icon">
                     <AddIcon/>
                 </div>
             </div>
 
             <div className="nav-user-logged-out nav-item-container">
-                <div onClick={() => redirect('/users/sign-in')} className="clickable sign-in-button">
+                <div onClick={() => navigate('/users/sign-in')} className="clickable sign-in-button">
                     Sign In
                 </div>
-                <div onClick={() => redirect('/users/sign-up')} className="clickable sign-up-button">
+                <div onClick={() => navigate('/users/sign-up')} className="clickable sign-up-button">
                     Sign Up                    
                 </div>
             </div>
@@ -51,13 +48,13 @@ function NavBar() {
                 Reptland
             </div>
             <div className="nav-categories nav-item-container">
-                <div onClick={() => redirect('/home')} className="clickable center-nav-icon ">
+                <div onClick={() => navigate('/')} className="clickable center-nav-icon ">
                     <HomeIcon/>
                 </div>
-                <div onClick={() => redirect('/home/followed-users')} className="clickable center-nav-icon">
+                <div onClick={() => navigate('/followed-users')} className="clickable center-nav-icon">
                     <FollowedUsersIcon/>
                 </div>
-                <div onClick={() => redirect('/posts/new-post')} className="clickable center-nav-icon">
+                <div onClick={() => navigate('/posts/new-post')} className="clickable center-nav-icon">
                     <AddIcon/>
                 </div>
             </div>

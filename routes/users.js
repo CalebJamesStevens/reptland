@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router();
 const User = require("../models/User");
+const Post = require("../models/Post");
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
 const { redirect } = require("express/lib/response");
@@ -13,6 +14,13 @@ router.get('/currentUser', async (req, res) => {
     await User.findById(res.locals.currentUser._id)
         .then(cU => {
             res.json(cU)
+        })
+})
+
+router.get('/:userID/user-posts', async (req, res) => {
+    await User.findById(req.params.userID)
+        .then(user => {
+            res.json(user.posts)
         })
 })
 

@@ -58,8 +58,8 @@ function App() {
 
           <Routes>
             {/*Home routs*/}
-            <Route path="/home" element={<Home />}/>
-            <Route path="/home/followed-users" element={<FollowedUsers />}/>
+            <Route path="/" element={<Home />}/>
+            <Route path="/followed-users" element={<FollowedUsers />}/>
             
             {/*User Routes*/}
             <Route path="/users/sign-in" element={<SignIn />}/>
