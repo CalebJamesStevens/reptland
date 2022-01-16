@@ -176,8 +176,8 @@ router.get('/sign-in', (req, res) => {console.log('sign in page')})
 
 router.post('/sign-in', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/home',
-        failureRedirect: '/home'
+        successRedirect: '/',
+        failureRedirect: '/'
     })(req, res, next)
 });
 

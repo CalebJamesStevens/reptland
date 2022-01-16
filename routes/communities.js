@@ -67,7 +67,7 @@ router.post('/:community_name/leave-community', async (req, res) => {
     await Community.updateOne({name: req.params.community_name}, {$pull: {followers: res.locals.currentUser._id}})
     await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {communities: req.body.communityID}})
     .then(user => {
-        res.redirect(`/communities/${req.params.community_name}`)
+        res.redirect(`/communities/view/${req.params.community_name}`)
     })
 })
 
@@ -107,6 +107,19 @@ router.get('/view/:community', async (req, res) => {
 
     }
     
+})
+
+
+router.get('/:community/:topic/posts', async (req, res) => {
+    await Community.findOne({name: req.params.community})
+        .populate('posts')
+        .then(c => {
+            res.json(
+                c.posts
+                .filter(post => post.communityTopic == req.params.topic)
+                .map(post => {return post._id})
+            )
+        })
 })
 
 router.get('/getrandom', async (req, res) => {
