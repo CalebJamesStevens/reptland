@@ -514,3 +514,52 @@ a:hover {
     position: absolute;
     top: 3.5rem;
 }
+
+/* COMMENT COMPONENT */
+
+.post-comment-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.post-comment-textarea {
+    resize: vertical;
+}
+
+.post-comment-submit {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.comment-author {
+    margin-top: 3rem;
+}
+.comment-body-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+}
+
+.comment-body-text {
+    padding-block-end: 1rem;
+    width: 100%;
+    border-bottom: #738956 solid .5rem;
+}
+.comment-reply-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: .5rem;
+}
+
+.comment-reply-textarea {
+    resize: vertical;
+
+}
+
+.comment-reply-submit {
+    display: flex;
+    justify-content: flex-end;
+}

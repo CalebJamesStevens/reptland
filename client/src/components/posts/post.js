@@ -5,15 +5,17 @@ import CommentIcon from '../icons/comment-icon'
 import LinkIcon from '../icons/link-icon'
 import ProfileIcon from '../icons/profile-icon';
 import { useNavigate } from 'react-router-dom';
+import CommentView from '../comments/comment-view';
 
 function Post({postID}) {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [post, setPost] = useState();
     const [postHtml, setPostHtml] = useState();
-    const navigate = useNavigate();
     const [enrichedPost, setEnrichedPost] = useState();
     const [heartIconHtml, setHeartIconHtml] = useState();
-
+    const [comments, setComments] = useState(new Array(``));
+    
+    const navigate = useNavigate();
 
     const likePost = () => {
         fetch(`/posts/${postID}/enrich-post`)
@@ -23,26 +25,37 @@ function Post({postID}) {
         })
     }
 
+    const fetchPost = async () => {
+        await fetch(`/posts/view-post/${postID}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log('456456456',data);
+                if(currentUser) {
+                    fetch(`/users/getEnrichedPosts`)
+                        .then(res => res.json())
+                        .then(posts => {
+                            setCurrentUser({...currentUser, enrichedPosts: posts})
+                            console.log(currentUser)
+                            setPost(data)
+                        })
+                } else {
+                    setPost(data)
+                }
+            })
+
+        console.log('fetching comments')
+        await fetch(`/posts/${postID}/get-child-comments`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                data.forEach(comment => {
+                    setComments(current => [...current, <CommentView key={comment} commentID={comment}/>])
+                });
+            })
+    }
+
     useEffect(() => {
         if(post) return;
-        const fetchPost = async () => {
-            await fetch(`/posts/view-post/${postID}`)
-                .then(res => res.json())
-                .then(data => {
-                    console.log('456456456',data);
-                    if(currentUser) {
-                        fetch(`/users/getEnrichedPosts`)
-                            .then(res => res.json())
-                            .then(posts => {
-                                setCurrentUser({...currentUser, enrichedPosts: posts})
-                                console.log(currentUser)
-                                setPost(data)
-                            })
-                    } else {
-                        setPost(data)
-                    }
-                })
-        }
         fetchPost();
     },[]);
     const test = () => {
@@ -136,7 +149,16 @@ function Post({postID}) {
     return (
         <div className='post-container'>
             {postHtml && postHtml}
-            
+            <div className='comments-container'>
+                <form className='post-comment-form' action="/comments/new" method='POST'>
+                    <input type='hidden' name='postID' value={postID}/>
+                    <textarea className='post-comment-textarea' name='body' id='body' placeholder="Comment" type='text'/>
+                    <div className='post-comment-submit'>
+                        <input className='button-style-1' type='submit' value={'Comment'}/>
+                    </div>
+                </form>
+                {comments}
+            </div>
         </div>
     );
 }

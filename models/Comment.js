@@ -2,23 +2,31 @@ const mongoose = require("mongoose");
 const Post = require("../models/Post");
 
 const CommentSchema = new mongoose.Schema({
-    commentAuthor: {
+    author: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
         required: true 
     },
     post: {
         type: mongoose.Schema.Types.ObjectId, ref: 'Post' 
     },
-    commentBody: {
+    parentComment: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'Comment',
+        default: null
+    },
+    body: {
         type: String,
         required: true
     },
-    commentLikes: {
+    enrichment: {
         type: Number,
         default: 0            
     },
     replies: {
         type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
+    },
+    dateCreated: {
+        type: Date,
+        default: Date.now
     }
 });
 

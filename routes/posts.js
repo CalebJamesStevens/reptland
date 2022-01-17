@@ -62,6 +62,18 @@ router.get('/new-post', async (req, res) => {
 
 })
 
+router.get(`/:postID/get-child-comments`, async (req, res) => {
+    await Post.findById(req.params.postID)
+        .populate('comments')
+        .exec((err, post) => {
+            console.log(post)
+            res.json(
+                post.comments
+                .filter(comment => comment.parentComment == null)
+                .map(comment => {return comment._id})
+            )
+        })
+})
 
 router.post('/new-post', (req, res) => {
     const details = req.body;
@@ -150,15 +162,7 @@ router.get(`/popular-posts`, async (req, res) => {
 router.get(`/view-post/:postID`, async (req, res) => {
     console.log('going to post')
     await Post.findOne({_id: req.params.postID})
-        .populate('authorID')
-        .populate('community')
-        .populate({
-            path: 'comments',
-            populate: {
-                path: "commentAuthor"
-            }
-        })
-        .exec((err, post) => {
+        .then(post => {
             res.json(post);
         })
 }) 

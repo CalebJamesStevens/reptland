@@ -200,4 +200,18 @@ router.get('/getrandom', async (req, res) => {
     })
 })
 
+// Getting user info
+
+router.get('/:id/info', async (req, res) => {
+    await User.findOne({_id: req.params.id})
+    .then(user => {
+        let u = {
+            _id: user._id,
+            username: user.username
+        }
+
+        res.json(u)
+    })
+})
+
 module.exports = router;
