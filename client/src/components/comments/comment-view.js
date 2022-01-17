@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
 
 function CommentView ({commentID}) {
+    const {currentUser, setCurrentUser} = useContext(UserContext);
     const [comment, setComment] = useState()
     const [replies, setReplies] = useState(new Array())
     const [author, setAuthor] = useState()
     const [repliedTo, setRepliedTo] = useState()
+
+    const navigate = useNavigate();
 
     const fetchComment = () => {
         fetch(`/comments/get/${commentID}`)
@@ -29,6 +34,17 @@ function CommentView ({commentID}) {
                 setComment(data)
             })
     }
+
+    const deleteButton = (
+        <form className="delete-comment-form" action={`/comments/${comment?._id}?_method=DELETE`} method='POST'>
+                        <input type='hidden' name='commentID' value={comment?._id}/>
+                        <input type='hidden' name='postID' value={comment?.post}/>
+                        <div className="comment-reply-submit">
+                            <input onClick={() => {navigate(`/posts/view-post/${comment?.post}`)}} className='button-style-1' type='submit' value={'Delete'}/>
+                        </div>
+        </form>
+    )
+
     const fetchReplies = () => {
         fetch(`/comments/get/${commentID}/replies`)
             .then(res => res.json())
@@ -58,6 +74,7 @@ function CommentView ({commentID}) {
             <div>{repliedTo && `Reply to: ${repliedTo.username}`}</div>
             <div className="container-3 comment-body-container">
                 <div className="comment-body-text">{comment && comment.body}</div>
+                {currentUser?._id == author?._id && deleteButton}
                 <form className="comment-reply-form" action="/comments/new" method='POST'>
                         <input type='hidden' name='parentComment' value={comment?._id}/>
                         <input type='hidden' name='postID' value={comment?.post}/>
