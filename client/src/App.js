@@ -18,6 +18,7 @@ import UserProfile from './components/users/user-profile';
 import NavBar from './components/header/navbar';
 import FollowedUsers from './components/home-page/followed-users';
 import SignUp from './components/users/sign-up';
+import Friends from './components/users/friends';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -65,6 +66,7 @@ function App() {
             <Route path="/users/sign-in" element={<SignIn />}/>
             <Route path="/users/sign-up" element={<SignUp />}/>
             <Route path="/users/:username/profile" element={<UserProfile />}/>
+            <Route path="/users/:username/friends" element={<Friends />}/>
             <Route path="/users/logout"/>
             
             {/*Post Routes*/}

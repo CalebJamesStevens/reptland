@@ -5,6 +5,8 @@ const Post = require("../models/Post");
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
 const { redirect } = require("express/lib/response");
+const { query } = require("express");
+const url = require('url')
 
 router.get('/currentUser', async (req, res) => {
     if (!res.locals.currentUser) {
@@ -35,32 +37,60 @@ router.get(`/:username/profile`, async (req, res) => {
 
 router.post(`/:username/request-friend`, async (req, res) => {
     console.log('REQUEST')
+    if (!res.locals.currentUser) {
+        res.redirect(`/users/sign-in`)
+        return;
+    }
     const details = req.body;
-    await User.updateOne({_id: res.locals.currentUser._id}, {$push: {sentFriendRequests: details.userID}})
-    await User.findOneAndUpdate({_id: details.userID}, {$push: {friendRequests: res.locals.currentUser._id}})
-        .then(user => {
+
+    switch(details.request) {
+        case 'add':
+            await User.updateOne({_id: res.locals.currentUser._id}, {$push: {sentFriendRequests: details.userID}})
+            await User.findOneAndUpdate({_id: details.userID}, {$push: {friendRequests: res.locals.currentUser._id}})
+                .then(user => {
+                    res.redirect(`/users/${user.username}/profile`)
+                })
+            break;
+        case 'remove':
+            await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {friends: details.userID}})
+            await User.findOneAndUpdate({_id: details.userID}, {$pull: {friends: res.locals.currentUser._id}})
+                .then(user => {
+                    res.redirect(`/users/${user.username}/profile`)
+                })
+            break;
+        case 'cancel':
+            await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {sentFriendRequests: details.userID}})
+            await User.findOneAndUpdate({_id: details.userID}, {$pull: {friendRequests: res.locals.currentUser._id}})
+                .then(user => {
+                    res.redirect(`/users/${user.username}/profile`)
+                })
+            break;
+        default:
             res.redirect(`/users/${user.username}/profile`)
-        })
+            res.send({message: 'invalid request'})
+
+    }
+
 })
 
 router.post(`/:username/accept-friend-request`, async (req, res) => {
     console.log('REQUEST')
     const details = req.body;
-    await User.updateOne({_id: details.friendID}, {$pull: {sentFriendRequests: res.locals.currentUser._id}, $push: {friends: res.locals.currentUser._id}})
-    await User.findOneAndUpdate({_id: res.locals.currentUser._id}, {$pull: {friendRequests: details.friendID}, $push: {friends: details.friendID}})
-        .then(user => {
-            res.redirect(`/users/${user.username}/profile`)
-        })
-})
-
-router.post(`/:username/unfriend`, async (req, res) => {
-    console.log('REQUEST')
-    const details = req.body;
-    await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {friends: details.userID}})
-    await User.findOneAndUpdate({_id: details.userID}, {$pull: {friends: res.locals.currentUser._id}})
-        .then(user => {
-            res.redirect(`/users/${user.username}/profile`)
-        })
+    console.log(details.accepted == 'true')
+    console.log(details.accepted)
+    if (details.accepted == 'true') {
+        await User.updateOne({_id: details.userID}, {$pull: {sentFriendRequests: res.locals.currentUser._id}, $push: {friends: res.locals.currentUser._id}})
+        await User.findOneAndUpdate({_id: res.locals.currentUser._id}, {$pull: {friendRequests: details.userID}, $push: {friends: details.userID}})
+            .then(user => {
+                res.redirect(`/users/${res.locals.currentUser.username}/friends`)
+            })
+    } else {
+        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {friendRequests: details.userID}})
+        await User.findOneAndUpdate({_id: details.userID}, {$pull: {sentFriendRequests: res.locals.currentUser._id}})
+            .then(user => {
+                res.redirect(`/users/${res.locals.currentUser.username}/friends`)
+            })
+    }
 })
 
 router.get(`/getEnrichedPosts`, async (req, res) => {
@@ -203,15 +233,20 @@ router.get('/getrandom', async (req, res) => {
 // Getting user info
 
 router.get('/:id/info', async (req, res) => {
+    const q = await req.query;
+    let u = {}
     await User.findOne({_id: req.params.id})
-    .then(user => {
-        let u = {
-            _id: user._id,
-            username: user.username
-        }
-
-        res.json(u)
-    })
+        .populate('friends')
+        .populate('friendRequests')
+        .exec((err, user) => {
+            u = {
+                ...(q.id && {_id: user._id}),
+                ...(q.username && {username: user.username}),
+                ...(q.friends && {friends: user.friends.map(e => {return {_id: e._id, username: e.username}})}),
+                ...(q.friendRequests && {friendRequests: user.friendRequests.map(e => {return {_id: e._id, username: e.username}})}),
+            }
+            res.json(u)
+        })
 })
 
 module.exports = router;

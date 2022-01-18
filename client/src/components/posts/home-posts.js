@@ -35,7 +35,6 @@ function HomePosts() {
     }
 
     useEffect(() => {
-        if(posts) return;
         setPosts(new Array())
         if (currentUser) {
             fetch(`/users/getEnrichedPosts`)

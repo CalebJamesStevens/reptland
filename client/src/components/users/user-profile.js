@@ -3,6 +3,8 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import ProfileIcon from '../icons/profile-icon';
 import Post from '../posts/post';
+import PostPreview from '../posts/post-preview';
+import FriendRequestButton from './friend-request-button';
 
 function UserProfile() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
@@ -26,19 +28,6 @@ function UserProfile() {
         </>
     )
 
-    const friendUserHtml = (
-        <>
-            <form action={currentUser?.followedUsers.includes(user?._id) ? `/users/${user?.username}/unfollow-user` : `/users/${user?.username}/follow-user`} method='POST'>
-                <input type="hidden" name='userID' value={user?._id}/>
-                <input
-                    className='button-style-2' 
-                    type='submit' 
-                    value={currentUser?.followedUsers.includes(user?._id) ? 'Unfollow' : 'Follow'}>
-                </input>
-            </form>
-        </>
-    )
-
     const currentUserHtml = (
         <>
             <div className='user-profile-sidebar-container container-1'>
@@ -50,6 +39,10 @@ function UserProfile() {
                 
              <div className='user-profile-post-container'>
                 {userPosts.length > 0 ? userPosts : <h2>No posts to be shown here...</h2>}
+            </div>
+
+            <div className=''>
+
             </div>
 
         </>
@@ -83,7 +76,7 @@ function UserProfile() {
     const fetchPosts = async () => {
         await user.posts.forEach(post => {
             console.log(post)
-            setUserPosts(current => [...current, <Post key={post} postID={post}/>])
+            setUserPosts(current => [...current, <PostPreview key={post} postID={post}/>])
         })        
     }
 
@@ -112,6 +105,7 @@ function UserProfile() {
 
     return (
         <div className='user-profile-container'>
+            {user && <FriendRequestButton userID={user?._id}/>}
             {user && userHtml}
         </div>
     );

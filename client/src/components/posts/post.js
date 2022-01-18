@@ -17,6 +17,16 @@ function Post({postID}) {
     
     const navigate = useNavigate();
 
+
+    const deleteButton = (
+        <form className="delete-comment-form" action={`/posts/${postID}?_method=DELETE`} method='POST'>
+                        <input type='hidden' name='postID' value={postID}/>
+                        <div className="comment-reply-submit">
+                            <input className='button-style-1' type='submit' value={'Delete'}/>
+                        </div>
+        </form>
+    )
+
     const likePost = () => {
         fetch(`/posts/${postID}/enrich-post`)
         .then(res => res.json())
@@ -104,8 +114,8 @@ function Post({postID}) {
                             <div className='clickable' onClick={() => navigate(`/users/${post?.authorID.username}/profile`)}>
                                 {post?.authorID.username}
                             </div>
-                            <div className='clickable' onClick={() => navigate(`/communities/view/${post?.community.name}`)}>
-                                {post?.community.name}
+                            <div className='clickable' onClick={() => navigate(`/communities/view/${post?.community?.name}`)}>
+                                {post?.community?.name}
                             </div>
                             
                         </div>
@@ -116,7 +126,9 @@ function Post({postID}) {
                         {heartIconHtml}
                         <div className='clickable hover-style-1 comment-interactable'><CommentIcon/></div>
                         <div className='clickable hover-style-1 link-interactable'><LinkIcon/></div>
+                        
                     </div>
+                    <div>{currentUser?._id == post.authorID && deleteButton}</div>
     
                 </>
             )

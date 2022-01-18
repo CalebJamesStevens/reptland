@@ -82,8 +82,8 @@ function PostPreview({postID}) {
                             <div className='clickable' onClick={() => navigate(`/users/${post?.authorID.username}/profile`)}>
                                 {post?.authorID.username}
                             </div>
-                            <div className='clickable' onClick={() => navigate(`/communities/view/${post?.community.name}`)}>
-                                {post?.community.name}
+                            <div className='clickable' onClick={() => navigate(`/communities/view/${post?.community?.name}`)}>
+                                {post?.community?.name}
                             </div>
                             
                         </div>

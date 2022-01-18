@@ -11,33 +11,7 @@ const Community = require("../models/Community");
 
 
 
-router.post('/:postID/delete', async (req, res) => {
-    console.log("GOT THIS FAR")
-    try {
-        console.log("Starting post deletion")
-        await Post.findById({_id: req.params.postID}, (err, post) => {
-            console.log("Starting post deletion")
-            try {
-                if (!post.authorID._id.equals(res.locals.currentUser._id)) {
-                    res.redirect(`/posts/${req.params.postID}`)
-                    return;
-                } 
-            } catch {
-                res.redirect(`/posts/${req.params.postID}`)
-                return;
-            }
-        }).clone()
-        console.log("Post deleted")
-        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {posts: req.params.postID}})
-        await Post.deleteOne({_id: req.params.postID})
-        res.redirect(`/`)
-        
-    } catch (err){
-        console.log(err)
-    
-        res.redirect(`/`)
-    }
-})
+
 
 router.get('/new-post', async (req, res) => {
     if (!res.locals.currentUser) {
@@ -166,5 +140,40 @@ router.get(`/view-post/:postID`, async (req, res) => {
             res.json(post);
         })
 }) 
+
+router.delete('/:postID', async (req, res) => {
+    console.log("GOT THIS FAR")
+    try {
+        console.log("Starting post deletion")
+        await Post.findById({_id: req.params.postID}, (err, post) => {
+            console.log("Starting post deletion")
+            try {
+                if (!post.authorID._id.equals(res.locals.currentUser._id)) {
+                    res.redirect(`/posts/view-post/${req.params.postID}`)
+                    return;
+                } 
+            } catch {
+                res.redirect(`/posts//view-post/${req.params.postID}`)
+                return;
+            }
+        }).clone()
+        console.log("Post deleted")
+        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {posts: req.params.postID}})
+        await Post.deleteOne({_id: req.params.postID})
+        .then(post => {
+            if (post.community) {
+                Community.updateOne({_id: post.community}, {$pull: {posts: req.params.postID}})
+
+                }
+            })
+            .then(res.redirect(`/`))
+        
+        
+    } catch (err){
+        console.log(err)
+    
+        res.redirect(`/`)
+    }
+})
 
 module.exports = router; 
