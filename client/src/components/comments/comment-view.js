@@ -24,7 +24,7 @@ function CommentView ({commentID}) {
                     fetch(`/comments/get/${data.parentComment}`)
                         .then(res => res.json())
                         .then(pData => {
-                            fetch(`/users/${pData.author}/info`)
+                            fetch(`/users/${pData.author}/info?username=true&id=true`)
                                 .then(res => res.json())
                                 .then(auth => {
                                     setRepliedTo(auth)
@@ -51,7 +51,7 @@ function CommentView ({commentID}) {
             .then(data => {
                 console.log(data)
                 data.forEach(c => {
-                    setReplies(current => [...current, <CommentView key={c} commentID={c}/>])
+                    setReplies(current => [...current, c])
                 });
             })
     }
@@ -85,7 +85,11 @@ function CommentView ({commentID}) {
                 </form>
                 
             </div>
-            {replies}
+            {replies.map(r => {
+                return (
+                    <CommentView key={r} commentID={r}/>
+                )
+            })}
             
 
         </div>

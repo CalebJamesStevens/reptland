@@ -11,7 +11,7 @@ function Post({postID}) {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [post, setPost] = useState();
     const [enrichedPost, setEnrichedPost] = useState();
-    const [comments, setComments] = useState(new Array(``));
+    const [comments, setComments] = useState();
     
     const navigate = useNavigate();
 
@@ -54,6 +54,7 @@ function Post({postID}) {
         console.log('fetching comments')
         await fetch(`/posts/${postID}/get-child-comments`)
             .then(res => res.json())
+            .then(setComments(new Array()))
             .then(data => {
                 console.log(data)
                 data.forEach(comment => {
@@ -121,7 +122,8 @@ function Post({postID}) {
                         <input className='button-style-1' type='submit' value={'Comment'}/>
                     </div>
                 </form>
-                {comments.map(comment => {
+                {comments && comments.map(comment => {
+                    console.log(comment)
                     return (<CommentView key={comment} commentID={comment}/>)
                 })}
             </div>
