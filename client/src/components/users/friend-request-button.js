@@ -15,7 +15,7 @@ function FriendRequestButton ({userID}) {
             <form action={`/users/${user?.username}/request-friend`} method="POST">
                 <input type='hidden' name='userID' value={user?._id}/>
                 <input type='hidden' name='request' value={'add'}/>
-                <input type='submit' value={'Add friend'}/>
+                <input className='button-style-2' type='submit' value={'Add friend'}/>
             </form>
         </>
     )
@@ -25,7 +25,7 @@ function FriendRequestButton ({userID}) {
             <form action={`/users/${user?.username}/request-friend`} method="POST">
                 <input type='hidden' name='userID' value={user?._id}/>
                 <input type='hidden' name='request' value={'remove'}/>
-                <input type='submit' value={'Remove Friend'}/>
+                <input className='button-style-2' type='submit' value={'Remove Friend'}/>
             </form>
         </>
     )
@@ -35,7 +35,7 @@ function FriendRequestButton ({userID}) {
             <form action={`/users/${user?.username}/request-friend`} method="POST">
                 <input type='hidden' name='userID' value={user?._id}/>
                 <input type='hidden' name='request' value={'cancel'}/>
-                <input type='submit' value={'Cancel Request'}/>
+                <input className='button-style-2' type='submit' value={'Cancel Request'}/>
             </form>
         </>
     )

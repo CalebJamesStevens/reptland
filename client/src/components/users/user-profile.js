@@ -4,6 +4,8 @@ import { UserContext } from '../../contexts/UserContext';
 import ProfileIcon from '../icons/profile-icon';
 import Post from '../posts/post';
 import PostPreview from '../posts/post-preview';
+import CurrentUsersProfile from './current-users-profile';
+import DifferentUsersProfile from './different-users-profile';
 import FriendRequestButton from './friend-request-button';
 
 function UserProfile() {
@@ -12,7 +14,7 @@ function UserProfile() {
     const [user, setUser] = useState(null);
     const [userHtml, setUserHtml] = useState();
     const [userPosts, setUserPosts] = useState(new Array())
-
+    const [ownProfile, setOwnProfile] = useState()
     const navigate = useNavigate()
 
     const followUserHtml = (
@@ -25,43 +27,6 @@ function UserProfile() {
                     value={currentUser?.followedUsers.includes(user?._id) ? 'Unfollow' : 'Follow'}>
                 </input>
             </form>
-        </>
-    )
-
-    const currentUserHtml = (
-        <>
-            <div className='user-profile-sidebar-container container-1'>
-                <div className='sidebar-profile-picture'><ProfileIcon></ProfileIcon></div>
-                <div>{user?.username}</div>
-                <div>{user?.bio && user?.bio}</div>
-                <div onClick={() => navigate(`/posts/new-post`)} className="clickable hover-style-1 button-style-1">Create Post</div>
-            </div>
-                
-             <div className='user-profile-post-container'>
-                {userPosts.length > 0 ? userPosts : <h2>No posts to be shown here...</h2>}
-            </div>
-
-            <div className=''>
-
-            </div>
-
-        </>
-    )
-
-    const notCurrentUserHtml = (
-        <>
-            <div className='user-profile-sidebar-container container-1'>
-                
-                <div className='sidebar-profile-picture'><ProfileIcon></ProfileIcon></div>
-                <div>{user?.username}</div>
-                <div>{user?.bio && user?.bio}</div>
-                {console.log(currentUser)}
-                {currentUser && followUserHtml}
-            </div>
-                
-             <div className='user-profile-post-container'>
-                {userPosts.length > 0 ? userPosts : <h2>No posts to be shown here...</h2>}
-            </div>
         </>
     )
 
@@ -92,9 +57,9 @@ function UserProfile() {
 
     useEffect(() => {
         if (currentUser && username == currentUser?.username) {
-            setUserHtml(currentUserHtml)
+            setOwnProfile(true)
         } else {
-            setUserHtml(notCurrentUserHtml)
+            setOwnProfile(false)
         }
     }, [userPosts, currentUser])
 
@@ -105,8 +70,8 @@ function UserProfile() {
 
     return (
         <div className='user-profile-container'>
-            {user && <FriendRequestButton userID={user?._id}/>}
-            {user && userHtml}
+            {(user && ownProfile) ? <CurrentUsersProfile posts={userPosts} user={user}/> : <DifferentUsersProfile posts={userPosts} user={user}/>}
+            
         </div>
     );
 }

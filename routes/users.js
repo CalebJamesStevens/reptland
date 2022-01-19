@@ -142,7 +142,7 @@ router.post('/sign-up', (req, res) => {
     }
 
     if(errors.length > 0) {
-        res.render('users/signUp', {
+        res.redirect('/users/sign-up', {
             errors,
             username,
             email,

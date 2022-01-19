@@ -13,6 +13,7 @@ svg {
     height: inherit;
 }
 
+
 /*SELECT STYLES*/
 
 .select-1 {
@@ -421,6 +422,9 @@ a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    margin-top: 1rem;
+    width: 15rem;
+    height: 20rem;
 }
 
 .sidebar-profile-picture {
@@ -562,4 +566,57 @@ a:hover {
 .comment-reply-submit {
     display: flex;
     justify-content: flex-end;
+}
+
+/* USER FRIENDS PAGE */
+
+.user-friends-page-container {
+    display: flex;
+    padding-block-start: 1rem;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.user-friends-container {
+    display: grid;
+    width: auto;
+    padding-inline: 2rem;
+    padding-block: 2rem;
+    grid-template-columns: repeat(3, 15rem);
+    column-gap: 2rem;
+    
+}
+
+.friend-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.friend-profile-picture {
+    width: 10rem;
+    height: auto;
+}
+
+.friend-requests-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20rem;
+    gap: 1rem;
+
+}
+
+.friend-request-item {
+    display: flex;
+    align-items: center;
+}
+
+.friend-request-options {
+    display: flex;
+    gap: .5rem;
+    justify-content: flex-start;
+
+
 }
