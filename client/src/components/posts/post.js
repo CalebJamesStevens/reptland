@@ -17,7 +17,7 @@ function Post({postID}) {
 
 
     const deleteButton = (
-        <form className="delete-comment-form" action={`/posts/${postID}?_method=DELETE`} method='POST'>
+        <form className="delete-comment-form" action={`/api/posts/${postID}?_method=DELETE`} method='POST'>
             <input type='hidden' name='postID' value={postID}/>
             <div className="comment-reply-submit">
                 <input className='button-style-1' type='submit' value={'Delete'}/>
@@ -109,7 +109,7 @@ function Post({postID}) {
             </div>
             <div>{currentUser?._id == post?.authorID && deleteButton}</div>
             <div className='comments-container'>
-                <form className='post-comment-form' action="/comments/new" method='POST'>
+                <form className='post-comment-form' action="/api/comments/new" method='POST'>
                     <input type='hidden' name='postID' value={postID}/>
                     <textarea className='post-comment-textarea' name='body' id='body' placeholder="Comment" type='text'/>
                     <div className='post-comment-submit'>

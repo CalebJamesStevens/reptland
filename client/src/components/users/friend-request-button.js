@@ -12,7 +12,7 @@ function FriendRequestButton ({userID}) {
 
     const addFriendForm = (
         <>
-            <form action={`/users/${user?.username}/request-friend`} method="POST">
+            <form action={`/api/users/${user?.username}/request-friend`} method="POST">
                 <input type='hidden' name='userID' value={user?._id}/>
                 <input type='hidden' name='request' value={'add'}/>
                 <input className='button-style-2' type='submit' value={'Add friend'}/>
@@ -22,7 +22,7 @@ function FriendRequestButton ({userID}) {
 
     const removeFriendForm = (
         <>
-            <form action={`/users/${user?.username}/request-friend`} method="POST">
+            <form action={`/api/users/${user?.username}/request-friend`} method="POST">
                 <input type='hidden' name='userID' value={user?._id}/>
                 <input type='hidden' name='request' value={'remove'}/>
                 <input className='button-style-2' type='submit' value={'Remove Friend'}/>
@@ -32,7 +32,7 @@ function FriendRequestButton ({userID}) {
 
     const cancelRequestForm = (
         <>
-            <form action={`/users/${user?.username}/request-friend`} method="POST">
+            <form action={`/api/users/${user?.username}/request-friend`} method="POST">
                 <input type='hidden' name='userID' value={user?._id}/>
                 <input type='hidden' name='request' value={'cancel'}/>
                 <input className='button-style-2' type='submit' value={'Cancel Request'}/>

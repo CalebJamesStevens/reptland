@@ -68,12 +68,12 @@ function Friends () {
                                 {requester?.username} wants to be your friend!
                             </div>
                             <div className="friend-request-options">
-                                <form action={`/users/${requester?.username}/accept-friend-request`} method="POST">
+                                <form action={`/api/users/${requester?.username}/accept-friend-request`} method="POST">
                                     <input type='hidden' name='userID' value={requester?._id}/>
                                     <input type='hidden' name='accepted' value={'true'}/>
                                     <input className='button-style-1' type='submit' value={'Accept'}/>
                                 </form>
-                                <form action={`/users/${requester?.username}/accept-friend-request`} method="POST">
+                                <form action={`/api/users/${requester?.username}/accept-friend-request`} method="POST">
                                     <input type='hidden' name='userID' value={requester?._id}/>
                                     <input type='hidden' name='accepted' value={'false'}/>
                                     <input className='button-style-1' type='submit' value={'Deny'}/>

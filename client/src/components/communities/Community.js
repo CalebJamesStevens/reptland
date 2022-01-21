@@ -54,14 +54,14 @@ function Community() {
         if (currentUser) {
             if (currentUser?.communities.includes(community?._id)) {
                 setJoinButton (
-                    <form action={`/communities/${community?.name}/leave-community`} method="POST">
+                    <form action={`/api/communities/${community?.name}/leave-community`} method="POST">
                         <input className='clickable button-style-1' type="submit" value="Leave Community"/>
                         <input type="hidden" name="communityID" value={community?._id}/>
                     </form>
                 )
             } else {
                 setJoinButton (
-                    <form action={`/communities/${community?.name}/join-community`} method="POST">
+                    <form action={`/api/communities/${community?.name}/join-community`} method="POST">
                         <input className='clickable button-style-1' type="submit" value="Join Community"/>
                         <input type="hidden" name="communityID" value={community?._id}/>
                     </form>

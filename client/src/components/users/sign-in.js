@@ -6,7 +6,7 @@ function SignIn() {
 
     return (
         <div className="sign-in-container">
-            <form className='form-style-1' action="/users/sign-in" method="POST">
+            <form className='form-style-1' action="/api/users/sign-in" method="POST">
                 <div className='header-1'>Sign In</div>
 
                 <div className='sign-in-profile-icon'>

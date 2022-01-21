@@ -2,7 +2,7 @@ import ProfileIcon from '../icons/profile-icon';
 function SignUp () {
     return (
         <div className="sign-up-container">
-            <form className='form-style-1' action="/users/sign-up" method="POST">
+            <form className='form-style-1' action="/api/users/sign-up" method="POST">
                 <div className='header-1'>Sign Up</div>
 
                 <div className='sign-in-profile-icon'>

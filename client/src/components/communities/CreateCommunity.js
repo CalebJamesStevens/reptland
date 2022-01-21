@@ -17,7 +17,7 @@ function CreateCommunity() {
 
     return (
         <div>
-            <form action="/communities/new-community" method="POST">
+            <form action="/api/communities/new-community" method="POST">
                 <div>
                     <label htmlFor="name" id="community-name-form-label">Name</label>
                     <input type="text" name="name" id="community-name-input-field"/>

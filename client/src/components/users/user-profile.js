@@ -19,7 +19,7 @@ function UserProfile() {
 
     const followUserHtml = (
         <>
-            <form action={currentUser?.followedUsers.includes(user?._id) ? `/users/${user?.username}/unfollow-user` : `/users/${user?.username}/follow-user`} method='POST'>
+            <form action={currentUser?.followedUsers.includes(user?._id) ? `/api/users/${user?.username}/unfollow-user` : `/api/users/${user?.username}/follow-user`} method='POST'>
                 <input type="hidden" name='userID' value={user?._id}/>
                 <input
                     className='button-style-2' 

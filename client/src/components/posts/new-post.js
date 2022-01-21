@@ -77,7 +77,7 @@ function NewPost() {
     return (
         <div className='new-post-container'>
             <div className='new-post-header'>Create a post:</div>
-            <form className='form-style-2' action="/posts/new-post" method="POST">
+            <form className='form-style-2' action="/api/posts/new-post" method="POST">
                 <div className='new-post-slectors'>
                     <label htmlFor="community">Post to:</label>
                     <select className='select-1' onChange={communitySelectChange} name="community" id="post-form-community-select">

@@ -36,7 +36,7 @@ function CommentView ({commentID}) {
     }
 
     const deleteButton = (
-        <form className="delete-comment-form" action={`/comments/${comment?._id}?_method=DELETE`} method='POST'>
+        <form className="delete-comment-form" action={`/api/comments/${comment?._id}?_method=DELETE`} method='POST'>
                         <input type='hidden' name='commentID' value={comment?._id}/>
                         <input type='hidden' name='postID' value={comment?.post}/>
                         <div className="comment-reply-submit">
@@ -74,7 +74,7 @@ function CommentView ({commentID}) {
             <div className="container-3 comment-body-container">
                 <div className="comment-body-text">{comment && comment.body}</div>
                 {currentUser?._id == author?._id && deleteButton}
-                <form className="comment-reply-form" action="/comments/new" method='POST'>
+                <form className="comment-reply-form" action="/api/comments/new" method='POST'>
                         <input type='hidden' name='parentComment' value={comment?._id}/>
                         <input type='hidden' name='postID' value={comment?.post}/>
                         <textarea className="comment-reply-textarea" name='body' placeholder='Reply!' id='body' type='text'/>
