@@ -11,11 +11,14 @@ const Post = require('./models/Post');
 const {ObjectId} = require('mongodb');
 const app = express();
 
+
 //ENV
 require('dotenv').config()
 
 //AWS and Multer stuff
+const {uploadFile} = require('./s3')
 const multer = require('multer')
+const upload = multer({dest: 'uploads/'})
 const Aws = require('aws-sdk')
 
 //Authentication
@@ -31,9 +34,6 @@ mongoose.connect(db, {useNewUrlParser: true})
     .then(() => console.log('DB Connected'))
     .catch(err => console.log(err));
 
-
-    
-    
 //EJS
 app.use(expressLayouts);
 app.set('view engine', 'ejs');

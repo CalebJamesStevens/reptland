@@ -4,9 +4,14 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
-const { redirect } = require("express/lib/response");
-const { query } = require("express");
-const url = require('url')
+const fs = require('fs')
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
+const {uploadFile, getFile} = require('../s3')
+const multer = require('multer')
+const upload = multer({dest: '../uploads/'})
+
+
 
 router.get('/currentUser', async (req, res) => {
     if (!res.locals.currentUser) {
@@ -247,6 +252,46 @@ router.get('/:id/info', async (req, res) => {
             }
             res.json(u)
         })
+})
+
+
+
+router.post(`/:id/info`, upload.single('image'), async (req, res) => {
+    const q = req.query;
+    const details = req.body;
+    
+    const file = req.file
+    const result = await uploadFile(file)
+    await unlinkFile(file.path)
+    const description = req.body.description
+    
+
+    await User.updateOne({_id: req.params.id}, {$set: {
+        ...(q.profilePicture && {profilePicture: result.key})
+    }})
+})
+
+router.get ('/:id/profile-picture', async (req, res) => {
+    const key = req.params.key
+    const readStream = await getFile(file)
+    
+    readStream.pipe(res)
+})
+
+router.post(`/:id/profile-picture`, upload.single('image'), async (req, res) => {
+    const q = req.query;
+    const details = req.body;
+    
+    const file = req.file
+    const result = await uploadFile(file)
+    await unlinkFile(file.path)
+    const description = req.body.description
+    
+
+    await User.updateOne({_id: req.params.id}, {$set: 
+        {profilePicture: result.key}
+    })
+    .then(res.send({message: "Success"}))
 })
 
 module.exports = router;
