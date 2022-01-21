@@ -5,6 +5,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 
+const path = require('path');
 const Post = require('./models/Post');
 const {ObjectId} = require('mongodb');
 const app = express();
@@ -60,10 +61,15 @@ app.use('/posts', require('./routes/posts'));
 app.use('/comments', require('./routes/comments'));
 app.use('/communities', require('./routes/communities'));
 
-//catch 404 and handle erros
-app.use(function(req, res, next) {
-    res.status(404).send('Page does not exist')
-})
+//Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+    //Set static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
+}
 
 const PORT = process.env.PORT || 5000;
 
