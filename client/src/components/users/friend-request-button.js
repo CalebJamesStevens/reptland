@@ -43,7 +43,7 @@ function FriendRequestButton ({userID}) {
     
 
     const fetchUser = () => {
-        fetch(`/users/${userID}/info?id=true&username=true`)
+        fetch(`/api/users/${userID}/info?id=true&username=true`)
             .then(res => res.json())
             .then(data => {
                 setUser(data)

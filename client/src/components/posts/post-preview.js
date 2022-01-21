@@ -15,7 +15,7 @@ function PostPreview({postID}) {
     const navigate = useNavigate();
 
     const likePost = () => {
-        fetch(`/posts/${postID}/enrich-post`)
+        fetch(`/api/posts/${postID}/enrich-post`)
         .then(res => res.json())
         .then(data => {
             setEnrichedPost(current => !current)
@@ -23,7 +23,7 @@ function PostPreview({postID}) {
     }
 
     const fetchPost = async () => {
-        await fetch(`/posts/view-post/${postID}`)
+        await fetch(`/api/posts/view-post/${postID}`)
             .then(res => res.json())
             .then(data => {
                 console.log('456456456',data);

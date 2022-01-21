@@ -8,7 +8,7 @@ function CommunitiesSidebar () {
     const navigate = useNavigate();
 
     const getRandomCommunities = () => {
-        fetch('/communities/getrandom')
+        fetch('/api/communities/getrandom')
             .then(res => res.json())
             .then(data => {
                 setCommunities(current => [...current, data[0]])

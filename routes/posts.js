@@ -87,6 +87,14 @@ router.post('/new-post', (req, res) => {
 
 })
 
+router.get(`/view-post/:postID`, async (req, res) => {
+    console.log('going to post')
+    await Post.findOne({_id: req.params.postID})
+        .then(post => {
+            res.json(post);
+        })
+}) 
+
 router.get(`/:postID/enrich-post`, async (req, res) => {
     console.log(req.params.postID)
     if (!res.locals.currentUser) {
@@ -133,13 +141,6 @@ router.get(`/popular-posts`, async (req, res) => {
 
 })
 
-router.get(`/view-post/:postID`, async (req, res) => {
-    console.log('going to post')
-    await Post.findOne({_id: req.params.postID})
-        .then(post => {
-            res.json(post);
-        })
-}) 
 
 router.delete('/:postID', async (req, res) => {
     console.log("GOT THIS FAR")

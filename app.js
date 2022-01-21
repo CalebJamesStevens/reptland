@@ -54,11 +54,11 @@ app.use(function(req, res, next) {
 
 
 //Routes
-app.use('/home', require('./routes/home'));
-app.use('/users', require('./routes/users'));
-app.use('/posts', require('./routes/posts'));
-app.use('/comments', require('./routes/comments'));
-app.use('/communities', require('./routes/communities'));
+app.use('/api/home', require('./routes/home'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/posts', require('./routes/posts'));
+app.use('/api/comments', require('./routes/comments'));
+app.use('/api/communities', require('./routes/communities'));
 
 //Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

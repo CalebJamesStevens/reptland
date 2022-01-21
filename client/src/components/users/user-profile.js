@@ -31,7 +31,7 @@ function UserProfile() {
     )
 
     const findUser = () => {
-        fetch(`/users/${username}/profile`)
+        fetch(`/api/users/${username}/profile`)
             .then(res => res.json())
             .then (data => {
                 setUser(data);

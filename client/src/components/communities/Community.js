@@ -29,7 +29,7 @@ function Community() {
         console.log('topic posts')
         
         await setPosts(new Array())
-        fetch(`/communities/${community?.name}/${topic}/posts`)
+        fetch(`/api/communities/${community?.name}/${topic}/posts`)
             .then(res => res.json())
             .then(data => {
                 data.forEach (post => {
@@ -39,7 +39,7 @@ function Community() {
     }
 
     const fetchCommunity = async () => {
-        fetch(`/communities/view/${communityName}`)
+        fetch(`/api/communities/view/${communityName}`)
             .then(res => res.json())
             .then(data => {
                 console.log('fetched')

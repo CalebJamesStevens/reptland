@@ -8,10 +8,10 @@ function CommunityNavbarTopicsDropdown () {
     const navigate = useNavigate() 
 
     const logout = () => {
-        fetch('/users/logout')
+        fetch('/api/users/logout')
             .then(res => res.json())
             .then(data => {
-                fetch('/users/currentUser')
+                fetch('/api/users/currentUser')
                 .then(res => res.json())
                 .then(data => {
                   setCurrentUser(data);

@@ -26,7 +26,7 @@ function Post({postID}) {
     )
 
     const likePost = () => {
-        fetch(`/posts/${postID}/enrich-post`)
+        fetch(`/api/posts/${postID}/enrich-post`)
         .then(res => res.json())
         .then(data => {
             setEnrichedPost(current => !current)
@@ -34,11 +34,11 @@ function Post({postID}) {
     }
 
     const fetchPost = async () => {
-        await fetch(`/posts/view-post/${postID}`)
+        await fetch(`/api/posts/view-post/${postID}`)
             .then(res => res.json())
             .then(data => {
                 if(currentUser) {
-                    fetch(`/users/getEnrichedPosts`)
+                    fetch(`/api/users/getEnrichedPosts`)
                         .then(res => res.json())
                         .then(posts => {
                             setCurrentUser({...currentUser, enrichedPosts: posts})
@@ -49,7 +49,7 @@ function Post({postID}) {
                 }
             })
 
-        await fetch(`/posts/${postID}/get-child-comments`)
+        await fetch(`/api/posts/${postID}/get-child-comments`)
             .then(res => res.json())
             .then(setComments(new Array()))
             .then(data => {

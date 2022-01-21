@@ -23,7 +23,7 @@ function NewPost() {
             setCommunityTopicSelector(null);
             return;
         }
-        fetch(`/communities/view/${event.target.value}`)
+        fetch(`/api/communities/view/${event.target.value}`)
             .then(res => res.json())
             .then(data => {
                 setCommunityTopics(data.topics)
@@ -51,7 +51,7 @@ function NewPost() {
     const getCommunityNames = () => {
         console.log('geting communities')
         currentUser?.communities.forEach(community => {
-            fetch(`/communities/view/${community}`)
+            fetch(`/api/communities/view/${community}`)
             .then(res => res.json())
             .then(data => {
                 setUserCommunityNameOptions(current => [...current, <option name="community" value={community}>{data.name}</option>])

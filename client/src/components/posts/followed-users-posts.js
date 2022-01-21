@@ -10,7 +10,7 @@ function FollowedUsersPost() {
 
     const fetchCommunityPosts = async () => {
         await currentUser?.followedUsers.forEach(user => {
-            fetch(`/users/${user}/user-posts`)
+            fetch(`/api/users/${user}/user-posts`)
                 .then(res => res.json())
                 .then(data => {
                     data.forEach (post => {
@@ -30,7 +30,7 @@ function FollowedUsersPost() {
         if(posts) return;
         setPosts(new Array())
         if (currentUser) {
-            fetch(`/users/getEnrichedPosts`)
+            fetch(`/api/users/getEnrichedPosts`)
                 .then(res => res.json())
                 .then(async posts => {
                     await setCurrentUser({...currentUser, enrichedPosts: posts})

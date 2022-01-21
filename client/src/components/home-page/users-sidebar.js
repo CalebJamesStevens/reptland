@@ -8,7 +8,7 @@ function UsersSidebar () {
     const navigate = useNavigate();
 
     const getRandomUsers = () => {
-        fetch('/users/getrandom')
+        fetch('/api/users/getrandom')
             .then(res => res.json())
             .then(data => {
                 setUsers(current => [...current, data[0]])

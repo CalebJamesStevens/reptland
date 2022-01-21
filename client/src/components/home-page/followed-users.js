@@ -11,7 +11,7 @@ function FollowedUsers() {
 
     let test = () => {
         console.log('fetching home')
-        fetch('/home/')
+        fetch('/api/home/')
             .then(res => res.json())
             .then(data => {
                 console.log(data)

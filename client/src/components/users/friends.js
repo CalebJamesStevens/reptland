@@ -13,7 +13,7 @@ function Friends () {
         console.log('fetching friends')
         await setFriendRequestsList(new Array())
         await setFriendsList(new Array())
-        await fetch(`/users/${currentUser?._id}/info?friends=true&friendRequests=true`)
+        await fetch(`/api/users/${currentUser?._id}/info?friends=true&friendRequests=true`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)

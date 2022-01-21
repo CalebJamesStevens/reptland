@@ -8,7 +8,7 @@ function HomePosts() {
 
     const fetchCommunityPosts = async () => {
         await currentUser?.communities.forEach(community => {
-            fetch(`/communities/view/${community}`)
+            fetch(`/api/communities/view/${community}`)
                 .then(res => res.json())
                 .then(data => {
                     data.posts.forEach (post => {
@@ -19,7 +19,7 @@ function HomePosts() {
     }
 
     const fetchPopularPosts = async () => {
-        await fetch(`/posts/popular-posts`)
+        await fetch(`/api/posts/popular-posts`)
             .then(res => res.json())
             .then(data => {
                 data.forEach (post => {
@@ -37,7 +37,7 @@ function HomePosts() {
     useEffect(() => {
         setPosts(new Array())
         if (currentUser) {
-            fetch(`/users/getEnrichedPosts`)
+            fetch(`/api/users/getEnrichedPosts`)
                 .then(res => res.json())
                 .then(async posts => {
                     await setCurrentUser({...currentUser, enrichedPosts: posts})

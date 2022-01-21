@@ -31,7 +31,7 @@ function App() {
 
   const getCurrentUser = () => {
     console.log('fetching user data')
-    fetch('/users/currentUser')
+    fetch('/api/users/currentUser')
     .then(res => res.json())
     .then(data => {
       console.log(data)

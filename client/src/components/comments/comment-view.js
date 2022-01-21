@@ -10,21 +10,21 @@ function CommentView ({commentID}) {
     const [repliedTo, setRepliedTo] = useState()
 
     const navigate = useNavigate();
-
+ 
     const fetchComment = () => {
-        fetch(`/comments/get/${commentID}`)
+        fetch(`/api/comments/get/${commentID}`)
             .then(res => res.json())
             .then(data => {
-                fetch(`/users/${data.author}/info`)
+                fetch(`/api/users/${data.author}/info`)
                     .then(res => res.json())
                     .then(auth => {
                         setAuthor(auth)
                     })
                 if(data.parentComment != null) {
-                    fetch(`/comments/get/${data.parentComment}`)
+                    fetch(`/api/comments/get/${data.parentComment}`)
                         .then(res => res.json())
                         .then(pData => {
-                            fetch(`/users/${pData.author}/info?username=true&id=true`)
+                            fetch(`/api/users/${pData.author}/info?username=true&id=true`)
                                 .then(res => res.json())
                                 .then(auth => {
                                     setRepliedTo(auth)
@@ -46,7 +46,7 @@ function CommentView ({commentID}) {
     )
 
     const fetchReplies = () => {
-        fetch(`/comments/get/${commentID}/replies`)
+        fetch(`/api/comments/get/${commentID}/replies`)
             .then(res => res.json())
             .then(data => {
                 data.forEach(c => {
