@@ -49,7 +49,6 @@ function CommentView ({commentID}) {
         fetch(`/comments/get/${commentID}/replies`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 data.forEach(c => {
                     setReplies(current => [...current, c])
                 });

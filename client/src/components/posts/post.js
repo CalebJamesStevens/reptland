@@ -37,13 +37,11 @@ function Post({postID}) {
         await fetch(`/posts/view-post/${postID}`)
             .then(res => res.json())
             .then(data => {
-                console.log('456456456',data);
                 if(currentUser) {
                     fetch(`/users/getEnrichedPosts`)
                         .then(res => res.json())
                         .then(posts => {
                             setCurrentUser({...currentUser, enrichedPosts: posts})
-                            console.log(currentUser)
                             setPost(data)
                         })
                 } else {
@@ -51,7 +49,6 @@ function Post({postID}) {
                 }
             })
 
-        console.log('fetching comments')
         await fetch(`/posts/${postID}/get-child-comments`)
             .then(res => res.json())
             .then(setComments(new Array()))
@@ -70,13 +67,10 @@ function Post({postID}) {
     useEffect(() => {
         const checkIfEnriched = async () => {
             if (currentUser) {
-                console.log('checking enrichment')
                 if (currentUser?.enrichedPosts.includes(post?._id)) {
-                    console.log('this post is enriched')
                     console.log(currentUser)
                      setEnrichedPost(true)
                 } else {
-                    console.log('this post is not enriched')
                     setEnrichedPost(false)
                 }
             } else {

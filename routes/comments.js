@@ -23,7 +23,6 @@ router.post('/new', async (req, res) => {
         parentComment: details.parentComment
     })
 
-    console.log(newComment)
 
     try {
         await newComment.save()
