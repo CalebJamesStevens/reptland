@@ -88,9 +88,11 @@ router.post('/new-post', (req, res) => {
 })
 
 router.get(`/view-post/:postID`, async (req, res) => {
-    console.log('going to post')
+    const q = await req.query;
+    const data ={};
     await Post.findOne({_id: req.params.postID})
-        .then(post => {
+        .populate('community')
+        .exec((err, post) => {
             res.json(post);
         })
 }) 

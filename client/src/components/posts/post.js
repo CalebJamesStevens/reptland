@@ -12,7 +12,8 @@ function Post({postID}) {
     const [post, setPost] = useState();
     const [enrichedPost, setEnrichedPost] = useState();
     const [comments, setComments] = useState();
-    
+    const [author, setAuthor] = useState();
+    const [community, setCommunity] = useState();
     const navigate = useNavigate();
 
 
@@ -37,6 +38,12 @@ function Post({postID}) {
         await fetch(`/api/posts/view-post/${postID}`)
             .then(res => res.json())
             .then(data => {
+                fetch(`/api/users/${data?.authorID}/info?username=true&id=true`)
+                    .then(res => res.json())
+                    .then(auth => {
+                        setAuthor(auth)
+                    })
+                
                 if(currentUser) {
                     fetch(`/api/users/getEnrichedPosts`)
                         .then(res => res.json())
@@ -88,8 +95,8 @@ function Post({postID}) {
                 <ProfileIcon/>
                 <div>
                          
-                    <div className='clickable' onClick={() => navigate(`/users/${post?.authorID.username}/profile`)}>
-                        {post?.authorID.username}
+                    <div className='clickable' onClick={() => navigate(`/users/${author?.username}/profile`)}>
+                        {author?.username}
                     </div>
                     <div className='clickable' onClick={() => navigate(`/communities/view/${post?.community?.name}`)}>
                         {post?.community?.name}
