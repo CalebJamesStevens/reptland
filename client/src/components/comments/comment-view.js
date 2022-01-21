@@ -15,7 +15,7 @@ function CommentView ({commentID}) {
         fetch(`/api/comments/get/${commentID}`)
             .then(res => res.json())
             .then(data => {
-                fetch(`/api/users/${data.author}/info`)
+                fetch(`/api/users/${data.author}/info?username=true&id=true`)
                     .then(res => res.json())
                     .then(auth => {
                         setAuthor(auth)
