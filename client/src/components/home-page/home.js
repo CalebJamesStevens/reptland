@@ -5,10 +5,11 @@ import HomePosts from '../posts/home-posts';
 import CommunitiesSidebar from './communities-sidebar copy';
 import CreateSidebar from './create-sidebar copy';
 import UsersSidebar from './users-sidebar';
+import useWindowDimensions from '../custom-hooks/useWindowDimensions';
 
 function Home() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
-
+    const {height, width} = useWindowDimensions();
     let test = () => {
         console.log('fetching home')
         fetch('/api/home/')
@@ -26,11 +27,13 @@ function Home() {
     return (
         <div className="home-container">
             <HomePosts/>
-            <div className='home-sidebar-right'>
-                <CommunitiesSidebar/>
-                <CreateSidebar/>
-                <UsersSidebar/>
-            </div>
+            {width > 950 && (
+                <div className='home-sidebar-right'>
+                    <CommunitiesSidebar/>
+                    <CreateSidebar/>
+                    <UsersSidebar/>
+                </div>
+            )}
         </div>
     );
 }

@@ -7,7 +7,7 @@ const passport = require('passport');
 const fs = require('fs')
 const util = require('util')
 const unlinkFile = util.promisify(fs.unlink)
-const {uploadFile, getFile} = require('../s3')
+const {awsUploadFile: awsUploadFile, awsGetFile: awsGetFile} = require('../s3')
 const multer = require('multer')
 const upload = multer({dest: '../uploads/'})
 
@@ -261,7 +261,7 @@ router.post(`/:id/info`, upload.single('image'), async (req, res) => {
     const details = req.body;
     
     const file = req.file
-    const result = await uploadFile(file)
+    const result = await awsUploadFile(file)
     await unlinkFile(file.path)
     const description = req.body.description
     
@@ -273,7 +273,7 @@ router.post(`/:id/info`, upload.single('image'), async (req, res) => {
 
 router.get ('/:id/profile-picture', async (req, res) => {
     const key = req.params.key
-    const readStream = await getFile(file)
+    const readStream = await awsGetFile(file)
     
     readStream.pipe(res)
 })
@@ -283,7 +283,7 @@ router.post(`/:id/profile-picture`, upload.single('image'), async (req, res) => 
     const details = req.body;
     
     const file = req.file
-    const result = await uploadFile(file)
+    const result = await awsUploadFile(file)
     await unlinkFile(file.path)
     const description = req.body.description
     

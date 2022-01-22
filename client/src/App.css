@@ -141,7 +141,6 @@ svg {
 }
 
 .form-style-2 {
-    width: 40rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -285,6 +284,8 @@ a:hover {
 .nav-profile-dropdown {
     position: absolute;
     top: 3rem;
+    right: 0;
+    width: 10rem;
 }
 
 .nav-profile-dropdown-icon {
@@ -318,6 +319,22 @@ a:hover {
     width: 50%;
 }
 
+@media (max-width: 600px) {
+    .form-style-1 {
+        height: 25rem;
+        width: 100%;
+    }
+
+    .sign-in-container, .sign-up-container {
+        margin: 5vh;
+    }
+
+    .sign-in-profile-icon, .sign-up-profile-icon  {
+        width: 8rem;
+        height: 8rem;
+    }
+}
+
 /* HOME PAGE */
 .home-container {
     display: flex;
@@ -333,6 +350,11 @@ a:hover {
 
 
 /*  POST COMPONENT  */
+.home-posts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .post-container {
     background-color: #99b667b6;
@@ -342,6 +364,7 @@ a:hover {
     border: solid .2rem #99b667;
     padding: 1rem;
     padding-bottom: .2rem;
+    
 
 }
 
@@ -385,6 +408,12 @@ a:hover {
     /*background:linear-gradient(transparent 20rem, #99b667b6);*/
 }
 
+@media (max-width: 700px) {
+    .post-container {
+        width: 95%;
+        
+    }
+}
 
 /* SIDEBAR COMPONENTS */
 
@@ -432,14 +461,41 @@ a:hover {
     height: 8rem;
 }
 
+@media (max-width: 950px) {
+    .user-profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .user-profile-sidebar-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-top: 1rem;
+        width: 90%;
+        height: 20rem;
+    }
+
+    .user-profile-post-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 /* NEW POST PAGE */
 
 .new-post-container {
-    margin: 6rem;
+    margin-block-start: 6rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.new-post-form-container {
+    width: 40rem;
 }
 
 .new-post-header {
@@ -481,6 +537,27 @@ a:hover {
 
 .new-post-slectors select {
     margin-block-end: 1rem;
+}
+
+@media (max-width: 750px) {
+    .new-post-form-container {
+        width: 99%;
+        padding-inline: 0;
+    }
+    .new-post-submit {
+        width: 90%;
+        height: 3rem;
+    }
+    .new-post-header {
+        width: 100%;
+    }
+    .new-post-container {
+        margin-block-start: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 /* COMMUNITY COMPONENT */
@@ -618,5 +695,90 @@ a:hover {
     gap: .5rem;
     justify-content: flex-start;
 
+
+}
+
+@media (max-width: 1250px) {
+    .user-friends-container {
+        display: grid;
+        width: auto;
+        padding-inline: 2rem;
+        padding-block: 2rem;
+        grid-template-columns: repeat(3, 12rem);
+        column-gap: 2rem;
+        
+    }
+    .friend-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (max-width: 1100px) {
+    .user-friends-page-container {
+        display: flex;
+        flex-direction: column-reverse;
+        padding-block-start: 1rem;
+        align-items: center;
+        gap: 1rem;
+    }
+    .user-friends-container {
+        display: grid;
+        width: auto;
+        padding-inline: 2rem;
+        padding-block: 2rem;
+        grid-template-columns: repeat(3, 12rem);
+        column-gap: 2rem;
+        
+    }
+    .friend-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .friend-requests-container {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-items: flex-start;
+        overflow-x: scroll;
+        width: 90%;
+        gap: 1rem;
+        flex-shrink: 0;
+    
+    }
+    .friend-request-item {
+        min-width: 17rem;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .user-friends-container {
+        display: grid;
+        width: auto;
+        padding-inline: 2rem;
+        padding-block: 2rem;
+        grid-template-columns: repeat(2, 12rem);
+        column-gap: 2rem;
+        
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .user-friends-container {
+        display: grid;
+        width: auto;
+        padding-inline: 2rem;
+        padding-block: 2rem;
+        grid-template-columns: repeat(1, 12rem);
+        column-gap: 2rem;
+        
+    }
 
 }

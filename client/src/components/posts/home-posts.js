@@ -52,7 +52,7 @@ function HomePosts() {
     },[]);
 
     return (
-        <div>
+        <div className="home-posts-container">
             {posts && posts}
         </div>
     );

@@ -1,5 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
 import { UserContext } from '../../contexts/UserContext';
+import useWindowDimensions from '../custom-hooks/useWindowDimensions';
 import FollowedUsersPost from '../posts/followed-users-posts';
 import HomePosts from '../posts/home-posts';
 import CommunitiesSidebar from './communities-sidebar copy';
@@ -8,6 +9,7 @@ import UsersSidebar from './users-sidebar';
 
 function FollowedUsers() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
+    const {height, width} = useWindowDimensions();
 
     let test = () => {
         console.log('fetching home')
@@ -26,11 +28,14 @@ function FollowedUsers() {
     return (
         <div className="home-container">
             <FollowedUsersPost/>
-            <div className='home-sidebar-right'>
-                <CommunitiesSidebar/>
-                <CreateSidebar/>
-                <UsersSidebar/>
-            </div>
+            
+            {width > 950 && (
+                <div className='home-sidebar-right'>
+                    <CommunitiesSidebar/>
+                    <CreateSidebar/>
+                    <UsersSidebar/>
+                </div>
+            )}
         </div>
     );
 }

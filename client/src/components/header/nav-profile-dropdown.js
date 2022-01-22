@@ -23,12 +23,32 @@ function NavProfileDropdown () {
 
     return (
         <div className="nav-profile-dropdown dropdown-style-1">
-            <div
-                onClick={() => {logout()}} 
-                className="dropdown-option-1 clickable hover-style-2"
-            >
-                Log Out
-            </div>
+            {currentUser && (
+                <>
+                    <div
+                        onClick={() => {logout()}} 
+                        className="dropdown-option-1 clickable hover-style-2"
+                    >
+                        Log Out
+                    </div>
+                </>
+            )}
+            {!currentUser && (
+                <>
+                    <div
+                        onClick={() => {navigate('/users/sign-in')}} 
+                        className="dropdown-option-1 clickable hover-style-2"
+                    >
+                        Sign In
+                    </div>
+                    <div
+                        onClick={() => {navigate('/users/sign-up')}} 
+                        className="dropdown-option-1 clickable hover-style-2"
+                    >
+                        Sign Up
+                    </div>
+                </>
+            )}
         </div>
     )
 }
