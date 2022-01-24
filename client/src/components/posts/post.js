@@ -105,6 +105,14 @@ function Post({postID}) {
                 </div>
             </div>
             <div className='post-title'>{post?.title}</div>
+            {post?.images?.length > 0 && (
+                <div className='post-images-container'>
+                    {post?.images?.map(key => {
+                        console.log(key)
+                        return(<img src={`/api/posts/images/${key}`}/>)
+                    })}
+                </div>
+            )}
             <div className='post-body'>{post?.body}</div>
             <div className='post-interaction-icon-container'>
                 <div onClick={() => {likePost()}}

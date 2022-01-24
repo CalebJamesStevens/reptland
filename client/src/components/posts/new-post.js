@@ -77,7 +77,7 @@ function NewPost() {
     return (
         <div className='new-post-container'>
             <div className='new-post-header'>Create a post:</div>
-            <form className='new-post-form-container form-style-2' action="/api/posts/new-post" method="POST">
+            <form className='new-post-form-container form-style-2' action="/api/posts/new-post" method="POST" enctype="multipart/form-data">
                 <div className='new-post-slectors'>
                     <label htmlFor="community">Post to:</label>
                     <select className='select-1' onChange={communitySelectChange} name="community" id="post-form-community-select">
@@ -92,7 +92,9 @@ function NewPost() {
                 </div>
                 
                 <input className='new-post-title input-field-style-1' maxLength='300' placeholder="Title" name="title" type="text" id="title"/>
+                <input type='file' name='image' accept=".png, .jpeg, .jpg"/>
                 <textarea className='new-post-body input-field-style-1' placeholder="Body" name="body" type="text" id="body"/>
+                
                 <input className='new-post-title input-field-style-1' maxLength='300' placeholder="Tags: Please seperate by commas" name="tags" type="text" id="tags"/>
                 
                 <input className='new-post-submit button-style-2' type="submit" value="Post"/>

@@ -4,6 +4,8 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
+
+//File upload stuff
 const fs = require('fs')
 const util = require('util')
 const unlinkFile = util.promisify(fs.unlink)
@@ -283,9 +285,11 @@ router.post(`/:id/profile-picture`, upload.single('image'), async (req, res) => 
     const details = req.body;
     
     const file = req.file
-    const result = await awsUploadFile(file)
-    await unlinkFile(file.path)
-    const description = req.body.description
+    if (file) {
+        const result = await awsUploadFile(file)
+        await unlinkFile(file.path)
+        const description = req.body.description
+    }
     
 
     await User.updateOne({_id: req.params.id}, {$set: 

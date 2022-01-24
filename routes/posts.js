@@ -8,33 +8,15 @@ const {ObjectId} = require('mongodb');
 const { redirect } = require("express/lib/response");
 const Community = require("../models/Community");
 
+//File upload stuff
+const fs = require('fs')
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
+const {awsUploadFile: awsUploadFile, awsGetFile: awsGetFile} = require('../s3')
+const multer = require('multer')
+const upload = multer({dest: 'uploads/'})
 
 
-
-
-
-router.get('/new-post', async (req, res) => {
-    if (!res.locals.currentUser) {
-        res.redirect('/users/sign-up')
-        return;
-    }
-
-    let userCommunities = new Array();
-
-    await User.findById(res.locals.currentUser._id)
-            .populate({
-                path:'communities',
-                populate: {
-                    path:'topics'
-                }
-            })
-            .exec((err, user) => {
-                userCommunities = user.communities
-                res.render('../views/posts/new-post', {communities: userCommunities})
-            })
-            
-
-})
 
 router.get(`/:postID/get-child-comments`, async (req, res) => {
     await Post.findById(req.params.postID)
@@ -49,16 +31,31 @@ router.get(`/:postID/get-child-comments`, async (req, res) => {
         })
 })
 
-router.post('/new-post', (req, res) => {
+router.post('/new-post', upload.single('image'), async (req, res) => {
     const details = req.body;
-    details.tags = details.tags.split(',').map(tag => tag.trim())
+    details.tags = details.tags.split(',').map(tag => tag.trim()) 
+    let key = null;
+    console.log(req.file)
+    if (req.file) {
+        console.log('getting file')
+        const file = req.file
+        const result = await awsUploadFile(file)
+        await unlinkFile(file.path)
+        console.log(result)
+        key = result.key
+    }
     
+
+
     const newPost = new Post({
         title: details.title,
-        authorID: res.locals.currentUser._id
+        authorID: res.locals.currentUser._id,
+        ...(key && {images: [key]})
     });
     
     console.log(details)
+
+
 
     if (details.body) {
         newPost.body = details.body;
@@ -85,6 +82,19 @@ router.post('/new-post', (req, res) => {
             
         })
 
+})
+
+router.get ('/images/:key', async (req, res) => {
+
+    const key = req.params.key
+    try {
+
+        const readStream = await awsGetFile(key)
+        
+        readStream.pipe(res)
+    } catch {
+        res.send({message: "File could not be found on server"})
+    }
 })
 
 router.get(`/view-post/:postID`, async (req, res) => {
@@ -132,6 +142,8 @@ router.post(`/:postID/save-post`, async (req, res) => {
     }
     
 })
+
+
 
 router.get(`/popular-posts`, async (req, res) => {
     await Post.aggregate(

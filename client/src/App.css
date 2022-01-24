@@ -391,6 +391,14 @@ a:hover {
     font-weight: 800;
 }
 
+.post-images-container {
+    width: 100%;
+}
+
+.post-images-container img {
+    width: 100%;
+}
+
 .post-preview-body {
     position: relative;
     max-height: 25rem;
