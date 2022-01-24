@@ -9,7 +9,7 @@ const util = require('util')
 const unlinkFile = util.promisify(fs.unlink)
 const {awsUploadFile: awsUploadFile, awsGetFile: awsGetFile} = require('../s3')
 const multer = require('multer')
-const upload = multer({dest: '../uploads/'})
+const upload = multer({dest: 'uploads/'})
 
 
 

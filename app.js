@@ -16,7 +16,7 @@ const app = express();
 require('dotenv').config()
 
 //AWS and Multer stuff
-const {uploadFile} = require('./s3')
+const {aswUploadFile} = require('./s3')
 const multer = require('multer')
 const upload = multer({dest: 'uploads/'})
 const Aws = require('aws-sdk')
@@ -58,7 +58,6 @@ app.use(methodOverride('_method'))
 // Give access to currentUser without having to pass in 
 app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
-    console.log(`ASDFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd ${process.env.MONGO_URI}`)
     next();
 });
 
