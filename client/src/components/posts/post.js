@@ -118,6 +118,7 @@ function Post({postID}) {
                 <div onClick={() => {likePost()}}
                 className={`${enrichedPost && 'filled'} clickable hover-style-1 heart-interactable`}>
                     <HeartIcon/>
+                    {post?.enrichment}
                 </div>
                 <div className='clickable hover-style-1 comment-interactable'><CommentIcon/></div>
                 <div className='clickable hover-style-1 link-interactable'><LinkIcon/></div>

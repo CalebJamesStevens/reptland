@@ -377,6 +377,13 @@ a:hover {
     width: 2rem;
 }
 
+.heart-interactable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(auto, 2rem);
+}
+
 .heart-interactable.filled svg{
     fill: red;
 }

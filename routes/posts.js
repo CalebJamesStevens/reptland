@@ -146,8 +146,8 @@ router.post(`/:postID/save-post`, async (req, res) => {
 
 
 router.get(`/popular-posts`, async (req, res) => {
-    await Post.aggregate(
-        [{$sample: {size: 5}}]
+    await Post.find(
+        {community: {$exists: true}}
     )
     .then (post => {
         res.json(post)

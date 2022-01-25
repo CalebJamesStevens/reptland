@@ -20,16 +20,28 @@ function HomePosts() {
         }) 
     }
 
+    const fetchEnrichedPosts = async () => {
+        if (!currentUser) return;
+        await setPosts(new Array())
+        fetch(`/api/users/getEnrichedPosts`)
+                .then(res => res.json())
+                .then(posts => {
+                    setCurrentUser({...currentUser, enrichedPosts: posts})
+                    
+                })
+    }
+
     const fetchCommunityPosts = async (data) => {
         data.communities.forEach(community => {
             fetch(`/api/communities/view/${community}`)
                 .then(res => res.json())
                 .then(data => {
                     data.posts.forEach (post => {
-                        
-                        setPosts(current => [...current, <PostPreview key={post} postID={post}/>])
+                        setPosts(current => [...current, post])
                     })
                 })
+                .then(setPosts(current => current.sort((a, b) => a.enrichment - b.enrichment)))
+
         });
     }
 
@@ -38,9 +50,10 @@ function HomePosts() {
             .then(res => res.json())
             .then(data => {
                 data.forEach (post => {
-                    setPosts(current => [...current, <PostPreview key={post._id} postID={post._id}/>])
+                    setPosts(current => [...current, post._id])
                 })
             })
+            .then(setPosts(current => current.sort((a, b) => a.enrichment - b.enrichment)))
     }
 
     const test = async (print, wait) => {
@@ -51,11 +64,16 @@ function HomePosts() {
 
     useEffect(() => {
         checkCurrentUser();
+        fetchEnrichedPosts()
     },[]);
 
     return (
         <div className="home-posts-container">
-            {posts && posts}
+            {posts && posts.map(post => {
+                return (
+                    <PostPreview key={post} postID={post}/>
+                )
+            })}
         </div>
     );
 }
