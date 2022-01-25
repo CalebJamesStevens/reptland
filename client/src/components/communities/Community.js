@@ -16,17 +16,17 @@ function Community() {
     const navigate = useNavigate();
 
     const fetchAllCommunityPosts = async () => {
-        console.log('all posts')
+        
         await setPosts(new Array())
         await community?.posts.forEach (post => {
-            console.log('getting post')
+            
             setPosts(current => [...current, <PostPreview key={post} postID={post}/>])
         })
-        console.log(posts)
+        
     }
 
     const fetchCommunityPostsByTopic = async () => {
-        console.log('topic posts')
+        
         
         await setPosts(new Array())
         fetch(`/api/communities/${community?.name}/${topic}/posts`)
@@ -42,15 +42,15 @@ function Community() {
         fetch(`/api/communities/view/${communityName}`)
             .then(res => res.json())
             .then(data => {
-                console.log('fetched')
+                
                 setCommunity(data)
             })
         
     }
 
     const buildJoinButton = () => {
-        console.log(community)
-        console.log(currentUser)
+        
+        
         if (currentUser) {
             if (currentUser?.communities.includes(community?._id)) {
                 setJoinButton (
@@ -79,7 +79,7 @@ function Community() {
 
     const buildCommuntiyNavbar = async () => {
         let topicChoices = await community?.topics.map(t => {
-            console.log('topic');
+            ;
             return (
                 <div 
                 onClick={() => {setTopic(t)}}

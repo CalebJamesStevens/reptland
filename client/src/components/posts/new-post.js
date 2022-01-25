@@ -16,7 +16,7 @@ function NewPost() {
 
 
     const communitySelectChange = (event) => {
-        console.log(event.target.value)
+        
         if (event.target.value == " ") {
             setHtmlCommunityTopics(new Array());
             setCommunityTopics(new Array());
@@ -27,7 +27,7 @@ function NewPost() {
             .then(res => res.json())
             .then(data => {
                 setCommunityTopics(data.topics)
-                console.log(data.topics)
+                
             })
     }
 
@@ -49,7 +49,7 @@ function NewPost() {
     }
 
     const getCommunityNames = () => {
-        console.log('geting communities')
+        
         currentUser?.communities.forEach(community => {
             fetch(`/api/communities/view/${community}`)
             .then(res => res.json())

@@ -10,13 +10,13 @@ function Friends () {
 
     const fetchUserFriends = async () => {
         if (!currentUser) return;
-        console.log('fetching friends')
+        
         await setFriendRequestsList(new Array())
         await setFriendsList(new Array())
         await fetch(`/api/users/${currentUser?._id}/info?friends=true&friendRequests=true`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                
                 data.friendRequests.forEach(requester => {
                     setFriendRequestsList(current => [...current, requester])
                 });

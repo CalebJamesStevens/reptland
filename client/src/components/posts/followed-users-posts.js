@@ -8,44 +8,55 @@ function FollowedUsersPost() {
     const [posts, setPosts] = useState();
     const navigate = useNavigate();
 
-    const fetchCommunityPosts = async () => {
-        await currentUser?.followedUsers.forEach(user => {
+    const fetchFriendsPosts = async (data) => {
+        
+       await data.followedUsers.forEach(user => {
             fetch(`/api/users/${user}/user-posts`)
                 .then(res => res.json())
                 .then(data => {
                     data.forEach (post => {
-                        setPosts(current => [...current, <PostPreview key={post} postID={post}/>])
+                        setPosts(current => [...current, post])
                     })
                 })
         });
     }
 
-    const test = async (print, wait) => {
-        setTimeout(() => {
-            console.log(print)
-        }, wait)
+    const checkCurrentUser = async () => {
+        await setPosts(new Array())
+        await fetch('/api/users/currentUser')
+        .then(res => res.json())
+        .then(data => {
+            if (data) {
+                fetchFriendsPosts(data)
+            } else {
+                navigate('/users/sign-in')
+            }
+        })
+    }
+
+    const fetchEnrichedPosts = async () => {
+        if (!currentUser) return;
+        await setPosts(new Array())
+        fetch(`/api/users/getEnrichedPosts`)
+                .then(res => res.json())
+                .then(posts => {
+                    setCurrentUser({...currentUser, enrichedPosts: posts})
+                    
+                })
     }
 
     useEffect(() => {
-        if(posts) return;
-        setPosts(new Array())
-        if (currentUser) {
-            fetch(`/api/users/getEnrichedPosts`)
-                .then(res => res.json())
-                .then(async posts => {
-                    await setCurrentUser({...currentUser, enrichedPosts: posts})
-                    console.log(currentUser)
-                })
-                .then(fetchCommunityPosts())
-        } else {
-            navigate('/users/sign-in')
-        }
-
+        checkCurrentUser();
+        fetchEnrichedPosts()
     },[]);
 
     return (
         <div>
-            {posts && posts}
+            {posts && posts.map(post => {
+                return (
+                    <PostPreview key={post} postID={post}/>
+                )
+            })}
         </div>
     );
 }

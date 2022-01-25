@@ -30,23 +30,22 @@ function App() {
 
 
   const getCurrentUser = () => {
-    console.log('fetching user data')
     fetch('/api/users/currentUser')
     .then(res => res.json())
     .then(data => {
-      console.log(data)
+      
       setCurrentUser(data);
     })
   }
   
   useEffect(() => {
       getCurrentUser();
-      console.log(currentUser)
+      
       
   }, []);
 
   useEffect(() => {
-    console.log(currentUser)
+    
     
 }, [currentUser]);
   return (

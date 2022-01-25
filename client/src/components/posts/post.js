@@ -60,7 +60,7 @@ function Post({postID}) {
             .then(res => res.json())
             .then(setComments(new Array()))
             .then(data => {
-                console.log(data)
+                
                 data.forEach(comment => {
                     setComments(current => [...current, comment])
                 });
@@ -75,13 +75,13 @@ function Post({postID}) {
         const checkIfEnriched = async () => {
             if (currentUser) {
                 if (currentUser?.enrichedPosts.includes(post?._id)) {
-                    console.log(currentUser)
+                    
                      setEnrichedPost(true)
                 } else {
                     setEnrichedPost(false)
                 }
             } else {
-                console.log('no user')
+                
                 setEnrichedPost(false)
             }
         }
@@ -108,7 +108,7 @@ function Post({postID}) {
             {post?.images?.length > 0 && (
                 <div className='post-images-container'>
                     {post?.images?.map(key => {
-                        console.log(key)
+                        
                         return(<img src={`/api/posts/images/${key}`}/>)
                     })}
                 </div>
@@ -132,7 +132,7 @@ function Post({postID}) {
                     </div>
                 </form>
                 {comments && comments.map(comment => {
-                    console.log(comment)
+                    
                     return (<CommentView key={comment} commentID={comment}/>)
                 })}
             </div>

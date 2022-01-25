@@ -44,17 +44,17 @@ function PostPreview({postID}) {
     useEffect(() => {
         const checkIfEnriched = async () => {
             if (currentUser) {
-                console.log('checking enrichment')
+                
                 if (currentUser?.enrichedPosts.includes(post?._id)) {
-                    console.log('this post is enriched')
-                    console.log(currentUser)
+                    
+                    
                      setEnrichedPost(true)
                 } else {
-                    console.log('this post is not enriched')
+                    
                     setEnrichedPost(false)
                 }
             } else {
-                console.log('no user')
+                
                 setEnrichedPost(false)
             }
         }

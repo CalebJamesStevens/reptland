@@ -8,7 +8,7 @@ function ViewPost() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const {postID} = useParams();
     const [post, setPost] = useState(postID);
-    console.log(post);
+    ;
     useEffect(() => {
         setPost(postID)
     },[]);

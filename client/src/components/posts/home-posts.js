@@ -6,12 +6,27 @@ function HomePosts() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [posts, setPosts] = useState();
 
-    const fetchCommunityPosts = async () => {
-        await currentUser?.communities.forEach(community => {
+
+    const checkCurrentUser = async () => {
+        await setPosts(new Array())
+        await fetch('/api/users/currentUser')
+        .then(res => res.json())
+        .then(data => {
+            if (data) {
+                fetchCommunityPosts(data)
+            } else {
+                fetchPopularPosts()
+            }
+        }) 
+    }
+
+    const fetchCommunityPosts = async (data) => {
+        data.communities.forEach(community => {
             fetch(`/api/communities/view/${community}`)
                 .then(res => res.json())
                 .then(data => {
                     data.posts.forEach (post => {
+                        
                         setPosts(current => [...current, <PostPreview key={post} postID={post}/>])
                     })
                 })
@@ -19,7 +34,7 @@ function HomePosts() {
     }
 
     const fetchPopularPosts = async () => {
-        await fetch(`/api/posts/popular-posts`)
+        fetch(`/api/posts/popular-posts`)
             .then(res => res.json())
             .then(data => {
                 data.forEach (post => {
@@ -30,25 +45,12 @@ function HomePosts() {
 
     const test = async (print, wait) => {
         setTimeout(() => {
-            console.log(print)
+            
         }, wait)
     }
 
     useEffect(() => {
-        setPosts(new Array())
-        if (currentUser) {
-            fetch(`/api/users/getEnrichedPosts`)
-                .then(res => res.json())
-                .then(async posts => {
-                    await setCurrentUser({...currentUser, enrichedPosts: posts})
-                    console.log(currentUser)
-                })
-                .then(fetchCommunityPosts())
-        } else {
-            console.log('hey')
-            fetchPopularPosts();
-        }
-
+        checkCurrentUser();
     },[]);
 
     return (

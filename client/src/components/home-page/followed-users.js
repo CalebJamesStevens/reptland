@@ -1,4 +1,5 @@
 import {useContext, useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import useWindowDimensions from '../custom-hooks/useWindowDimensions';
 import FollowedUsersPost from '../posts/followed-users-posts';
@@ -10,19 +11,10 @@ import UsersSidebar from './users-sidebar';
 function FollowedUsers() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const {height, width} = useWindowDimensions();
+    const navigate = useNavigate();
 
-    let test = () => {
-        console.log('fetching home')
-        fetch('/api/home/')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-            })
-    }
 
     useEffect(() => {
-        test()
-        console.log('asdfasdfa')
     }, []);
 
     return (

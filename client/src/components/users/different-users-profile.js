@@ -17,7 +17,7 @@ function DifferentUsersProfile ({user, posts}) {
         <div className='sidebar-profile-picture'><ProfileIcon/></div>
         <div>{user?.username}</div>
         <div>{user?.bio && user?.bio}</div>
-        {console.log(currentUser)}
+        {}
         {(currentUser && user) && 
             
             <>

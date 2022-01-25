@@ -40,16 +40,16 @@ function UserProfile() {
 
     const fetchPosts = async () => {
         await user.posts.forEach(post => {
-            console.log(post)
+            
             setUserPosts(current => [...current, <PostPreview key={post} postID={post}/>])
         })        
     }
 
     useEffect(() => {
-        console.log('USER CHANGED')
+        
         setUserPosts(current => current = new Array())
         if (user) {
-            console.log('made it this dar')
+            
             fetchPosts();
         }
 

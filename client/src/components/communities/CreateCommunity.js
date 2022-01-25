@@ -8,12 +8,19 @@ function CreateCommunity() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [community, setCommunity] = useState(null);
 
+    const checkCurrentUser = () => {
+        fetch('/api/users/currentUser')
+        .then(res => res.json())
+        .then(data => {
+            if (!data) {
+                navigate('/users/sign-in')
+            }
+        }) 
+    }
+
     useEffect(() => {
-        if (!currentUser) {
-            navigate('/users/sign-in')
-            return;
-        };
-    },[currentUser]);
+        checkCurrentUser()
+    },[]);
 
     return (
         <div className='create-community-container'>
