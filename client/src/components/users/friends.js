@@ -46,14 +46,6 @@ function Friends () {
                     </div>
                     )
                 })}
-                <div className="friend-item container-3">
-                        <div className="friend-profile-picture"><ProfileIcon/></div>
-                        {'friend?.username'}
-                </div>
-                <div className="friend-item container-3">
-                    <div className="friend-profile-picture"><ProfileIcon/></div>
-                    {'friend?.username'}
-                </div>
             </div>
             <div className="friend-requests-container container-3">
                 <div className="header-1">Friend Requests</div>

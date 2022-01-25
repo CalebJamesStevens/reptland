@@ -11,6 +11,7 @@ function CurrentUsersProfile ({user, posts}) {
                 <div>{user?.username}</div>
                 <div>{user?.bio && user?.bio}</div>
                 <div onClick={() => navigate(`/posts/new-post`)} className="clickable hover-style-1 button-style-1">Create Post</div>
+                <div onClick={() => navigate(`/users/friends`)} className="clickable hover-style-1 button-style-1">Friends</div>
         </div>
             
          <div className='user-profile-post-container'>

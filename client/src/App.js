@@ -65,7 +65,7 @@ function App() {
             <Route path="/users/sign-in" element={<SignIn />}/>
             <Route path="/users/sign-up" element={<SignUp />}/>
             <Route path="/users/:username/profile" element={<UserProfile />}/>
-            <Route path="/users/:username/friends" element={<Friends />}/>
+            <Route path="/users/friends" element={<Friends />}/>
             <Route path="/users/logout"/>
             
             {/*Post Routes*/}

@@ -4,6 +4,7 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const bcrypt = require('bcryptjs')
 const passport = require('passport');
+const flash = require('connect-flash')
 
 //File upload stuff
 const fs = require('fs')
@@ -129,92 +130,82 @@ router.post(`/:username/unfollow-user`, async (req, res) => {
         })
 })
 
-router.get('/sign-up', (req, res) => res.render('users/signUp'))
+router.get('/sign-up', (req, res) => {
+    if(req.flash) {
+        res.send(req.flash())
+    } else {
+        return;
+    }
+})
 
-router.post('/sign-up', (req, res) => {
+router.post('/sign-up', async (req, res) => {
     const {username, email, password, confirm_password} = req.body;
     let errors = [];
-
     if (!username || !email || !password || !confirm_password) {
-        errors.push({msg: "Please fill in all fields"});
+        errors.push( "Please fill in all fields");
     }
 
     if (password !== confirm_password) {
-        errors.push({msg: "Passwords do not match"});
+        errors.push("Passwords do not match");
 
     }
 
     if (password.length < 6) {
-        errors.push({msg: 'Password should be at least 6 characters'});
+        errors.push('Password should be at least 6 characters');
     }
-
+    await User.findOne({email: email})
+        .then(user => {
+            if (user) {
+                errors.push('Email already registered')
+            } 
+        })
+    await User.findOne({username: username})
+        .then(user => {
+            if (user) {
+                errors.push('Username already in use')
+            }
+        })
+        
     if(errors.length > 0) {
-        res.redirect('/users/sign-up', {
-            errors,
+        req.flash("errors", errors)
+        res.redirect('/users/sign-up')
+    } else {
+        const newUser = new User( {
             username,
             email,
-            password,
-            confirm_password
+            password
         });
-    } else {
-        User.findOne({email: email})
-            .then(user => {
-                
-                if (user) {
-                    errors.push({msg:'Email already registered'})
-                    res.render('users/signUp', {
-                        errors,
-                        username,
-                        email,
-                        password,
-                        confirm_password
-                    });
-                } else {
-                    User.findOne({username: username})
-                        .then(user_ => {
-                            if (user_) {
-                                errors.push({msg:'Username already in use'})
-                                res.render('users/signUp', {
-                                    errors,
-                                    username,
-                                    email,
-                                    password,
-                                    confirm_password
-                                });
-                            } else {
-                                const newUser = new User( {
-                                    username,
-                                    email,
-                                    password
-                                });
-                                
-                                //Hash Password
-                                bcrypt.genSalt(10, (err, salt) =>
-                                    bcrypt.hash(newUser.password, salt, (err, hash) =>{
-                                        if (err) throw err;
-                                        //set password to hashed
-                                        newUser.password = hash;
-                                        //save user
-                                        newUser.save()
-                                            .then(user => {
-                                                res.redirect('/users/sign-in')
-                                            })
-                                            .catch(err => console.log(err))
-                                }))
-                            }
-                        })
-                }
-            })
+        
+        //Hash Password
+        bcrypt.genSalt(10, (err, salt) =>
+            bcrypt.hash(newUser.password, salt, (err, hash) =>{
+                if (err) throw err;
+                //set password to hashed
+                newUser.password = hash;
+                //save user
+                newUser.save()
+                    .then(user => {
+                        res.redirect('/users/sign-in')
+                    })
+                    .catch(err => console.log(err))
+        }))
     }
 
 });
 
-router.get('/sign-in', (req, res) => {console.log('sign in page')})
+router.get('/sign-in', (req, res) => {
+    if (req.flash) {
+        res.send(req.flash())
+    } else {
+        return;
+    }
+})
 
 router.post('/sign-in', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/',
-        failureRedirect: '/'
+        failureRedirect: '/users/sign-in',
+        failureFlash: true
     })(req, res, next)
 });
 

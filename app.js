@@ -2,6 +2,7 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 
+const flash = require('connect-flash')
 const passport = require('passport');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
@@ -47,7 +48,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
-
+app.use(flash())
 app.use(passport.initialize());
 app.use(passport.session());
 

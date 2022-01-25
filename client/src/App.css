@@ -124,7 +124,7 @@ svg {
 /* FORM STYLES */ 
 .form-style-1 {
     width: 30rem;
-    height: 35rem;
+    padding-block: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -264,6 +264,28 @@ a:hover {
 
 .sign-in-button:hover, .sign-up-button:hover {
     background-color: rgba(0, 0, 0, 10%);
+}
+
+.sign-in-error {
+    display: flex;
+    flex-direction: column;
+    color: pink;
+    background-color: rgba(0, 0, 0, 10%);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-block: 2rem;
+
+}
+
+.sign-up-error {
+    display: flex;
+    flex-direction: column;
+    color: pink;
+    background-color: rgba(0, 0, 0, 10%);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-block: .2rem;
+
 }
 
 .nav-profile {

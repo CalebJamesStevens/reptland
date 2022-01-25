@@ -10,6 +10,7 @@ module.exports = function(passport) {
             User.findOne({username: username})
                 .then(user => {
                     if (!user) {
+                        console.log('this user does not exist!')
                         return done(null, false, {message: "this user does not exist"})
                     }
 
