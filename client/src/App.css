@@ -604,6 +604,59 @@ a:hover {
     top: 3.5rem;
 }
 
+/* CREATE COMMUNITY PAGE */
+.create-community-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-community-form {
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 2rem;
+    width: min(90%, 50rem);
+}
+
+.create-community-form-item {
+    display: flex;
+    flex-direction: column;
+    margin-block-end: 3rem;
+}
+
+.create-community-form-item > .text-input {
+    height: 2rem;
+}
+
+.create-community-form-description-textarea {
+    width: 60%;
+    transition: 250ms;
+    height: 20rem;
+    resize: vertical;
+}
+
+#community-name-input-field {
+    width: 12rem;
+}
+
+@media (max-width: 1200px) {
+    .create-community-form-description-textarea {
+        width: 80%;
+        height: 20rem;
+        resize: vertical;
+    }
+}
+
+@media (max-width: 750px) {
+    .create-community-form-description-textarea {
+        width: 100%;
+        height: 20rem;
+        resize: vertical;
+    }
+}
+
 /* COMMENT COMPONENT */
 
 .post-comment-form {

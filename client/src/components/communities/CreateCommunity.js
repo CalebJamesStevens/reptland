@@ -16,29 +16,29 @@ function CreateCommunity() {
     },[currentUser]);
 
     return (
-        <div>
-            <form action="/api/communities/new-community" method="POST">
-                <div>
-                    <label htmlFor="name" id="community-name-form-label">Name</label>
-                    <input type="text" name="name" id="community-name-input-field"/>
+        <div className='create-community-container'>
+            <div>Create a community!</div>
+            <form className='container-3 create-community-form' action="/api/communities/new-community" method="POST">
+                <div className='create-community-form-item'>
+                    <label htmlFor="name" id="community-name-form-label">Give your community a unique name!</label>
+                    <input className='text-input' type="text" name="name" id="community-name-input-field"/>
                 </div>
 
-                <div>
-                    <label htmlFor="description" id="community-description-form-label">Description</label>
-                    <input type="text" name="description" id="community-description-input-field"/>
+                <div className='create-community-form-item'>
+                    <label htmlFor="description" id="community-description-form-label">Description:</label>
+                    <textarea className='create-community-form-description-textarea' type="text" name="description" id="community-description-input-field"/>
                 </div>
 
-                <div>
+                <div className='create-community-form-item'>
                     <label htmlFor="topics" id="community-topics-form-label">Topics</label>
-                    <div>Please Seperate By Commas</div>
-                    <input type="text" name="topics" id="community-topics-input-field"/>
+                    <input className='text-input' type="text" name="topics" placeholder='Please Seperate By Commas' id="community-topics-input-field"/>
                 </div>
-                <div>
+                <div className='create-community-form-item'>
                     <label htmlFor="tags" id="community-tags-form-label">Topics</label>
-                    <div>Please Seperate By Commas</div>
-                    <input type="text" name="tags" id="community-tags-input-field"/>
+                    
+                    <input className='text-input' type="text" name="tags" placeholder='Please Seperate By Commas' id="community-tags-input-field"/>
                 </div>
-                <input type="submit" value="Create"/>
+                <input className='button-style-2' type="submit" value="Create"/>
              </form>
         </div>
     );
