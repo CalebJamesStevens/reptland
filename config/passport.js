@@ -7,7 +7,7 @@ const User = require('../models/User');
 module.exports = function(passport) {
     passport.use(
         new LocalStrategy({usernameField: 'username'}, (username, password, done) => {
-            User.findOne({username: username})
+            User.findOne({username: username.toLowerCase()})
                 .then(user => {
                     if (!user) {
                         console.log('this user does not exist!')

@@ -139,10 +139,16 @@ router.get('/sign-up', (req, res) => {
 })
 
 router.post('/sign-up', async (req, res) => {
-    const {username, email, password, confirm_password} = req.body;
+    let {username, email, password, confirm_password} = req.body;
+    username = username.toLowerCase()
     let errors = [];
     if (!username || !email || !password || !confirm_password) {
         errors.push( "Please fill in all fields");
+    }
+
+    if (username.split('').includes(' ')) {
+        errors.push( "Invalid username: No spaces");
+
     }
 
     if (password !== confirm_password) {
