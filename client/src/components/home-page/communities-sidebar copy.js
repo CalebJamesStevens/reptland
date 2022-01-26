@@ -11,6 +11,7 @@ function CommunitiesSidebar () {
         fetch('/api/communities/getrandom')
             .then(res => res.json())
             .then(data => {
+                if(!data[0]) return;
                 setCommunities(current => [...current, data[0]])
             })
     }

@@ -223,14 +223,17 @@ router.get('/logout', async (req, res, next) => {
 
 router.get('/getrandom', async (req, res) => {
     await User.aggregate(
-        [{$sample: {size: 1}}]
+        [{$match: {_id: {$exists: true}}}, {$sample: {size: 1}}]
     )
     .then (user => {
-        const data = {
-            username: user[0].username,
-            id: user[0]._id
-        }
-        res.json(user)
+        if (user.length > 0) {
+            console.log(user)
+            const data = {
+                username: user[0].username,
+                id: user[0]._id
+            }
+            res.json(user)
+        } else {return}
     })
 })
 
