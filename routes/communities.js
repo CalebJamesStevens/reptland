@@ -17,7 +17,7 @@ router.get('/new-community', (req, res) => {
     res.render('../views/communities/new-community')
 })
 
-router.post('/new-community', (req, res) => {
+router.post('/new-community', async (req, res) => {
     let details = req.body;
     details.topics = details.topics.split(',').map(topic => topic.trim())
     details.topics.unshift('General');
@@ -31,12 +31,20 @@ router.post('/new-community', (req, res) => {
         topics: details.topics
     });
 
-    
-    newCommunity.save()
-        .then(community => {
-            User.updateOne({_id: res.locals.currentUser._id}, {$push: {createdCommunities: community._id, communities: community._id}})
-                .then(res.redirect(`/communities/view/${community.name}`))
-        })
+    await Community.findOne({name: details.name})
+    .then(c => {
+        if (c) {
+            res.redirect('/communities/new-community')
+            return;
+        } else {
+            newCommunity.save()
+                .then(community => {
+                    User.updateOne({_id: res.locals.currentUser._id}, {$push: {createdCommunities: community._id, communities: community._id}})
+                        .then(res.redirect(`/communities/view/${community.name}`))
+                })
+        }
+    })
+
 })
 
 router.get('/:community_name/new-community-post', (req, res) => {
