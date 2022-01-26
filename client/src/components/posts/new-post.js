@@ -92,7 +92,7 @@ function NewPost() {
                 </div>
                 
                 <input className='new-post-title input-field-style-1' maxLength='300' placeholder="Title" name="title" type="text" id="title"/>
-                <input type='file' name='image' accept=".png, .jpeg, .jpg"/>
+                <input type='file' name='images' accept=".png, .jpeg, .jpg"/>
                 <textarea className='new-post-body input-field-style-1' placeholder="Body" name="body" type="text" id="body"/>
                 
                 <input className='new-post-title input-field-style-1' maxLength='300' placeholder="Tags: Please seperate by commas" name="tags" type="text" id="tags"/>

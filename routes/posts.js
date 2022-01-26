@@ -31,18 +31,21 @@ router.get(`/:postID/get-child-comments`, async (req, res) => {
         })
 })
 
-router.post('/new-post', upload.single('image'), async (req, res) => {
+router.post('/new-post', upload.array('images', 2), async (req, res) => {
     const details = req.body;
     details.tags = details.tags.split(',').map(tag => tag.trim()) 
-    let key = null;
-    console.log(req.file)
-    if (req.file) {
-        console.log('getting file')
-        const file = req.file
-        const result = await awsUploadFile(file)
-        await unlinkFile(file.path)
-        console.log(result)
-        key = result.key
+    let key = [];
+    console.log(req.files)
+    if (req.files) {
+        key = await Promise.all(req.files.map(async file => {
+            console.log('getting file')
+            const result = await awsUploadFile(file)
+            await unlinkFile(file.path)
+            console.log('hey', result)
+            return result.key 
+
+        }))
+        
     }
     
 
@@ -50,7 +53,7 @@ router.post('/new-post', upload.single('image'), async (req, res) => {
     const newPost = new Post({
         title: details.title,
         authorID: res.locals.currentUser._id,
-        ...(key && {images: [key]})
+        ...(key && {images: key})
     });
     
     console.log(details)

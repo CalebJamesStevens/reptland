@@ -27,12 +27,17 @@ function Post({postID}) {
     )
 
     const likePost = () => {
+        if (!currentUser) return;
         fetch(`/api/posts/${postID}/enrich-post`)
         .then(res => res.json())
         .then(data => {
             setEnrichedPost(current => !current)
         })
     }
+
+    const copyPostLink = async () => {
+        await navigator.clipboard.writeText(`https://reptland.com/posts/view-post/${post?._id}`);
+      }
 
     const fetchPost = async () => {
         await fetch(`/api/posts/view-post/${postID}`)
@@ -121,7 +126,7 @@ function Post({postID}) {
                     {post?.enrichment}
                 </div>
                 <div className='clickable hover-style-1 comment-interactable'><CommentIcon/></div>
-                <div className='clickable hover-style-1 link-interactable'><LinkIcon/></div>
+                <div onClick={(e) => {copyPostLink(e)}} className='clickable hover-style-1 link-interactable'><LinkIcon/></div>
             </div>
             <div>{currentUser?._id == post?.authorID && deleteButton}</div>
             <div className='comments-container'>

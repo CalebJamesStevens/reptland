@@ -15,7 +15,16 @@ function PostPreview({postID}) {
     
     const navigate = useNavigate();
 
-    const likePost = () => {
+    const copyPostLink = async (e) => {
+        e.stopPropagation();
+        await navigator.clipboard.writeText(`https://reptland.com/posts/view-post/${post?._id}`);
+      }
+
+    const likePost = (e) => {
+        e.stopPropagation();
+        if (!currentUser) {
+            return
+        }
         fetch(`/api/posts/${postID}/enrich-post`)
         .then(res => res.json())
         .then(data => {
@@ -80,13 +89,13 @@ function PostPreview({postID}) {
             <div className='post-title'>{post?.title}</div>
             <div className='post-preview-body'>{post?.body}</div>
             <div className='post-interaction-icon-container'>
-                <div onClick={() => {likePost()}}
+                <div onClick={(e) => {likePost(e)}}
                 className={`${enrichedPost && 'filled'} clickable hover-style-1 heart-interactable`}>
                     <HeartIcon/>
                     {post?.enrichment}
                 </div>
                 <div className='clickable hover-style-1 comment-interactable'><CommentIcon/></div>
-                <div className='clickable hover-style-1 link-interactable'><LinkIcon/></div>
+                <div onClick={(e) => {copyPostLink(e)}} className='clickable hover-style-1 link-interactable'><LinkIcon/></div>
             </div>
             
         </div>
