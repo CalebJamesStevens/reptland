@@ -55,14 +55,14 @@ function Community() {
             if (currentUser?.communities.includes(community?._id)) {
                 setJoinButton (
                     <form action={`/api/communities/${community?.name}/leave-community`} method="POST">
-                        <input className='clickable button-style-1' type="submit" value="Leave Community"/>
+                        <input className='clickable button-style-1' type="submit" value="Leave"/>
                         <input type="hidden" name="communityID" value={community?._id}/>
                     </form>
                 )
             } else {
                 setJoinButton (
                     <form action={`/api/communities/${community?.name}/join-community`} method="POST">
-                        <input className='clickable button-style-1' type="submit" value="Join Community"/>
+                        <input className='clickable button-style-1' type="submit" value="Join"/>
                         <input type="hidden" name="communityID" value={community?._id}/>
                     </form>
                 )
@@ -71,7 +71,7 @@ function Community() {
         } else {
             setJoinButton (
                 <form>
-                    <input onClick={() => {navigate('/users/sign-in')}} className='clickable button-style-1' value="Join Community"/>
+                    <input onClick={() => {navigate('/users/sign-in')}} className='clickable button-style-1' value="Join"/>
                 </form>
             )
         }
@@ -91,7 +91,7 @@ function Community() {
         
         setCommunityNavbar(
             <>
-                <div className='container-2 community-navbar'>
+                <div className='container-3 community-navbar'>
                     <div>
                         {communityName}
                     </div>

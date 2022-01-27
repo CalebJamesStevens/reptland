@@ -609,6 +609,7 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 30rem;
     
 }
 
@@ -616,7 +617,12 @@ a:hover {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    gap: 1rem;
     width: 100%;
+}
+
+.community-join-button > form > input {
+    width: 5rem;
 }
 
 .community-topic-selector {
@@ -631,6 +637,37 @@ a:hover {
 .community-topic-dropdown {
     position: absolute;
     top: 3.5rem;
+}
+
+.community-posts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.community-posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 500px) {
+    .community-navbar-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        
+    }
+    .community-navbar {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+    }
 }
 
 /* CREATE COMMUNITY PAGE */
@@ -709,8 +746,7 @@ a:hover {
 .comment-body-container{
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .comment-body-text {
