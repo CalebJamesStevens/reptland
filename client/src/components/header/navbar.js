@@ -6,6 +6,7 @@ import AddIcon from '../icons/add-icon';
 import DropdownIcon from '../icons/dropdown-icon';
 import FollowedUsersIcon from '../icons/follower-users-icon';
 import HomeIcon from '../icons/home-icon';
+import PopularIcon from '../icons/popular-icon';
 import ProfileIcon from '../icons/profile-icon';
 import NavProfileDropdown from './nav-profile-dropdown';
 
@@ -33,6 +34,9 @@ function NavBar() {
                     <div className="nav-categories nav-item-container">
                         <div onClick={() => navigate('/')} className="clickable center-nav-icon ">
                             <HomeIcon/>
+                        </div>
+                        <div onClick={() => navigate('/popular')} className="clickable center-nav-icon ">
+                            <PopularIcon/>
                         </div>
                         <div onClick={() => navigate('/followed-users')} className="clickable center-nav-icon">
                             <FollowedUsersIcon/>
@@ -77,6 +81,9 @@ function NavBar() {
                         <div className="nav-categories nav-item-container">
                             <div onClick={() => navigate('/')} className="clickable center-nav-icon ">
                         <HomeIcon/>
+                        </div>
+                        <div onClick={() => navigate('/popular')} className="clickable center-nav-icon ">
+                            <PopularIcon/>
                         </div>
                         <div onClick={() => navigate('/followed-users')} className="clickable center-nav-icon">
                             <FollowedUsersIcon/>

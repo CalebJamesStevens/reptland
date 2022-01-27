@@ -152,8 +152,8 @@ router.get(`/popular-posts`, async (req, res) => {
     await Post.find(
         {community: {$exists: true}}
     )
-    .then (post => {
-        res.json(post)
+    .then (posts => {
+        res.json(posts)
     })
 
 })

@@ -19,6 +19,7 @@ import NavBar from './components/header/navbar';
 import FollowedUsers from './components/home-page/followed-users';
 import SignUp from './components/users/sign-up';
 import Friends from './components/users/friends';
+import PopularPage from './components/home-page/popular-page';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -60,6 +61,7 @@ function App() {
             {/*Home routs*/}
             <Route path="/" element={<Home />}/>
             <Route path="/followed-users" element={<FollowedUsers />}/>
+            <Route path="/popular" element={<PopularPage />}/>
             
             {/*User Routes*/}
             <Route path="/users/sign-in" element={<SignIn />}/>
