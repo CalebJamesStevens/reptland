@@ -31,22 +31,6 @@ function NewPost() {
             })
     }
 
-    const changeCommunityTopics = () => {
-        setHtmlCommunityTopics(new Array())
-        communityTopics.forEach(topic => {
-            setHtmlCommunityTopics(current => [...current, <option name="communityTopic" value={topic}>{topic}</option>])
-        })
-
-        setCommunityTopicSelector(
-            <>
-                <label htmlFor="communityTopic">Topic:</label>
-                <select name="communityTopic" id="post-form-community-topic-select">
-                    <option name="communityTopic" value="general">General</option>
-                    {htmlCommunityTopics && htmlCommunityTopics}
-                </select>
-            </>
-        )
-    }
 
     const getCommunityNames = () => {
         
@@ -68,12 +52,6 @@ function NewPost() {
         getCommunityNames();
     },[currentUser])
 
-    useEffect(() => {
-        changeCommunityTopics();
-        
-    },[communityTopics])
-
-
     return (
         <div className='new-post-container'>
             <div className='new-post-header'>Create a post:</div>
@@ -85,10 +63,16 @@ function NewPost() {
                         {userCommunityNameOptions && userCommunityNameOptions}
                     </select>
 
-                    <label htmlFor="communityTopic">Topic:</label>
-                    <select className='select-1' name="communityTopic" id="post-form-community-topic-select">
-                        {htmlCommunityTopics && htmlCommunityTopics}
-                    </select>
+                    {communityTopics?.length > 0 && (
+                        <>
+                        <label htmlFor="communityTopic">Topic:</label>
+                        <select className='select-1' name="communityTopic" id="post-form-community-topic-select">
+                            {communityTopics?.map(topic => {
+                                    return(<option key={topic} name="communityTopic" value={topic}>{topic}</option>)
+                                })}
+                        </select>
+                        </>
+                        )}
                 </div>
                 
                 <input className='new-post-title input-field-style-1' maxLength='300' placeholder="Title" name="title" type="text" id="title"/>
