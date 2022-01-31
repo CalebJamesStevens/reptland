@@ -50,7 +50,7 @@ function NavBar() {
                         {width > 850 && (
                             <div className='nav-profile-preview'>
                                 <ProfileIcon/>
-                                <div className='clickable'>
+                                <div onClick={() => {navigate(`/users/${currentUser?.username}/profile`)}} className='clickable'>
                                     {currentUser?.username}
                                 </div>
                                 <div onClick={() => {setNavProfileDropdownToggle(current => !current)}} className={`${navProfileDropdownToggle ? 'upside-down' : ''} nav-profile-dropdown-icon clickable`}>

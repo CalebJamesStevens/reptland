@@ -26,10 +26,16 @@ function NavProfileDropdown () {
             {currentUser && (
                 <>
                     <div
-                        onClick={() => {logout()}} 
+                        onClick={() => {navigate(`/users/${currentUser?.username}/profile`)}} 
                         className="dropdown-option-1 clickable hover-style-2"
                     >
-                        Log Out
+                        My Profile
+                    </div>
+                    <div
+                        onClick={() => {navigate(`/users/friends`)}} 
+                        className="dropdown-option-1 clickable hover-style-2"
+                    >
+                        Friends
                     </div>
                     <div
                         onClick={() => {navigate('/communities/new-community')}} 
@@ -42,6 +48,12 @@ function NavProfileDropdown () {
                         className="dropdown-option-1 clickable hover-style-2"
                     >
                         Create Post
+                    </div>
+                    <div
+                        onClick={() => {logout()}} 
+                        className="dropdown-option-1 clickable hover-style-2"
+                    >
+                        Log Out
                     </div>
                 </>
             )}

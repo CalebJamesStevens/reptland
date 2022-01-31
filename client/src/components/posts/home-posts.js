@@ -78,10 +78,10 @@ function HomePosts() {
             })}
 
             {posts?.length <= 0 && (
-                    <div class="no-home-posts">
+                    <div className="no-home-posts">
                         Looks like you haven't joined
                         any communities yet! Check out the
-                        popular <PopularIcon/> page to find your people!
+                        popular <div className="nhp-popular-icon"><PopularIcon/></div> page to find your people!
                     </div>
                 
             )}
