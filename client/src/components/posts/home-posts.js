@@ -2,6 +2,8 @@ import {useContext, useEffect, useState} from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import Post from './post'
 import PostPreview from './post-preview';
+import PopularIcon from '../icons/popular-icon' 
+
 function HomePosts() {
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const [posts, setPosts] = useState();
@@ -74,6 +76,15 @@ function HomePosts() {
                     <PostPreview key={post} postID={post}/>
                 )
             })}
+
+            {posts?.length <= 0 && (
+                    <div class="no-home-posts">
+                        Looks like you haven't joined
+                        any communities yet! Check out the
+                        popular <PopularIcon/> page to find your people!
+                    </div>
+                
+            )}
         </div>
     );
 }
