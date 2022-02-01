@@ -189,6 +189,24 @@ a:hover {
     cursor:pointer;
 }
 
+.flash-error-card {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    padding: .5rem;
+    width: min(95%, 20rem);
+    top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    border-left: 1rem lightcoral solid;
+    box-shadow: 0rem 0rem 1rem .2rem black;
+    background-color: #738956;
+}
 
 /* NAVBAR COMPONENT */
 
@@ -308,6 +326,7 @@ a:hover {
 
 .nav-profile-dropdown {
     position: absolute;
+    z-index: 1000;
     top: 3rem;
     right: 0;
     width: 10rem;

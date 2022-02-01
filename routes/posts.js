@@ -8,6 +8,18 @@ const {ObjectId} = require('mongodb');
 const { redirect } = require("express/lib/response");
 const Community = require("../models/Community");
 
+//rate limiters
+const rateLimit = require('express-rate-limit')
+
+const newPostLimiter = rateLimit({
+	windowMs: 60 * 1000, // 1 minute
+	max: 1, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    handler: (request, response, next, options) =>
+		response.status(405).send({rateError: "Too many posts in one minute!"}),
+})
+
 //File upload stuff
 const fs = require('fs')
 const util = require('util')
@@ -31,7 +43,7 @@ router.get(`/:postID/get-child-comments`, async (req, res) => {
         })
 })
 
-router.post('/new-post', upload.array('images', 2), async (req, res) => {
+router.post('/new-post', newPostLimiter, upload.array('images', 2), async (req, res) => {
     const details = req.body;
     details.tags = details.tags.split(',').map(tag => tag.trim()) 
     let key = [];
@@ -79,7 +91,7 @@ router.post('/new-post', upload.array('images', 2), async (req, res) => {
             User.updateOne({_id: res.locals.currentUser._id}, {$push: {posts: post._id}})
                 .then(user => {
                     Community.updateOne({_id: post.community}, {$push: {posts: post._id}})
-                        .then(res.redirect(`/posts/view-post/${post.id}`))
+                    .then(res.send({id: post._id}))
                     
                 })
             

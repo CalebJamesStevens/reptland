@@ -12,7 +12,7 @@ function NewPost() {
     const [communityTopics, setCommunityTopics] = useState(new Array());
     const [htmlCommunityTopics, setHtmlCommunityTopics] = useState();
     const [communityTopicSelector, setCommunityTopicSelector] = useState();
-    
+    const [errors, setErrors] = useState(new Array());
 
 
     const communitySelectChange = (event) => {
@@ -44,6 +44,8 @@ function NewPost() {
 
     }
 
+
+
     useEffect(() => {
         if (!currentUser) {
             navigate('/users/sign-in')
@@ -52,10 +54,45 @@ function NewPost() {
         getCommunityNames();
     },[currentUser])
 
+    const apiPost = (data) => {
+        console.log(data)
+        const body = new FormData(data);
+        fetch('/api/posts/new-post', { method: 'POST', body })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.id) {
+                    navigate(`/posts/view-post/${data.id}`)
+                }
+
+                if (data.rateError) {
+                    setErrors(current => [...current, data.rateError])
+                }
+            })
+    }
+
     return (
         <div className='new-post-container'>
             <div className='new-post-header'>Create a post:</div>
-            <form className='new-post-form-container form-style-2' action="/api/posts/new-post" method="POST" enctype="multipart/form-data">
+            {errors?.length > 0 && (
+                <>
+                    <div className='new-post-erros'>
+                        {errors.map(error => {
+                            return (
+                                <div onClick={() => {setErrors(errors?.filter(e => 
+                                    e != error
+                                ))}} className='clickable flash-error-card'>{error}</div>
+                            )
+                        })}
+                    </div>
+                </>
+            )}
+            <form className='new-post-form-container form-style-2'
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    apiPost(e.target);
+                }}
+            >
                 <div className='new-post-slectors'>
                     <label htmlFor="community">Post to:</label>
                     <select className='select-1' onChange={communitySelectChange} name="community" id="post-form-community-select">
