@@ -172,13 +172,10 @@ router.delete('/:postID', async (req, res) => {
     try {
         let post = await Post.findById({_id: req.params.postID});
         console.log("started deleting")
-        Post.findById({_id: req.params.postID}, (err, post) => {
-             if (!post.authorID._id.equals(res.locals.currentUser._id)) {
-                res.redirect(`/posts/view-post/${req.params.postID}`)
-                return;
-            } 
-            
-        }).clone()
+        if (!post.authorID.equals(res.locals.currentUser._id)) {
+           res.redirect(`/posts/view-post/${req.params.postID}`)
+           return;
+        } 
         
         await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {posts: req.params.postID}})
         if (post.community) {
