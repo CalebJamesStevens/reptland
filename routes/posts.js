@@ -183,11 +183,9 @@ router.delete('/:postID', async (req, res) => {
         await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {posts: req.params.postID}})
         if (post.community) {
             await Community.updateOne({_id: post.community}, {$pull: {posts: req.params.postID}})
-                .then(console.log('worked'))
         }
         await Post.deleteOne({_id: req.params.postID})
-        .then(post => {console.log(post)})
-        .then(res.redirect(`/`))
+        res.redirect(`/`)
     
         
     } catch (err){
