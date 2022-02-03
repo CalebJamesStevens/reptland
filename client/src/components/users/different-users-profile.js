@@ -3,6 +3,7 @@ import { UserContext } from "../../contexts/UserContext";
 import ProfileIcon from "../icons/profile-icon";
 import FriendRequestButton from "./friend-request-button";
 import { useNavigate } from 'react-router-dom';
+import PostPreview from "../posts/post-preview";
 
 function DifferentUsersProfile ({user, posts}) {
     const navigate = useNavigate();
@@ -36,7 +37,9 @@ function DifferentUsersProfile ({user, posts}) {
         </div>
             
          <div className='user-profile-post-container'>
-            {posts.length > 0 ? posts : <h2>No posts to be shown here...</h2>}
+            {posts.length > 0 ? posts?.map(post => {
+                return(<PostPreview key={post} postID={post}/>)
+            }) : <h2>No posts to be shown here...</h2>}
         </div>
         </>
     )

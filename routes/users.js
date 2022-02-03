@@ -35,16 +35,16 @@ router.get('/:userID/user-posts', async (req, res) => {
 })
 
 router.get(`/:username/profile`, async (req, res) => {
-    console.log('REQUEST')
+    
     await User.findOne({username: req.params.username})
         .then(user => {
             res.json(user)
         })
-    console.log('went')
+    
 })
 
 router.post(`/:username/request-friend`, async (req, res) => {
-    console.log('REQUEST')
+    
     if (!res.locals.currentUser) {
         res.redirect(`/users/sign-in`)
         return;
@@ -82,10 +82,10 @@ router.post(`/:username/request-friend`, async (req, res) => {
 })
 
 router.post(`/:username/accept-friend-request`, async (req, res) => {
-    console.log('REQUEST')
+    
     const details = req.body;
-    console.log(details.accepted == 'true')
-    console.log(details.accepted)
+    
+    
     if (details.accepted == 'true') {
         await User.updateOne({_id: details.userID}, {$pull: {sentFriendRequests: res.locals.currentUser._id}, $push: {friends: res.locals.currentUser._id}})
         await User.findOneAndUpdate({_id: res.locals.currentUser._id}, {$pull: {friendRequests: details.userID}, $push: {friends: details.userID}})
@@ -105,13 +105,13 @@ router.get(`/getEnrichedPosts`, async (req, res) => {
     if (!res.locals.currentUser) return;
     await User.findById(res.locals.currentUser._id)
     .then(user => {
-        console.log('ENRICHED POSTS', user.enrichedPosts)
+        
         res.json(user.enrichedPosts)
     })
 })
 
 router.post(`/:username/follow-user`, async (req, res) => {
-    console.log('REQUEST')
+    
     const details = req.body;
     await User.updateOne({_id: res.locals.currentUser._id}, {$push: {followedUsers: details.userID}})
     await User.findOneAndUpdate({_id: details.userID}, {$push: {followers: res.locals.currentUser._id}})
@@ -121,7 +121,7 @@ router.post(`/:username/follow-user`, async (req, res) => {
 })
 
 router.post(`/:username/unfollow-user`, async (req, res) => {
-    console.log('REQUEST')
+    
     const details = req.body;
     await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {followedUsers: details.userID}})
     await User.findOneAndUpdate({_id: details.userID}, {$pull: {followers: res.locals.currentUser._id}})
@@ -193,7 +193,7 @@ router.post('/sign-up', async (req, res) => {
                     .then(user => {
                         res.redirect('/users/sign-in')
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => console.log(err));
         }))
     }
 
@@ -216,7 +216,7 @@ router.post('/sign-in', (req, res, next) => {
 });
 
 router.get('/logout', async (req, res, next) => {
-    console.log('logging out')
+    
     req.logout()
     res.json({message: 'Succesfully logged out'})
 })
@@ -227,7 +227,7 @@ router.get('/getrandom', async (req, res) => {
     )
     .then (user => {
         if (user.length > 0) {
-            console.log(user)
+            
             const data = {
                 username: user[0].username,
                 id: user[0]._id
@@ -246,6 +246,10 @@ router.get('/:id/info', async (req, res) => {
         .populate('friends')
         .populate('friendRequests')
         .exec((err, user) => {
+            if (!user) {
+                res.json({msg: "user not found"})
+                return;
+            }
             u = {
                 ...(q.id && {_id: user._id}),
                 ...(q.username && {username: user.username}),

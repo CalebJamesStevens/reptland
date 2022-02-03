@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-    console.log('home')
+    
     const test = {
         msg: 'hey'
     }
@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/followed-users', (req, res) => {
-    console.log('follower')
+    
     const test = {
         msg: 'hey'
     }

@@ -80,18 +80,18 @@ router.post('/:community_name/leave-community', async (req, res) => {
 })
 
 router.get('/view/:community', async (req, res) => {
-    console.log("FINDING COMMUNITY")
+    
     let community = req.params.community.toLowerCase();
-    console.log(req.params.community)
-    console.log(community)
+    
+    
 
     //try to find by name
     try {
 
-        console.log('trying name')
+        
         await Community.findOne({name: community})
             .then(c => {
-                console.log('Name' + c)
+                
                 if (c) {
                     res.json(c);
                     return;
@@ -103,10 +103,10 @@ router.get('/view/:community', async (req, res) => {
 
     // Try to find by id
     try {
-        console.log('trying id')
+        
         await Community.findOne({_id: community})
             .then(c => {
-                console.log('ID' + c)
+                
                 if (c) {
                     res.json(c);
                 }

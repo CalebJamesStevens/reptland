@@ -41,7 +41,7 @@ function UserProfile() {
     const fetchPosts = async () => {
         await user.posts.forEach(post => {
             
-            setUserPosts(current => [...current, <PostPreview key={post} postID={post}/>])
+            setUserPosts(current => [...current, post])
         })        
     }
 

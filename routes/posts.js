@@ -34,7 +34,7 @@ router.get(`/:postID/get-child-comments`, async (req, res) => {
     await Post.findById(req.params.postID)
         .populate('comments')
         .exec((err, post) => {
-            console.log(post)
+            
             res.json(
                 post.comments
                 .filter(comment => comment.parentComment == null)
@@ -47,17 +47,13 @@ router.post('/new-post', newPostLimiter, upload.array('images', 2), async (req, 
     const details = req.body;
     details.tags = details.tags.split(',').map(tag => tag.trim()) 
     let key = [];
-    console.log(req.files)
+    
     if (req.files) {
         key = await Promise.all(req.files.map(async file => {
-            console.log('getting file')
             const result = await awsUploadFile(file)
             await unlinkFile(file.path)
-            console.log('hey', result)
             return result.key 
-
         }))
-        
     }
     
 
@@ -68,7 +64,7 @@ router.post('/new-post', newPostLimiter, upload.array('images', 2), async (req, 
         ...(key && {images: key})
     });
     
-    console.log(details)
+    
 
 
 
@@ -123,7 +119,7 @@ router.get(`/view-post/:postID`, async (req, res) => {
 }) 
 
 router.get(`/:postID/enrich-post`, async (req, res) => {
-    console.log(req.params.postID)
+    
     if (!res.locals.currentUser) {
         res.redirect(`/posts/${req.params.postID}`)
         return;
@@ -134,7 +130,7 @@ router.get(`/:postID/enrich-post`, async (req, res) => {
     } else {
         await Post.updateOne({_id: req.params.postID}, {$inc: {enrichment: 1}})
         await User.updateOne({_id: res.locals.currentUser._id}, {$push: {enrichedPosts: req.params.postID}})
-        console.log("Enriched")
+        
     }
 
     res.json({message: 'Success'})
@@ -142,7 +138,7 @@ router.get(`/:postID/enrich-post`, async (req, res) => {
 })
 
 router.post(`/:postID/save-post`, async (req, res) => {
-    console.log(req.params.postID)
+    
     if (!res.locals.currentUser) {
         res.redirect(`/posts/${req.params.postID}`)
         return;
@@ -153,7 +149,7 @@ router.post(`/:postID/save-post`, async (req, res) => {
     } else {
         await User.updateOne({_id: res.locals.currentUser._id}, {$push: {savedPosts: req.params.postID}})
         res.redirect(`/posts/${req.params.postID}`)
-        console.log("Saved")
+        
     }
     
 })
@@ -172,35 +168,30 @@ router.get(`/popular-posts`, async (req, res) => {
 
 
 router.delete('/:postID', async (req, res) => {
-    console.log("GOT THIS FAR")
+    
     try {
-        console.log("Starting post deletion")
-        await Post.findById({_id: req.params.postID}, (err, post) => {
-            console.log("Starting post deletion")
-            try {
-                if (!post.authorID._id.equals(res.locals.currentUser._id)) {
-                    res.redirect(`/posts/view-post/${req.params.postID}`)
-                    return;
-                } 
-            } catch {
-                res.redirect(`/posts//view-post/${req.params.postID}`)
+        let post = await Post.findById({_id: req.params.postID});
+        console.log("started deleting")
+        Post.findById({_id: req.params.postID}, (err, post) => {
+             if (!post.authorID._id.equals(res.locals.currentUser._id)) {
+                res.redirect(`/posts/view-post/${req.params.postID}`)
                 return;
-            }
+            } 
+            
         }).clone()
-        console.log("Post deleted")
-        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {posts: req.params.postID}})
-        await Post.deleteOne({_id: req.params.postID})
-        .then(post => {
-            if (post.community) {
-                Community.updateOne({_id: post.community}, {$pull: {posts: req.params.postID}})
-
-                }
-            })
-            .then(res.redirect(`/`))
         
+        await User.updateOne({_id: res.locals.currentUser._id}, {$pull: {posts: req.params.postID}})
+        if (post.community) {
+            await Community.updateOne({_id: post.community}, {$pull: {posts: req.params.postID}})
+                .then(console.log('worked'))
+        }
+        await Post.deleteOne({_id: req.params.postID})
+        .then(post => {console.log(post)})
+        .then(res.redirect(`/`))
+    
         
     } catch (err){
-        console.log(err)
+        console.log("there was an error", err)
     
         res.redirect(`/`)
     }

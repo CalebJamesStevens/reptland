@@ -55,12 +55,12 @@ function NewPost() {
     },[currentUser])
 
     const apiPost = (data) => {
-        console.log(data)
+        
         const body = new FormData(data);
         fetch('/api/posts/new-post', { method: 'POST', body })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                
                 if (data.id) {
                     navigate(`/posts/view-post/${data.id}`)
                 }

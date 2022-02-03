@@ -29,13 +29,13 @@ router.post('/new', async (req, res) => {
         .then(comment => {
             Post.updateOne({_id: details.postID}, {$push: {comments: newComment._id}})
             .then(c => {
-                console.log(c)
+                
             })       
             if(details.parentComment != null) {
-                console.log('saving reply to comment ', details.parentComment)
+                
                 Comment.findOneAndUpdate({_id: details.parentComment}, {$push: {replies: newComment._id}})
                 .then(c => {
-                    console.log(c)
+                    
                 })       
             }
         })
@@ -44,7 +44,7 @@ router.post('/new', async (req, res) => {
         )
     }
     catch (err){
-        console.log(err)
+        
     }
 })
 
@@ -63,7 +63,7 @@ router.get('/get/:commentID/replies', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-    console.log('deleting comment')
+    
     await Post.findByIdAndUpdate({_id: req.body.postID}, {$pull: {comments: req.params.id}})
     await Comment.findByIdAndDelete(req.params.id)
         .then(comment => {

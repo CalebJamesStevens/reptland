@@ -10,7 +10,7 @@ function SignUp () {
         fetch('/api/users/sign-up')
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            
             if (data.errors) {
                 setErrors(data.errors)
             }

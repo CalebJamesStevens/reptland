@@ -14,7 +14,7 @@ function PopularPosts() {
             .then(res => res.json())
             .then(data => {
                 data.forEach (post => {
-                    console.log(post)
+                    
                     setPosts(current => [...current, post])
                 })
             })
