@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
         type: String
     },
     pets: {
-        type: [[String]]
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pet'}]
     },
     posts: {
         type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]

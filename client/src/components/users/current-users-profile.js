@@ -5,6 +5,8 @@ import PostPreview from "../posts/post-preview";
 function CurrentUsersProfile ({user, posts}) {
     const navigate = useNavigate();
 
+
+    
     return (
         <>
         <div className='user-profile-sidebar-container container-3'>
@@ -20,6 +22,9 @@ function CurrentUsersProfile ({user, posts}) {
                 return(<PostPreview key={post} postID={post}/>)
             }) : <h2>No posts to be shown here...</h2>}
         </div>
+        <section>
+
+        </section>
         </>
     )
 }

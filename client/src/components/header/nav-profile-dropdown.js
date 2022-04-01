@@ -49,6 +49,12 @@ function NavProfileDropdown () {
                     >
                         Create Post
                     </div>
+                    <button
+                        onClick={() => {navigate('/tracker')}} 
+                        className="dropdown-option-1 clickable hover-style-2"
+                    >
+                        Tracker
+                    </button>
                     <div
                         onClick={() => {logout()}} 
                         className="dropdown-option-1 clickable hover-style-2"

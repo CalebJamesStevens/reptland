@@ -20,6 +20,7 @@ import FollowedUsers from './components/home-page/followed-users';
 import SignUp from './components/users/sign-up';
 import Friends from './components/users/friends';
 import PopularPage from './components/home-page/popular-page';
+import Tracker from './components/users/tracker';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -69,6 +70,9 @@ function App() {
             <Route path="/users/:username/profile" element={<UserProfile />}/>
             <Route path="/users/friends" element={<Friends />}/>
             <Route path="/users/logout"/>
+            
+            {/*Tools Routes*/}
+            <Route path='/tracker' element={<Tracker/>}/>
             
             {/*Post Routes*/}
             <Route path="/posts/new-post" element={<NewPost />}/>

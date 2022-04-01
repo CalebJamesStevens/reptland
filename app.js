@@ -42,6 +42,8 @@ app.set('view engine', 'ejs');
 
 //Bodyparser
 app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+
 
 app.use(session({
     secret: "secret",
@@ -66,6 +68,7 @@ app.use(function(req, res, next) {
 //Routes
 app.use('/api/home', require('./routes/home'));
 app.use('/api/users', require('./routes/users'));
+app.use('/api/pets', require('./routes/pets'));
 app.use('/api/posts', require('./routes/posts'));
 app.use('/api/comments', require('./routes/comments'));
 app.use('/api/communities', require('./routes/communities'));

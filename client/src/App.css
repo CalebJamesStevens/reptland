@@ -118,6 +118,10 @@ svg {
 }
 
 .dropdown-option-1 {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -946,4 +950,205 @@ a:hover {
         
     }
 
+}
+
+/* Tracker Tool */
+
+.tracker-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pet-card {
+    display: flex;
+    flex-direction: column;
+    width: 40rem;
+    height: 10rem;
+    margin-top: 2rem;
+    border: solid .3rem #99b667;
+    border-radius: 10px;
+}
+
+.add-pet-card {
+    margin-top: 2rem;
+}
+
+.add-pet-popup-container {
+    border: solid #99b667 .5rem;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.add-pet-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.add-pet-form > label {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-pet-form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.pet-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-block: .6rem;
+    margin-inline: .3rem;
+    width: auto;
+
+}
+
+.expanded-pet-card-container {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .8);
+}
+
+.expanded-pet-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60rem;
+    height: 80vh;
+    border: solid 1rem #99b667;
+    background-color: #738956;
+    overflow-y: scroll;
+}
+
+.expanded-pet-card-button-1 {
+    margin-top: .5rem;
+    border: none;
+
+    background-color: #99b667;
+    padding: .5rem 1rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.expanded-pet-card-name {
+    margin-top: 1rem;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.expanded-pet-attributes {
+    margin-bottom: .2rem;
+}
+
+.expanded-pet-main-updates-container {
+    margin-block: 2rem;
+    display: flex;
+    align-items: flex-end;
+
+}
+
+@media (max-width:750px) {
+    .expanded-pet-main-updates-container {
+        margin-block: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+    
+    }
+}
+
+
+.main-update-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: baseline;
+    margin-inline: 1rem;
+    height: 100%;
+}
+
+@media (max-width:750px) {
+    .expanded-pet-main-updates-container {
+        margin-block: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+    
+    }
+
+    .pet-card {
+        width: 90%;
+    }
+}
+
+.vertical-layout {
+    display: flex;
+    flex-direction: column;
+}
+
+.expanded-pet-input-container-1 {
+    
+}
+
+.expanded-pet-input-container-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.number-input-1 {
+    width: 4rem;
+
+}
+
+.recorded-feeds-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 80%;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    border: solid black .2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+#recorded-feeds-header {
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+.recorded-feeds {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.recorded-feed-item {
+    margin-inline: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.expanded-pet-graph {
+    width: 90%;
+    height: 20rem;
 }
